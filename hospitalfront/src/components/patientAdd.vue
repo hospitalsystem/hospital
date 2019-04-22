@@ -137,7 +137,7 @@
         var _this = this;
         _this.loading = true;
         getRequest("http://localhost:8081/getBed/1").then(resp=> {
-            console.log("resp:"+JSON.stringify(resp.data));
+          console.log("respdata:"+JSON.stringify(resp.data));
         });
         console.log("patient_name:"+_this.patient.patient_name);
         var data={
@@ -149,7 +149,7 @@
           age:_this.patient.age,
           country:_this.patient.country,
           dist:_this.patient.dist,
-          bith_area:_this.patient.bith_area,
+          birth_area:_this.patient.birth_area,
           mari_code:_this.patient.mari_code,
           work_name:_this.patient.work_name,
           occupation:_this.patient.occupation,
@@ -167,7 +167,9 @@
         data=JSON.stringify(data);
         console.log("data:"+data);
         postRequest("http://localhost:8081/addPatient",data).then(resp=> {
-            console.log("chenggong");
+          if (resp.status == 200 && resp.data.status == 'success') {
+            console.log("resp:"+JSON.stringify(resp));
+          }
         })
       },
       imgAdd(pos, $file){

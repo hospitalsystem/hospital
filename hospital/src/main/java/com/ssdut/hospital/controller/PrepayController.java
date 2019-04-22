@@ -54,7 +54,7 @@ public class PrepayController {
         json.appendField("houseDocNo", inpatient.getHouseDocNo());
         json.appendField("bedNo", inpatient.getBedNo());
         json.appendField("birthday", patient.getBirthday());
-        json.appendField("prepayMethon", prepay.get(0).getPrepayMethod());
+        json.appendField("prepayMethod", prepay.get(0).getPrepayMethod());
         //json.appendField("prepayCost", prepay.get(0).getPrepayCost());
         //json.appendField("", patient);
         JSONArray data = new JSONArray();
