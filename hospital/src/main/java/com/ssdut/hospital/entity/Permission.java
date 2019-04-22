@@ -1,6 +1,5 @@
 package com.ssdut.hospital.entity;
 
-import javax.lang.model.element.NestingKind;
 import javax.persistence.*;
 
 @Entity
@@ -9,63 +8,64 @@ public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer staff_no;
-    @Column
-    private Integer func_no;
-    @Column(length = 1)
-    private String func_read;
-    @Column(length = 1)
-    private String func_add;
-    @Column(length = 1)
-    private String func_edit;
-    @Column(length = 1)
-    private String func_delete;
+    @Column(name="staffNo")
+    private Integer staffNo;
+    @Column(name="funcNo")
+    private Integer funcNo;
+    @Column(name="funcRead",length = 1)
+    private String funcRead;
+    @Column(name="funcAdd",length = 1)
+    private String funcAdd;
+    @Column(name="funcEdit",length = 1)
+    private String funcEdit;
+    @Column(name="funcDelete",length = 1)
+    private String funcDelete;
 
-    public Integer getStaff_no() {
-        return staff_no;
+    public Integer getStaffNo() {
+        return staffNo;
     }
 
-    public void setStaff_no(Integer staff_no) {
-        this.staff_no = staff_no;
+    public void setStaffNo(Integer staffNo) {
+        this.staffNo = staffNo;
     }
 
-    public Integer getFunc_no() {
-        return func_no;
+    public Integer getFuncNo() {
+        return funcNo;
     }
 
-    public void setFunc_no(Integer func_no) {
-        this.func_no = func_no;
+    public void setFuncNo(Integer funcNo) {
+        this.funcNo = funcNo;
     }
 
-    public String getFunc_read() {
-        return func_read;
+    public String getFuncRead() {
+        return funcRead;
     }
 
-    public void setFunc_read(String func_read) {
-        this.func_read = func_read;
+    public void setFuncRead(String funcRead) {
+        this.funcRead = funcRead;
     }
 
-    public String getFunc_add() {
-        return func_add;
+    public String getFuncAdd() {
+        return funcAdd;
     }
 
-    public void setFunc_add(String func_add) {
-        this.func_add = func_add;
+    public void setFuncAdd(String funcAdd) {
+        this.funcAdd = funcAdd;
     }
 
-    public String getFunc_edit() {
-        return func_edit;
+    public String getFuncEdit() {
+        return funcEdit;
     }
 
-    public void setFunc_edit(String func_edit) {
-        this.func_edit = func_edit;
+    public void setFuncEdit(String funcEdit) {
+        this.funcEdit = funcEdit;
     }
 
-    public String getFunc_delete() {
-        return func_delete;
+    public String getFuncDelete() {
+        return funcDelete;
     }
 
-    public void setFunc_delete(String func_delete) {
-        this.func_delete = func_delete;
+    public void setFuncDelete(String funcDelete) {
+        this.funcDelete = funcDelete;
     }
 }

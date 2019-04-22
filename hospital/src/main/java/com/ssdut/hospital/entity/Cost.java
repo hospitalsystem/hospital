@@ -8,39 +8,49 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "cost")
 public class Cost {
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @Id
+    @Column(name="happenNo")
+    private Integer happenNo;
+    @Column(name="inpatientNo")
+    private Integer inpatientNo;
+    @Column(name="costName",length = 20)
+    private String costName;
+    @Column(name="costAmount")
+    private Double costAmount;
 
-    @EmbeddedId
-    //上述注解标注id这个属性为实体的标识符
-    private CostPK id;
-
-    @Column(length = 20)
-    private String cost_name;
-    @Column(precision=10, scale=2)
-    private BigDecimal cost_amount;
-
-    public CostPK getId() {
-        return id;
+    public String getCostName() {
+        return costName;
     }
 
-    public void setId(CostPK id) {
-        this.id = id;
-    }
-    public String getCost_name() {
-        return cost_name;
+    public void setCostName(String costName) {
+        this.costName = costName;
     }
 
-    public void setCost_name(String cost_name) {
-        this.cost_name = cost_name;
+    public Double getCostAmount() {
+        return costAmount;
     }
 
-    public BigDecimal getCost_amount() {
-        return cost_amount;
+    public void setCostAmount(Double costAmount) {
+        this.costAmount = costAmount;
     }
 
-    public void setCost_amount(BigDecimal cost_amount) {
-        this.cost_amount = cost_amount;
+
+    public Integer getInpatientNo() {
+        return inpatientNo;
     }
 
+    public void setInpatientNo(Integer inpatientNo) {
+        this.inpatientNo = inpatientNo;
+    }
+
+    public Integer getHappenNum() {
+        return happenNo;
+    }
+
+    public void setHappenNum(Integer happenNo) {
+        this.happenNo = happenNo;
+    }
 
 
 }

@@ -10,37 +10,38 @@ public class Outpatient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer outpatient_no;
-    @Column(length = 10, nullable = false)
-    private String patient_name;
-    @Column(length = 18, nullable = false)
-    private String idcard_no;
+    @Column(name="outpatientNo")
+    private Integer outpatientNo;
+    @Column(name="patientName",length = 10, nullable = false)
+    private String patientName;
+    @Column(name="idCard",length = 18, nullable = false)
+    private String idCard;
     @Column(length = 50)
     private String diagnose;
 
 
-    public Integer getOutpatient_no() {
-        return outpatient_no;
+    public Integer getOutpatientNo() {
+        return outpatientNo;
     }
 
-    public void setOutpatient_no(Integer outpatient_no) {
-        this.outpatient_no = outpatient_no;
+    public void setOutpatientNo(Integer outpatientNo) {
+        this.outpatientNo = outpatientNo;
     }
 
-    public String getPatient_name() {
-        return patient_name;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setPatient_name(String patient_name) {
-        this.patient_name = patient_name;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
-    public String getIdcard_no() {
-        return idcard_no;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard_no(String idcard_no) {
-        this.idcard_no = idcard_no;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getDiagnose() {

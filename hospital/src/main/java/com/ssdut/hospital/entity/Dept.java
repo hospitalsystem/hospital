@@ -8,23 +8,24 @@ public class Dept {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer  dept_no;
-    @Column(length = 20)
-    private String dept_name;
+    @Column(name="deptNo")
+    private Integer deptNo;
+    @Column(name="deptName",length = 20)
+    private String deptName;
 
-    public Integer  getDept_no() {
-        return dept_no;
+    public Integer getDeptNo() {
+        return deptNo;
     }
 
-    public void setDept_no(Integer  dept_no) {
-        this.dept_no = dept_no;
+    public void setDeptNo(Integer deptNo) {
+        this.deptNo = deptNo;
     }
 
-    public String getDept_name() {
-        return dept_name;
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setDept_name(String dept_name) {
-        this.dept_name = dept_name;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

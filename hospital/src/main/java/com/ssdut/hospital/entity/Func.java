@@ -8,23 +8,24 @@ public class Func {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer func_no;
-    @Column(length = 64)
-    private String func_name;
+    @Column(name="funcNo")
+    private Integer funcNo;
+    @Column(name="funcName",length = 64)
+    private String funcName;
 
-    public Integer getFunc_no() {
-        return func_no;
+    public Integer getFuncNo() {
+        return funcNo;
     }
 
-    public void setFunc_no(Integer func_no) {
-        this.func_no = func_no;
+    public void setFuncNo(Integer funcNo) {
+        this.funcNo = funcNo;
     }
 
-    public String getFunc_name() {
-        return func_name;
+    public String getFuncName() {
+        return funcName;
     }
 
-    public void setFunc_name(String func_name) {
-        this.func_name = func_name;
+    public void setFuncName(String funcName) {
+        this.funcName = funcName;
     }
 }

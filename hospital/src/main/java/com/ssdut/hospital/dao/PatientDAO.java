@@ -4,4 +4,5 @@ import com.ssdut.hospital.entity.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PatientDAO extends JpaRepository<Patient, Integer> {
+    Patient findByIdCard(String idCard);
 }

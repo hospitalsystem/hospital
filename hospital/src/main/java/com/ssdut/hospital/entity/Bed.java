@@ -9,25 +9,26 @@ public class Bed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer  bed_no;
-    @Column(length = 1)
-    private String bed_state;
+    @Column(name="bedNo")
+    private Integer bedNo;
+    @Column(name="bedState",length = 1)
+    private String bedState;
 
 
-    public Integer  getBed_no() {
-        return bed_no;
+    public Integer getBedNo() {
+        return bedNo;
     }
 
-    public void setBed_no(Integer  bed_no) {
-        this.bed_no = bed_no;
+    public void setBedNo(Integer bedNo) {
+        this.bedNo = bedNo;
     }
 
-    public String getBed_state() {
-        return bed_state;
+    public String getBedState() {
+        return bedState;
     }
 
-    public void setBed_state(String bed_state) {
-        this.bed_state = bed_state;
+    public void setBedState(String bedState) {
+        this.bedState = bedState;
     }
 
 

@@ -8,53 +8,54 @@ import javax.persistence.*;
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer staff_no;
-    @Column(length = 20, nullable = false)
-    private String staff_name;
-    @Column(length = 50)
-    private String staff_spell;
-    @Column(length = 1, nullable = false)
-    private String staff_role;
-    @Column(length = 20, nullable = false)
-    private String staff_password;
+    @Column(name="staffNo")
+    private Integer staffNo;
+    @Column(name="staffName",length = 20, nullable = false)
+    private String staffName;
+    @Column(name="staffSpell",length = 50)
+    private String staffSpell;
+    @Column(name="staffRole",length = 1, nullable = false)
+    private String staffRole;
+    @Column(name="staffPassword",length = 20, nullable = false)
+    private String staffPassword;
 
-    public Integer getStaff_no() {
-        return staff_no;
+    public Integer getStaffNo() {
+        return staffNo;
     }
 
-    public void setStaff_no(Integer staff_no) {
-        this.staff_no = staff_no;
+    public void setStaffNo(Integer staffNo) {
+        this.staffNo = staffNo;
     }
 
-    public String getStaff_name() {
-        return staff_name;
+    public String getStaffName() {
+        return staffName;
     }
 
-    public void setStaff_name(String staff_name) {
-        this.staff_name = staff_name;
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
-    public String getStaff_spell() {
-        return staff_spell;
+    public String getStaffSpell() {
+        return staffSpell;
     }
 
-    public void setStaff_spell(String staff_spell) {
-        this.staff_spell = staff_spell;
+    public void setStaffSpell(String staffSpell) {
+        this.staffSpell = staffSpell;
     }
 
-    public String getStaff_role() {
-        return staff_role;
+    public String getStaffRole() {
+        return staffRole;
     }
 
-    public void setStaff_role(String staff_role) {
-        this.staff_role = staff_role;
+    public void setStaffRole(String staffRole) {
+        this.staffRole = staffRole;
     }
 
-    public String getStaff_password() {
-        return staff_password;
+    public String getStaffPassword() {
+        return staffPassword;
     }
 
-    public void setStaff_password(String staff_password) {
-        this.staff_password = staff_password;
+    public void setStaffPassword(String staffPassword) {
+        this.staffPassword = staffPassword;
     }
 }

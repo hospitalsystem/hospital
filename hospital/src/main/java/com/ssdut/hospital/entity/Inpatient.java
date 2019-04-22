@@ -1,6 +1,11 @@
 package com.ssdut.hospital.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -9,82 +14,85 @@ public class Inpatient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer inpatient_no;
-    @Column(length = 10, nullable = false)
-    private String patient_name;
-    @Column(length = 18, nullable = false)
-    private String idcard_no;
-    @Column(nullable = false)
-    private Date in_date;
-    @Column(length = 1, nullable = false)
-    private String in_source;
-    @Column(length = 1)
-    private String in_path;
-    @Column(length = 50)
+    @Column(name="inpatientNo")
+    private Integer inpatientNo;
+    @Column(name="patientName",length = 10, nullable = false)
+    private String patientName;
+    @Column(name="idCard",length = 18, nullable = false)
+    private String idCard;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @Column(name="inDate",nullable = false)
+    private Date inDate;
+    @Column(name="inSource",length = 1, nullable = false)
+    private String inSource;
+    @Column(name="inPath",length = 1)
+    private String inPath;
+    @Column(name="status",length = 50)
     private String status;
-    @Column(nullable = false)
-    private Integer dept_no;
-    @Column(nullable = false)
-    private Integer bed_no;
-    @Column(nullable = false)
-    private Integer house_doc_no;
-    @Column
-    private Integer charge_doc_no;
-    @Column
-    private Integer chief_doc_no;
-    @Column
-    private Integer duty_nurse_no;
-    @Column
-    private Date out_date;
-    @Column(length = 1)
-    private String out_state;
-
-    public Integer getInpatient_no() {
-        return inpatient_no;
+    @Column(name="deptNo",nullable = false)
+    private Integer deptNo;
+    @Column(name="bedNo",nullable = false)
+    private Integer bedNo;
+    @Column(name="houseDocNo",nullable = false)
+    private Integer houseDocNo;
+    @Column(name="chargeDocNo")
+    private Integer chargeDocNo;
+    @Column(name="chiefDocNo")
+    private Integer chiefDocNo;
+    @Column(name="dutyNurseNo")
+    private Integer dutyNurseNo;
+    @Column(name="outDate")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date outDate;
+    @Column(name="outState",length = 1)
+    private String outState;
+    public Integer getInpatientNo() {
+        return inpatientNo;
     }
 
-    public void setInpatient_no(Integer inpatient_no) {
-        this.inpatient_no = inpatient_no;
+    public void setInpatientNo(Integer inpatientNo) {
+        this.inpatientNo = inpatientNo;
     }
 
-    public String getPatient_name() {
-        return patient_name;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setPatient_name(String patient_name) {
-        this.patient_name = patient_name;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
-    public String getIdcard_no() {
-        return idcard_no;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard_no(String idcard_no) {
-        this.idcard_no = idcard_no;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public Date getIn_date() {
-        return in_date;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public Date getInDate() {
+        return inDate;
     }
 
-    public void setIn_date(Date in_date) {
-        this.in_date = in_date;
+    public void setInDate(Date inDate) {
+        this.inDate = inDate;
     }
 
-    public String getIn_source() {
-        return in_source;
+    public String getInSource() {
+        return inSource;
     }
 
-    public void setIn_source(String in_source) {
-        this.in_source = in_source;
+    public void setInSource(String inSource) {
+        this.inSource = inSource;
     }
 
-    public String getIn_path() {
-        return in_path;
+    public String getInPath() {
+        return inPath;
     }
 
-    public void setIn_path(String in_path) {
-        this.in_path = in_path;
+    public void setInPath(String inPath) {
+        this.inPath = inPath;
     }
 
     public String getStatus() {
@@ -95,67 +103,68 @@ public class Inpatient {
         this.status = status;
     }
 
-    public Integer getDept_no() {
-        return dept_no;
+    public Integer getDeptNo() {
+        return deptNo;
     }
 
-    public void setDept_no(Integer dept_no) {
-        this.dept_no = dept_no;
+    public void setDeptNo(Integer deptNo) {
+        this.deptNo = deptNo;
     }
 
-    public Integer getBed_no() {
-        return bed_no;
+    public Integer getBedNo() {
+        return bedNo;
     }
 
-    public void setBed_no(Integer bed_no) {
-        this.bed_no = bed_no;
+    public void setBedNo(Integer bedNo) {
+        this.bedNo = bedNo;
     }
 
-    public Integer getHouse_doc_no() {
-        return house_doc_no;
+    public Integer getHouseDocNo() {
+        return houseDocNo;
     }
 
-    public void setHouse_doc_no(Integer house_doc_no) {
-        this.house_doc_no = house_doc_no;
+    public void setHouseDocNo(Integer houseDocNo) {
+        this.houseDocNo = houseDocNo;
     }
 
-    public Integer getCharge_doc_no() {
-        return charge_doc_no;
+    public Integer getChargeDocNo() {
+        return chargeDocNo;
     }
 
-    public void setCharge_doc_no(Integer charge_doc_no) {
-        this.charge_doc_no = charge_doc_no;
+    public void setChargeDocNo(Integer chargeDocNo) {
+        this.chargeDocNo = chargeDocNo;
     }
 
-    public Integer getChief_doc_no() {
-        return chief_doc_no;
+    public Integer getChiefDocNo() {
+        return chiefDocNo;
     }
 
-    public void setChief_doc_no(Integer chief_doc_no) {
-        this.chief_doc_no = chief_doc_no;
+    public void setChiefDocNo(Integer chiefDocNo) {
+        this.chiefDocNo = chiefDocNo;
     }
 
-    public Integer getDuty_nurse_no() {
-        return duty_nurse_no;
+    public Integer getDutyNurseNo() {
+        return dutyNurseNo;
     }
 
-    public void setDuty_nurse_no(Integer duty_nurse_no) {
-        this.duty_nurse_no = duty_nurse_no;
+    public void setDutyNurseNo(Integer dutyNurseNo) {
+        this.dutyNurseNo = dutyNurseNo;
     }
 
-    public Date getOut_date() {
-        return out_date;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public Date getOutDate() {
+        return outDate;
     }
 
-    public void setOut_date(Date out_date) {
-        this.out_date = out_date;
+    public void setOutDate(Date outDate) {
+        this.outDate = outDate;
     }
 
-    public String getOut_state() {
-        return out_state;
+    public String getOutState() {
+        return outState;
     }
 
-    public void setOut_state(String out_state) {
-        this.out_state = out_state;
+    public void setOutState(String outState) {
+        this.outState = outState;
     }
 }

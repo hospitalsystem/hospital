@@ -1,7 +1,14 @@
 package com.ssdut.hospital.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -9,65 +16,77 @@ import java.util.Date;
 @Table(name = "prepay")
 public class Prepay {
 
-    @EmbeddedId
-    //上述注解标注id这个属性为实体的标识符
-    private PrepayPK id;
 
-    @Column(length = 10, nullable = false)
-    private String patient_name;
-    @Column(precision=10, scale=2, nullable = false)
-    private BigDecimal prepay_cost;
-    @Column
-    private Integer recipe_no;
-    @Column(length = 1)
-    private String prepay_state;
+    @Column(name="happenNo")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer happenNo;
+    @Column(name="patentName",length = 10, nullable = false)
+    private String patientName;
+    @Column(name="prepayCost")
+    private Double prepayCost;
+    @Column(name="recipeNo")
+    private Integer recipeNo;
+    @Column(name="prepayState",length = 1)
+    private String prepayState;
     @Column(length = 1)
     private String issettlement;
-    @Column
-    private Integer staff_no;
-    @Column
-    private Date oper_date;
-    @Column(length = 1)
-    private String prepay_method;
+    @Column(name="staffNo")
+    private Integer staffNo;
+    @Column(name="operDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date operDate;
+    @Column(name="prepayMethod",length = 1)
+    private String prepayMethod;
+    @Column(name="inpatientNo")
+    private Integer inpatientNo;
 
-    public PrepayPK getId() {
-        return id;
+    public int getInpatientNo() {
+        return inpatientNo;
     }
 
-    public void setId(PrepayPK id) {
-        this.id = id;
+    public void setInpatientNo(Integer inpatientNo) {
+        this.inpatientNo = inpatientNo;
     }
 
-    public String getPatient_name() {
-        return patient_name;
+    public int getHappenNo() {
+        return happenNo;
     }
 
-    public void setPatient_name(String patient_name) {
-        this.patient_name = patient_name;
+    public void setHappenNo(Integer happenNo) {
+        this.happenNo = happenNo;
     }
 
-    public BigDecimal getPrepay_cost() {
-        return prepay_cost;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setPrepay_cost(BigDecimal prepay_cost) {
-        this.prepay_cost = prepay_cost;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
-    public Integer getRecipe_no() {
-        return recipe_no;
+    public Double getPrepayCost() {
+        return prepayCost;
     }
 
-    public void setRecipe_no(Integer recipe_no) {
-        this.recipe_no = recipe_no;
+    public void setPrepayCost(Double prepayCost) {
+        this.prepayCost = prepayCost;
     }
 
-    public String getPrepay_state() {
-        return prepay_state;
+    public Integer getRecipeNo() {
+        return recipeNo;
     }
 
-    public void setPrepay_state(String prepay_state) {
-        this.prepay_state = prepay_state;
+    public void setRecipeNo(Integer recipeNo) {
+        this.recipeNo = recipeNo;
+    }
+
+    public String getPrepayState() {
+        return prepayState;
+    }
+
+    public void setPrepayState(String prepayState) {
+        this.prepayState = prepayState;
     }
 
     public String getIssettlement() {
@@ -78,27 +97,28 @@ public class Prepay {
         this.issettlement = issettlement;
     }
 
-    public Integer getStaff_no() {
-        return staff_no;
+    public Integer getStaffNo() {
+        return staffNo;
     }
 
-    public void setStaff_no(Integer staff_no) {
-        this.staff_no = staff_no;
+    public void setStaffNo(Integer staffNo) {
+        this.staffNo = staffNo;
     }
 
-    public Date getOper_date() {
-        return oper_date;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    public Date getOperDate() {
+        return  operDate;
     }
 
-    public void setOper_date(Date oper_date) {
-        this.oper_date = oper_date;
+    public void setOperDate(Date operDate) {
+        this.operDate = operDate;
     }
 
-    public String getPrepay_method() {
-        return prepay_method;
+    public String getPrepayMethod() {
+        return prepayMethod;
     }
 
-    public void setPrepay_method(String prepay_method) {
-        this.prepay_method = prepay_method;
+    public void setPrepayMethod(String prepayMethod) {
+        this.prepayMethod = prepayMethod;
     }
 }

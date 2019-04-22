@@ -1,6 +1,11 @@
 package com.ssdut.hospital.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -10,16 +15,20 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer card_no;
-    @Column(length = 10, nullable = false)
-    private String patient_name;
-    @Column(length = 1, nullable = false)
-    private String sex_code;
-    @Column(length = 18, nullable = false)
-    private String idcard_no;
+    @Column(name="cardNo")
+    private Integer cardNo;
+    @Column(name="patientName",length = 10, nullable = false)
+    private String patientName;
+    @Column(name="sexCode",length = 1, nullable = false)
+    private String sexCode;
+    @Column(name="idCard",length = 18, nullable = false)
+    private String idCard;
+    @Column(name="patientState",length =2,nullable = false)
+    private String patientState;
     @Column(length = 10)
     private String nation;
     @Column
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date birthday;
     @Column
     private Integer age;
@@ -27,61 +36,61 @@ public class Patient {
     private String country;
     @Column(length = 50)
     private String dist;
-    @Column(length = 50)
-    private String birth_area;
-    @Column(length = 1)
-    private String mari_code;
-    @Column(length = 50)
-    private String work_name;
+    @Column(name="birthArea",length = 50)
+    private String birthArea;
+    @Column(name="mariCode",length = 1)
+    private String mariCode;
+    @Column(name="workName",length = 50)
+    private String workName;
     @Column(length = 2)
     private String occupation;
-    @Column(length = 20)
-    private String work_tel;
+    @Column(name="workTel",length = 20)
+    private String workTel;
     @Column(length = 50)
     private String home;
-    @Column(length = 20)
-    private String home_tel;
-    @Column(length = 10)
-    private String linkman_name;
-    @Column(length = 1)
-    private String linkman_relation;
-    @Column(length = 50)
-    private String linkman_add;
-    @Column(length = 20)
-    private String linkman_tel;
-    @Column(length = 50)
-    private String pact_name;
+    @Column(name="homeTel",length = 20)
+    private String homeTel;
+    @Column(name="linkmanName",length = 10)
+    private String linkmanName;
+    @Column(name="linkmanRelation",length = 5)
+    private String linkmanRelation;
+    @Column(name="linkmanAdd",length = 50)
+    private String linkmanAdd;
+    @Column(name="linkmanTel",length = 20)
+    private String linkmanTel;
+    @Column(name="pactName",length = 50)
+    private String pactName;
 
-    public Integer getCard_no() {
-        return card_no;
+    public Integer getCardNo() {
+        return cardNo;
     }
 
-    public void setCard_no(Integer card_no) {
-        this.card_no = card_no;
+    public void setCardNo(Integer cardNo) {
+        this.cardNo = cardNo;
     }
 
-    public String getPatient_name() {
-        return patient_name;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setPatient_name(String patient_name) {
-        this.patient_name = patient_name;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
-    public String getSex_code() {
-        return sex_code;
+    public String getSexCode() {
+        return sexCode;
     }
 
-    public void setSex_code(String sex_code) {
-        this.sex_code = sex_code;
+    public void setSexCode(String sexCode) {
+        this.sexCode = sexCode;
     }
 
-    public String getIdcard_no() {
-        return idcard_no;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard_no(String idcard_no) {
-        this.idcard_no = idcard_no;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getNation() {
@@ -92,6 +101,7 @@ public class Patient {
         this.nation = nation;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date getBirthday() {
         return birthday;
     }
@@ -124,28 +134,28 @@ public class Patient {
         this.dist = dist;
     }
 
-    public String getBirth_area() {
-        return birth_area;
+    public String getBirthArea() {
+        return birthArea;
     }
 
-    public void setBirth_area(String birth_area) {
-        this.birth_area = birth_area;
+    public void setBirthArea(String birthArea) {
+        this.birthArea = birthArea;
     }
 
-    public String getMari_code() {
-        return mari_code;
+    public String getMariCode() {
+        return mariCode;
     }
 
-    public void setMari_code(String mari_code) {
-        this.mari_code = mari_code;
+    public void setMariCode(String mariCode) {
+        this.mariCode = mariCode;
     }
 
-    public String getWork_name() {
-        return work_name;
+    public String getWorkName() {
+        return workName;
     }
 
-    public void setWork_name(String work_name) {
-        this.work_name = work_name;
+    public void setWorkName(String workName) {
+        this.workName = workName;
     }
 
     public String getOccupation() {
@@ -156,12 +166,12 @@ public class Patient {
         this.occupation = occupation;
     }
 
-    public String getWork_tel() {
-        return work_tel;
+    public String getWorkTel() {
+        return workTel;
     }
 
-    public void setWork_tel(String work_tel) {
-        this.work_tel = work_tel;
+    public void setWorkTel(String workTel) {
+        this.workTel = workTel;
     }
 
     public String getHome() {
@@ -172,51 +182,59 @@ public class Patient {
         this.home = home;
     }
 
-    public String getHome_tel() {
-        return home_tel;
+    public String getHomeTel() {
+        return homeTel;
     }
 
-    public void setHome_tel(String home_tel) {
-        this.home_tel = home_tel;
+    public void setHomeTel(String homeTel) {
+        this.homeTel = homeTel;
     }
 
-    public String getLinkman_name() {
-        return linkman_name;
+    public String getLinkmanName() {
+        return linkmanName;
     }
 
-    public void setLinkman_name(String linkman_name) {
-        this.linkman_name = linkman_name;
+    public void setLinkmanName(String linkmanName) {
+        this.linkmanName = linkmanName;
     }
 
-    public String getLinkman_relation() {
-        return linkman_relation;
+    public String getLinkmanRelation() {
+        return linkmanRelation;
     }
 
-    public void setLinkman_relation(String linkman_relation) {
-        this.linkman_relation = linkman_relation;
+    public void setLinkmanRelation(String linkmanRelation) {
+        this.linkmanRelation = linkmanRelation;
     }
 
-    public String getLinkman_add() {
-        return linkman_add;
+    public String getLinkmanAdd() {
+        return linkmanAdd;
     }
 
-    public void setLinkman_add(String linkman_add) {
-        this.linkman_add = linkman_add;
+    public void setLinkmanAdd(String linkmanAdd) {
+        this.linkmanAdd = linkmanAdd;
     }
 
-    public String getLinkman_tel() {
-        return linkman_tel;
+    public String getLinkmanTel() {
+        return linkmanTel;
     }
 
-    public void setLinkman_tel(String linkman_tel) {
-        this.linkman_tel = linkman_tel;
+    public void setLinkmanTel(String linkmanTel) {
+        this.linkmanTel = linkmanTel;
     }
 
-    public String getPact_name() {
-        return pact_name;
+    public String getPactName() {
+        return pactName;
     }
 
-    public void setPact_name(String pact_name) {
-        this.pact_name = pact_name;
+    public void setPactName(String pactName) {
+        this.pactName = pactName;
+    }
+
+    public String getPatientState() {
+        return patientState;
+    }
+
+    public void setPatientState(String patientState) {
+        this.patientState = patientState;
     }
 }
