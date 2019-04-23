@@ -40,7 +40,7 @@
           <el-input v-model="form.remain" placeholder="费用余额"></el-input>
         </el-form-item>
         <el-form-item class="button">
-          <el-button type="primary" @click="onSubmit">修改</el-button>
+          <el-button type="primary" :disabled="buttonState" @click="reback">返还</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -84,190 +84,92 @@
   import {putRequest} from '../utils/api'
   import {deleteRequest} from '../utils/api'
   import {getRequest} from '../utils/api'
-  export default{
+  export default {
     methods: {
-      getPrepay(){
+      getPrepay() {
         var _this = this;
-        postRequest('/getPrepay', {inPatientNumber: this.inPatientNumber}).then(resp=> {
+        postRequest('/getPrepay', {inPatientNumber: this.inPatientNumber}).then(resp => {
           if (resp.status == 200) {
-            console.log("resp:"+JSON.stringify(resp));
-            console.log("resp.data:"+JSON.stringify(resp.data));
-            console.log("resp.data.json:"+JSON.stringify(resp.data.json));
-            console.log("resp.data.data"+JSON.stringify(resp.data.data));
-            var data=resp.data;
-            var json=data.json;
-            if(json.prepayMethod==1){
-              _this.form.prepayMethod="现金支付";
-            }
-            else if(json.prepayMethod==2){
-              _this.form.prepayMethod="银行卡支付";
-            }
-            else if(json.prepayMethod==3){
-              _this.form.prepayMethod="支票支付";
-            }
-            _this.form.patientName=json.patientName;
-            _this.form.inPath=json.inPath;
-            _this.form.inDate=json.inDate;
-            _this.form.workName=json.workName;
-            _this.form.deptNo=json.deptNo;
-            _this.form.houseDocNo=json.houseDocNo;
-            _this.form.bedNo=json.bedNo;
-            _this.form.birthday=json.birthday;
-            _this.form.prepayAll=json.prepayAll;
-            _this.form.remain=json.remain;
-            _this.tableData=resp.data.data;
-          }
-        }, resp=> {
-          if (resp.response.status == 403) {
-            _this.$message({
-              type: 'error',
-              message: resp.response.data
-            });
-          }
-        });
-      },
-      deleteAll(){
-        var _this = this;
-        this.$confirm('确认删除这 ' + this.selItems.length + ' 条数据?', '提示', {
-          type: 'warning',
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(()=> {
-          var selItems = _this.selItems;
-          var ids = '';
-          for (var i = 0; i < selItems.length; i++) {
-            ids += selItems[i].id + ",";
-          }
-          _this.deleteCate(ids.substring(0, ids.length - 1));
-        }).catch(() => {
-          //取消
-          _this.loading = false;
-        });
-      },
-
-      handleSelectionChange(val) {
-        this.selItems = val;
-      },
-
-      handleEdit(index, row){
-        var _this = this;
-        this.$prompt('请输入新名称', '编辑', {
-          confirmButtonText: '更新',
-          inputValue: row.cateName,
-          cancelButtonText: '取消'
-        }).then(({value}) => {
-          //value就是输入值
-          if (value == null || value.length == 0) {
-            _this.$message({
-              type: 'info',
-              message: '数据不能为空!'
-            });
-          } else {
-            _this.loading = true;
-            putRequest("/admin/category/", {id: row.id, cateName: value}).then(resp=> {
-              var json = resp.data;
-              _this.$message({
-                type: json.status,
-                message: json.msg
-              });
-              _this.refresh();
-            }, resp=> {
-              if (resp.response.status == 403) {
-                _this.$message({
-                  type: 'error',
-                  message: resp.response.data
-                });
+            console.log("resp:" + JSON.stringify(resp));
+            console.log("resp.data:" + JSON.stringify(resp.data));
+            console.log("resp.data.json:" + JSON.stringify(resp.data.json));
+            console.log("resp.data.data" + JSON.stringify(resp.data.data));
+            var data = resp.data;
+            var json = data.json;
+            console.log("json.remain:" + json.remain);
+            if (json.remain > 0) {
+              _this.buttonState = false;
+              if (_this.buttonState) {
+                console.log("yes");
               }
-              _this.loading = false;
-            });
+            }
+            if (json.prepayMethod == 1) {
+              _this.form.prepayMethod = "现金支付";
+            }
+            else if (json.prepayMethod == 2) {
+              _this.form.prepayMethod = "银行卡支付";
+            }
+            else if (json.prepayMethod == 3) {
+              _this.form.prepayMethod = "支票支付";
+            }
+            _this.form.patientName = json.patientName;
+            _this.form.inPath = json.inPath;
+            _this.form.inDate = json.inDate;
+            _this.form.workName = json.workName;
+            _this.form.deptNo = json.deptNo;
+            _this.form.houseDocNo = json.houseDocNo;
+            _this.form.bedNo = json.bedNo;
+            _this.form.birthday = json.birthday;
+            _this.form.prepayAll = json.prepayAll;
+            _this.form.remain = json.remain;
+            _this.tableData = resp.data.data;
           }
-        });
-      },
-
-      handleDelete(index, row){
-        let _this = this;
-        this.$confirm('确认删除 ' + row.cateName + ' ?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          _this.deleteCate(row.id);
-        }).catch(() => {
-          //取消
-          _this.loading = false;
-        });
-      },
-
-      deleteCate(ids){
-        var _this = this;
-        this.loading = true;
-        //删除
-        deleteRequest("/admin/category/" + ids).then(resp=> {
-          var json = resp.data;
-          _this.$message({
-            type: json.status,
-            message: json.msg
-          });
-          _this.refresh();
-        }, resp=> {
-          _this.loading = false;
+        }, resp => {
           if (resp.response.status == 403) {
             _this.$message({
               type: 'error',
               message: resp.response.data
             });
-          } else if (resp.response.status == 500) {
-            _this.$message({
-              type: 'error',
-              message: '该栏目下尚有文章，删除失败!'
-            });
+          }
+        });
+      },
+
+      reback() {
+        var inpatientNo = this.inPatientNumber;
+        var remain = this.form.remain;
+        var costName = "预交金返还";
+        var data = {
+          inpatientNo: inpatientNo,
+          remain: remain,
+          costName: costName
+        };
+        console.log("rebackData:" + JSON.stringify(data));
+        postRequest("/reback", data).then(resp => {
+          if (resp.status == 200) {
+            console.log("yes");
           }
         })
-      },
 
-      refresh(){
-        let _this = this;
-        getRequest("/admin/category/all").then(resp=> {
-          _this.categories = resp.data;
-          _this.loading = false;
-        }, resp=> {
-          if (resp.response.status == 403) {
-            _this.$message({
-              type: 'error',
-              message: resp.response.data
-            });
-          }
-          _this.loading = false;
-        });
-      },
-
-      onSubmit() {
-        console.log('submit!');
       }
     },
-    // mounted: function () {
-    //   this.loading = true;
-    //   this.refresh();
-    // },
-    data(){
+
+    data() {
       return {
+        buttonState: true,
         inPatientNumber: '',
-        selItems: [],
-        categories: [],
-        loading: false,
         tableData: [],
         form: {
           patientName: '',
           workName: '',
-          deptNo:'',
-          inPath:'',
-          inDate:'',
-          houseDocNo:'',
-          bedNo:'',
-          birthday:'',
-          prepayMethod:'',
-          prepayAll:'',
-          remain:''
+          deptNo: '',
+          inPath: '',
+          inDate: '',
+          houseDocNo: '',
+          bedNo: '',
+          birthday: '',
+          prepayMethod: '',
+          prepayAll: '',
+          remain: ''
         }
       }
     }
