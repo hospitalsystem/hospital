@@ -10,6 +10,7 @@ import UserMana from '@/components/UserMana'
 import BlogDetail from '@/components/BlogDetail'
 import patientAdd from "../components/patientAdd";
 import prepaySearch from "../components/prepaySearch";
+import leavePatientRegister from "../components/leavePatientRegister.vue"
 
 Vue.use(Router)
 
@@ -134,6 +135,20 @@ export default new Router({
           component: patientAdd
         }
       ]
-    }
+    },
+    {
+      path: '/home',
+      component: Home,
+      name: '出院登记',
+      iconCls: 'fa fa-bar-chart',
+      children: [
+        {
+          path: '/leavePatientRegister',
+          iconCls: 'fa fa-bar-chart',
+          name: '出院登记',
+          component: leavePatientRegister
+        }
+      ]
+    },
   ]
 })

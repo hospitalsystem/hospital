@@ -10,7 +10,7 @@
     <el-main class="cate_mana_second">
       <el-form :inline="true" :model="form" class="demo-form-inline">
         <el-form-item label="患者姓名:">
-          <el-input v-model="form.patientName" placeholder="患者姓名"></el-input>
+          <el-input  v-model="form.patientName" placeholder="患者姓名"></el-input>
         </el-form-item>
         <el-form-item label="住院科室:">
           <el-input v-model="form.deptNo" placeholder="住院科室"></el-input>
@@ -144,9 +144,11 @@
           _this.loading = false;
         });
       },
+
       handleSelectionChange(val) {
         this.selItems = val;
       },
+
       handleEdit(index, row){
         var _this = this;
         this.$prompt('请输入新名称', '编辑', {
@@ -181,6 +183,7 @@
           }
         });
       },
+
       handleDelete(index, row){
         let _this = this;
         this.$confirm('确认删除 ' + row.cateName + ' ?', '提示', {
@@ -194,6 +197,7 @@
           _this.loading = false;
         });
       },
+
       deleteCate(ids){
         var _this = this;
         this.loading = true;
@@ -220,6 +224,7 @@
           }
         })
       },
+
       refresh(){
         let _this = this;
         getRequest("/admin/category/all").then(resp=> {
@@ -235,6 +240,7 @@
           _this.loading = false;
         });
       },
+
       onSubmit() {
         console.log('submit!');
       }
