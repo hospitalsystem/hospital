@@ -111,6 +111,7 @@ public class PrepayController {
        Data.appendField("json",json);
        Data.appendField("data",data);
        System.out.println("Data:"+Data.toJSONString());
+      System.out.println("11111");
        return Data;
     }
     @RequestMapping(value = "/prepayCollect", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

@@ -11,4 +11,6 @@ import java.util.List;
 public interface CostDAO extends JpaRepository<Cost, Integer> {
     @Query("select sum(c.costAmount) from Cost c where c.inpatientNo=?1")
     Double getCostAll(Integer inpatientNo);
+
+    List<Cost> findByInpatientNo(Integer inpatientNo);
 }

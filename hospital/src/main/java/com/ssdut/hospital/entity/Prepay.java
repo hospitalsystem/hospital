@@ -16,7 +16,6 @@ import java.util.Date;
 @Table(name = "prepay")
 public class Prepay {
 
-
     @Column(name="happenNo")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
