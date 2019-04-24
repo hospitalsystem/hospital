@@ -116,7 +116,6 @@ public class PrepayController {
     }
     @RequestMapping(value = "/prepayCollect", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public Info prepayCollect(@RequestBody JSONObject data) throws Exception {
-        Prepay prepay=new Prepay();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(sdf.parse(data.getAsString("operDate")));
         System.out.println("data:"+data.toJSONString());
@@ -129,6 +128,7 @@ public class PrepayController {
         Integer recipeNo=Integer.valueOf(data.getAsString("recipeNo"));
         Integer staffNo=Integer.valueOf(data.getAsString("staffNo"));
         Date date=sdf.parse(data.getAsString("operDate"));
+        Prepay prepay=new Prepay();
         prepay.setPatientName(patientName);
         prepay.setInpatientNo(inpatientNo);
         prepay.setIssettlement(issettlement);

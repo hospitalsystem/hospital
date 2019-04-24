@@ -98,6 +98,7 @@
             postRequest("/prepayCollect",data).then(resp=> {
               if (resp.status == 200 && resp.data.status == 'success') {
                 console.log("resp:"+JSON.stringify(resp));
+                alert("提交成功");
               }
             })
           } else {

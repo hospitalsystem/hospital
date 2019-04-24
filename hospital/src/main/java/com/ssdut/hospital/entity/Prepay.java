@@ -16,10 +16,12 @@ import java.util.Date;
 @Table(name = "prepay")
 public class Prepay {
 
-    @Column(name="happenNo")
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name="happenNo")
     private Integer happenNo;
+    @Column(name="inpatientNo")
+    private Integer inpatientNo;
     @Column(name="patientName",length = 10, nullable = false)
     private String patientName;
     @Column(name="prepayCost")
@@ -37,8 +39,6 @@ public class Prepay {
     private Date operDate;
     @Column(name="prepayMethod",length = 1)
     private String prepayMethod;
-    @Column(name="inpatientNo")
-    private Integer inpatientNo;
 
     public int getInpatientNo() {
         return inpatientNo;
@@ -48,9 +48,9 @@ public class Prepay {
         this.inpatientNo = inpatientNo;
     }
 
-//    public int getHappenNo() {
-//        return happenNo;
-//    }
+    public int getHappenNum() {
+        return happenNo;
+    }
 
     public void setHappenNo(Integer happenNo) {
         this.happenNo = happenNo;

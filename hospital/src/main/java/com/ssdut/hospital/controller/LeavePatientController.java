@@ -107,7 +107,7 @@ public class LeavePatientController {
             prepayAll = prepayAll + prepayItem.getPrepayCost();
 
             prepayJSONItem.appendField("inpatientNo", prepayItem.getInpatientNo());
-            prepayJSONItem.appendField("happenNo", prepayItem.getHappenNo());
+            prepayJSONItem.appendField("happenNo", prepayItem.getHappenNum());
             prepayJSONItem.appendField("patientName", prepayItem.getPatientName());
             prepayJSONItem.appendField("prepayCost", prepayItem.getPrepayCost());
             prepayJSONItem.appendField("recipeNo", prepayItem.getRecipeNo());

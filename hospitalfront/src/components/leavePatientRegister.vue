@@ -140,7 +140,7 @@
 </template>
 
 <script>
-  import moment from "moment-js"
+  import moment from "moment"
   import {postRequest} from '../utils/api'
   import {putRequest} from '../utils/api'
   import {deleteRequest} from '../utils/api'
