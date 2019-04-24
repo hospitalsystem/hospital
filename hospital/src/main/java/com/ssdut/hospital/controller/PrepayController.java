@@ -1,17 +1,16 @@
 package com.ssdut.hospital.controller;
 
 import com.ssdut.hospital.dao.*;
-import com.ssdut.hospital.entity.Inpatient;
-import com.ssdut.hospital.entity.Patient;
-import com.ssdut.hospital.entity.Prepay;
-import com.ssdut.hospital.entity.Staff;
+import com.ssdut.hospital.entity.*;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -113,5 +112,32 @@ public class PrepayController {
        Data.appendField("data",data);
        System.out.println("Data:"+Data.toJSONString());
        return Data;
+    }
+    @RequestMapping(value = "/prepayCollect", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public Info prepayCollect(@RequestBody JSONObject data) throws Exception {
+        Prepay prepay=new Prepay();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.parse(data.getAsString("operDate")));
+        System.out.println("data:"+data.toJSONString());
+        String patientName=data.getAsString("patientName");
+        String issettlement=data.getAsString("issettlement");
+        String prepayMethod=data.getAsString("prepayMethod");
+        String prepayState=data.getAsString("prepayState");
+        Integer inpatientNo=Integer.valueOf(data.getAsString("inpatientNo"));
+        Double prepayCost=Double.valueOf(data.getAsString("prepayCost"));
+        Integer recipeNo=Integer.valueOf(data.getAsString("recipeNo"));
+        Integer staffNo=Integer.valueOf(data.getAsString("staffNo"));
+        Date date=sdf.parse(data.getAsString("operDate"));
+        prepay.setPatientName(patientName);
+        prepay.setInpatientNo(inpatientNo);
+        prepay.setIssettlement(issettlement);
+        prepay.setPrepayState(prepayState);
+        prepay.setOperDate(date);
+        prepay.setPrepayCost(prepayCost);
+        prepay.setPrepayMethod(prepayMethod);
+        prepay.setRecipeNo(recipeNo);
+        prepay.setStaffNo(staffNo);
+        prepayDAO.save(prepay);
+        return new Info("success","成功");
     }
 }

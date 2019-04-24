@@ -44,9 +44,9 @@ public class Cost {
         this.inpatientNo = inpatientNo;
     }
 
-    public Integer getHappenNum() {
-        return happenNo;
-    }
+    //public Integer getHappenNum() {
+      //  return happenNo;
+    //}
 
     public void setHappenNum(Integer happenNo) {
         this.happenNo = happenNo;

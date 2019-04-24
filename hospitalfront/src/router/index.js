@@ -10,6 +10,7 @@ import UserMana from '@/components/UserMana'
 import BlogDetail from '@/components/BlogDetail'
 import patientAdd from "../components/patientAdd";
 import prepaySearch from "../components/prepaySearch";
+import prepayCollect from "../components/prepayCollect";
 
 Vue.use(Router)
 
@@ -104,20 +105,6 @@ export default new Router({
     {
       path: '/home',
       component: Home,
-      name: '住院登记',
-      iconCls: 'fa fa-bar-chart',
-      children: [
-        {
-          path: '/patientAdd',
-          iconCls: 'fa fa-bar-chart',
-          name: '住院登记',
-          component: patientAdd
-        }
-      ]
-    },
-    {
-      path: '/home',
-      component: Home,
       name: '预交金管理',
       iconCls: 'fa fa-bar-chart',
       children: [
@@ -128,10 +115,10 @@ export default new Router({
           component: prepaySearch
         },
         {
-          path: '/patientAdd',
+          path: '/prepayCollect',
           iconCls: 'fa fa-bar-chart',
-          name: '预交金管理',
-          component: patientAdd
+          name: '预交金收取',
+          component: prepayCollect
         }
       ]
     }
