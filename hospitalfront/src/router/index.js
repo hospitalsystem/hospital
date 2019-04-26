@@ -9,7 +9,9 @@ import leavePatientRecall from "../components/leavePatientRecall.vue"
 import patientSearch from "../components/patientSearch";
 import patientShowAll from "../components/patientShowAll";
 import prepayCollect from "../components/prepayCollect"
-Vue.use(Router)
+import store from "../store"
+import user from "../components/user"
+Vue.use(Router);
 
 const router= new Router({
   routes: [
@@ -17,7 +19,7 @@ const router= new Router({
       path: '/',
       name: '登录',
       hidden: true,
-      component: Home
+      component: Login
     },{
       path: '/login',
       name: '登录',
@@ -43,6 +45,9 @@ const router= new Router({
           path: '/patientAdd',
           iconCls: 'fa fa-bar-chart',
           name: '住院登记',
+          meta: {
+            requiresAuth: true
+          },
           component: patientAdd
         },
         {
@@ -50,6 +55,9 @@ const router= new Router({
           path:'/patientShowAll',
           iconCls: 'fa fa-bar-chart',
           name: '患者信息查询',
+          meta: {
+            requiresAuth: true
+          },
           component: patientShowAll,
         }
       ]
@@ -64,12 +72,18 @@ const router= new Router({
           path: '/prepaySearch',
           iconCls: 'fa fa-reorder',
           name: '预交查询',
+          meta: {
+            requiresAuth: true
+          },
           component: prepaySearch
         },
         {
           path: '/prepayCollect',
           iconCls: 'fa fa-bar-chart',
           name: '预交金收取',
+          meta: {
+            requiresAuth: true
+          },
           component: prepayCollect
         }
       ]
@@ -93,7 +107,26 @@ const router= new Router({
           path: '/leavePatientRecall',
           iconCls: 'fa fa-bar-chart',
           name: '出院召回',
+          meta: {
+            requiresAuth: true
+          },
           component: leavePatientRecall
+        },
+      ]
+    },
+    {
+      path: '/home',
+      component: Home,
+      name: '个人主页',
+      iconCls: 'fa fa-bar-chart',
+      children: [
+        {
+          path:'/user',
+          component:user,
+          meta: {
+            requiresAuth: true
+          },
+          name:'个人主页'
         }
       ]
     }
@@ -103,12 +136,12 @@ router.beforeEach((to, from, next) => {
 
   //获取store里面的token
 
-//  let token = store.state.token;
-
+  let token = store.state.token;
+  console.log("router中的token:"+token);
   //判断要去的路由有没有requiresAuth
 
   if (to.meta.requiresAuth) {
-    if (false) {
+    if (token) {
       next();
     } else {
       next({
