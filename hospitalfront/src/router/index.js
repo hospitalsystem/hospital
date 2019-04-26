@@ -10,9 +10,11 @@ import UserMana from '@/components/UserMana'
 import BlogDetail from '@/components/BlogDetail'
 import patientAdd from "../components/patientAdd";
 import prepaySearch from "../components/prepaySearch";
-import prepayCollect from "../components/prepayCollect";
 import leavePatientRegister from "../components/leavePatientRegister.vue"
-
+import leavePatientRecall from "../components/leavePatientRecall.vue"
+import patientSearch from "../components/patientSearch";
+import patientShowAll from "../components/patientShowAll";
+import prepayCollect from "../components/prepayCollect"
 Vue.use(Router)
 
 export default new Router({
@@ -106,6 +108,27 @@ export default new Router({
     {
       path: '/home',
       component: Home,
+      name: '住院登记管理',
+      iconCls: 'fa fa-bar-chart',
+      children: [
+        {
+          path: '/patientAdd',
+          iconCls: 'fa fa-bar-chart',
+          name: '住院登记',
+          component: patientAdd
+        },
+        {
+          //path: '/patientSearch',
+          path:'/patientShowAll',
+          iconCls: 'fa fa-bar-chart',
+          name: '患者信息查询',
+          component: patientShowAll,
+        }
+      ]
+    },
+    {
+      path: '/home',
+      component: Home,
       name: '预交金管理',
       iconCls: 'fa fa-bar-chart',
       children: [
@@ -126,7 +149,7 @@ export default new Router({
     {
       path: '/home',
       component: Home,
-      name: '出院登记',
+      name: '出院管理',
       iconCls: 'fa fa-bar-chart',
       children: [
         {
@@ -134,6 +157,12 @@ export default new Router({
           iconCls: 'fa fa-bar-chart',
           name: '出院登记',
           component: leavePatientRegister
+        },
+        {
+          path: '/leavePatientRecall',
+          iconCls: 'fa fa-bar-chart',
+          name: '出院召回',
+          component: leavePatientRecall
         }
       ]
     },
