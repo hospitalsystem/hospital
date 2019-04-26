@@ -1,301 +1,356 @@
 <template>
-  <el-container v-loading="loading" class="post-article">
-    <el-header class="header">
-      <el-select v-model="article.cid" placeholder="请选择文章栏目" style="width: 150px;">
+  <el-container>
+<el-main class="cate_mana_second">
+  <el-form :inline="true" :model="form" class="demo-form-inline">
+    <el-form-item label="患者姓名：">
+    <el-input v-model="patient.patientName" placeholder="patient_name" ></el-input>
+    </el-form-item>
+    <el-form-item label="患者状态" >
+      <el-select v-model="patient.patientState" placeholder="请选择患者状态" >
         <el-option
-          v-for="item in categories"
-          :key="item.id"
-          :label="item.cateName"
-          :value="item.id">
+        v-for="item in options5"
+        :key="item.index"
+        :label="item.label"
+        :value="item.index">
         </el-option>
       </el-select>
-      <el-input v-model="article.title" placeholder="请输入标题..." style="width: 400px;margin-left: 10px"></el-input>
-      <el-tag
-        :key="tag"
-        v-for="tag in article.dynamicTags"
-        closable
-        :disable-transitions="false"
-        @close="handleClose(tag)" style="margin-left: 10px">
-        {{tag}}
-      </el-tag>
-      <el-input
-        class="input-new-tag"
-        v-if="tagInputVisible"
-        v-model="tagValue"
-        ref="saveTagInput"
-        size="small"
-        @keyup.enter.native="handleInputConfirm"
-        @blur="handleInputConfirm">
-      </el-input>
-      <el-button v-else class="button-new-tag" type="primary" size="small" @click="showInput">+Tag</el-button>
-    </el-header>
-
-    <el-input v-model="patient.patient_name" placeholder="patient_name" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.sex_code" placeholder="sex_code" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.idcard_no" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.nation" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.birthday" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.age" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.country" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.dist" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.birth_area" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.mari_code" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.work_name" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.occupation" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.work_tel" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.home" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.home_tel" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.linkman_name" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.linkman_relation" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.linkman_add" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.linkman_tel" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-    <el-input v-model="patient.pact_name" placeholder="请输入病人姓名" style="width: 400px;margin-left: 10px"></el-input>
-
+    </el-form-item>
+    <el-form-item label="身份证号：">
+    <el-input v-model="patient.idCard" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="性别：">
+      <el-select v-model="patient.sexCode" placeholder="sex_code" >
+        <el-option
+          v-for="item in options4"
+          :key="item.index"
+          :label="item.label"
+          :value="item.index">
+        </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="民族：">
+      <el-input v-model="patient.nation" placeholder="请输入病人姓名"></el-input>
+    </el-form-item>
+    <el-form-item label="出生年月：" required>
+      <el-form-item >
+        <el-date-picker  placeholder="选择日期" v-model="patient.birthday" style="width: 70%;"></el-date-picker>
+      </el-form-item>
+    </el-form-item>
+    <el-form-item label="年龄：">
+      <el-input v-model="patient.age" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="国籍：">
+      <el-input v-model="patient.country" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="籍贯：">
+      <el-input v-model="patient.dist" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="出生地：">
+      <el-input v-model="patient.birthArea" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="婚姻状况">
+      <el-select v-model="patient.mariCode" placeholder="请选择" >
+          <el-option
+        v-for="item in options1"
+        :key="item.index"
+        :label="item.label"
+        :value="item.index">
+      </el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="工作单位：">
+      <el-input v-model="patient.workName" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="职位：">
+    <el-select v-model="patient.occupation" placeholder="请选择" >
+      <el-option
+        v-for="item in options2"
+        :key="item.index"
+        :label="item.label"
+        :value="item.index">
+      </el-option>
+    </el-select>
+    </el-form-item>
+    <el-form-item label="单位电话：">
+    <el-input v-model="patient.workTel" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="家庭住址：">
+    <el-input v-model="patient.home" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="家庭电话：">
+    <el-input v-model="patient.homeTel" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="联系人姓名：">
+    <el-input v-model="patient.linkmanName" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+      <el-form-item label="与患者关系：">
+    <el-select v-model="patient.linkmanRelation" placeholder="请输入病人姓名" >
+      <el-option
+        v-for="item in options3"
+        :key="item.index"
+        :label="item.label"
+        :value="item.index">
+      </el-option>
+    </el-select>
+      </el-form-item>
+      <el-form-item label="联系人地址：">
+    <el-input v-model="patient.linkmanAdd" placeholder="请输入病人姓名" ></el-input>
+      </el-form-item>
+      <el-form-item label="联系人电话：">
+    <el-input v-model="patient.linkmanTel" placeholder="请输入病人姓名" ></el-input>
+      </el-form-item>
+      <el-form-item label="合同单位名称：">
+    <el-input v-model="patient.pactName" placeholder="请输入病人姓名" ></el-input>
+      </el-form-item>
+    <!--入院来源、入院途径、入院情况、收住医师、门诊诊断、出生地、预收金额、支付方式。-->
+    <el-form-item label="科室编号：">
+      <el-input v-model="patient.deptNo" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="病床编号：">
+      <el-input v-model="patient.bedNo" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="入院途径：">
+      <el-select v-model="patient.inPath">
+        <el-option label="本市" value="1"></el-option>
+        <el-option label="外市" value="2"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="入院来源：">
+      <el-select v-model="patient.inSource">
+        <el-option label="门诊" value="1"></el-option>
+        <el-option label="急诊" value="2"></el-option>
+        <el-option label="转科" value="3"></el-option>
+        <el-option label="转院" value="4"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="收住医师：">
+      <el-input v-model="patient.houseDocNo" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="门诊诊断：">
+      <el-input v-model="patient.diagnose" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="预收金额：">
+      <el-input v-model="patient.prepayCost" placeholder="请输入病人姓名" ></el-input>
+    </el-form-item>
+    <el-form-item label="支付方式：">
+      <el-select v-model="patient.inSource">
+        <el-option label="现金支付" value="1"></el-option>
+        <el-option label="银行卡支付" value="2"></el-option>
+        <el-option label="支票支付" value="3"></el-option>
+      </el-select>
+    </el-form-item>
     <el-button type="primary" @click="savePatient">添加病人</el-button>
+    <el-button @click="resetForm('formName')">重置</el-button>
+  </el-form>
+</el-main>
   </el-container>
 </template>
 <script>
   import {postRequest} from '../utils/api'
-  import {putRequest} from '../utils/api'
-  import {deleteRequest} from '../utils/api'
   import {getRequest} from '../utils/api'
-  import {uploadFileRequest} from '../utils/api'
-  // Local Registration
-  import {mavonEditor} from 'mavon-editor'
-  // 可以通过 mavonEditor.markdownIt 获取解析器markdown-it对象
-  import 'mavon-editor/dist/css/index.css'
-  import {isNotNullORBlank} from '../utils/utils'
 
   export default {
-    mounted: function () {
-      this.getCategories();
-      var from = this.$route.query.from;
-      this.from = from;
-      var _this = this;
-      if (from != null && from != '' && from != undefined) {
-        var id = this.$route.query.id;
-        this.id = id;
-        this.loading = true;
-        getRequest("/article/" + id).then(resp=> {
-          _this.loading = false;
-          if (resp.status == 200) {
-            _this.article = resp.data;
-            var tags = resp.data.tags;
-            _this.article.dynamicTags = []
-            for (var i = 0; i < tags.length; i++) {
-              _this.article.dynamicTags.push(tags[i].tagName)
-            }
-          } else {
-            _this.$message({type: 'error', message: '页面加载失败!'})
-          }
-        }, resp=> {
-          _this.loading = false;
-          _this.$message({type: 'error', message: '页面加载失败!'})
-        })
-      }
-    },
-    components: {
-      mavonEditor
-    },
     methods: {
-      cancelEdit(){
-        this.$router.go(-1)
-      },
-      saveBlog(state){
-        if (!(isNotNullORBlank(this.article.title, this.article.mdContent, this.article.cid))) {
-          this.$message({type: 'error', message: '数据不能为空!'});
-          return;
-        }
+      savePatient() {
         var _this = this;
-        _this.loading = true;
-        postRequest("/article/", {
-          id: _this.article.id,
-          title: _this.article.title,
-          mdContent: _this.article.mdContent,
-          htmlContent: _this.$refs.md.d_render,
-          cid: _this.article.cid,
-          state: state,
-          dynamicTags: _this.article.dynamicTags
-        }).then(resp=> {
-          _this.loading = false;
-          if (resp.status == 200 && resp.data.status == 'success') {
-            _this.article.id = resp.data.msg;
-            _this.$message({type: 'success', message: state == 0 ? '保存成功!' : '发布成功!'});
-//            if (_this.from != undefined) {
-            window.bus.$emit('blogTableReload')
-//            }
-            if (state == 1) {
-              _this.$router.replace({path: '/articleList'});
-            }
-          }
-        }, resp=> {
-          _this.loading = false;
-          _this.$message({type: 'error', message: state == 0 ? '保存草稿失败!' : '博客发布失败!'});
-        })
-      },
-      savePatient(){
-        var _this = this;
-        _this.loading = true;
-        getRequest("http://localhost:8081/getBed/1").then(resp=> {
-          console.log("respdata:"+JSON.stringify(resp.data));
-        });
-        console.log("patient_name:"+_this.patient.patient_name);
-        var data={
-          patient_name:_this.patient.patient_name,
-          sex_code:_this.patient.sex_code,
-          idcard_no:_this.patient.idcard_no,
-          nation:_this.patient.nation,
-          birthday:_this.patient.birthday,
-          age:_this.patient.age,
-          country:_this.patient.country,
-          dist:_this.patient.dist,
-          birth_area:_this.patient.birth_area,
-          mari_code:_this.patient.mari_code,
-          work_name:_this.patient.work_name,
-          occupation:_this.patient.occupation,
-          work_tel:_this.patient.work_tel,
-          home:_this.patient.home,
-          home_tel:_this.patient.home_tel,
-          linkman_name:_this.patient.linkman_name,
-          linkman_relation:_this.patient.linkman_relation,
-          linkman_add:_this.patient.linkman_add,
-          linkman_tel:_this.patient.linkman_tel,
-          pact_name:_this.patient.pact_name
+        var data = {
+          patientName: _this.patient.patientName,
+          sexCode: _this.patient.sexCode,
+          idCard: _this.patient.idCard,
+          nation: _this.patient.nation,
+          birthday: _this.patient.birthday,
+          age: _this.patient.age,
+          country: _this.patient.country,
+          dist: _this.patient.dist,
+          birthArea: _this.patient.birthArea,
+          mariCode: _this.patient.mariCode,
+          workName: _this.patient.workName,
+          occupation: _this.patient.occupation,
+          workTel: _this.patient.workTel,
+          home: _this.patient.home,
+          homeTel: _this.patient.homeTel,
+          linkmanName: _this.patient.linkmanName,
+          linkmanRelation: _this.patient.linkmanRelation,
+          linkmanAdd: _this.patient.linkmanAdd,
+          linkmanTel: _this.patient.linkmanTel,
+          pactName: _this.patient.pactName,
+          inSource: _this.patient.inSource,
+          inPath: _this.patient.inPath,
+          houseDocNo: _this.patient.houseDocNo,
+          diagnose: _this.patient.diagnose,
+          prepayCost: _this.patient.prepayCost,
+          prepayMethod: _this.patient.prepayMethod,
+          patientState: _this.patient.patientState,
+          deptNo: _this.patient.deptNo,
+          bedNo: _this.patient.bedNo,
+          inDate: _this.patient.inDate,
+
         };
         //console.log("data:"+JSON.stringify(data));
         //data=JSON.parse(JSON.stringify(data));
-        data=JSON.stringify(data);
-        console.log("data:"+data);
-        postRequest("http://localhost:8081/addPatient",data).then(resp=> {
+        data = JSON.stringify(data);
+        console.log("data:" + data);
+        postRequest("/patientAdd", data).then(resp => {
           if (resp.status == 200 && resp.data.status == 'success') {
-            console.log("resp:"+JSON.stringify(resp));
+            console.log("resp:" + JSON.stringify(resp));
+            alert("添加成功");
           }
-        })
-      },
-      imgAdd(pos, $file){
-        var _this = this;
-        // 第一步.将图片上传到服务器.
-        var formdata = new FormData();
-        formdata.append('image', $file);
-        uploadFileRequest("/article/uploadimg", formdata).then(resp=> {
-          var json = resp.data;
-          if (json.status == 'success') {
-//            _this.$refs.md.$imgUpdateByUrl(pos, json.msg)
-            _this.$refs.md.$imglst2Url([[pos, json.msg]])
-          } else {
-            _this.$message({type: json.status, message: json.msg});
-          }
-        });
-      },
-      imgDel(pos){
 
-      },
-      getCategories(){
-        let _this = this;
-        getRequest("/admin/category/all").then(resp=> {
-          _this.categories = resp.data;
         });
       },
-      handleClose(tag) {
-        this.article.dynamicTags.splice(this.article.dynamicTags.indexOf(tag), 1);
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       },
-      showInput() {
-        this.tagInputVisible = true;
-        this.$nextTick(_ => {
-          this.$refs.saveTagInput.$refs.input.focus();
-        });
-      },
-      handleInputConfirm() {
-        let tagValue = this.tagValue;
-        if (tagValue) {
-          this.article.dynamicTags.push(tagValue);
-        }
-        this.tagInputVisible = false;
-        this.tagValue = '';
-      }
     },
-    data() {
-      return {
-        categories: [],
-        tagInputVisible: false,
-        tagValue: '',
-        loading: false,
-        from: '',
-        article: {
-          id: '-1',
-          dynamicTags: [],
-          title: '',
-          mdContent: '',
-          cid: ''
-        },
-        patient:{
-          patient_name:'',
-          sex_code:'',
-          idcard_no:'',
-          nation:'',
-          birthday:'',
-          age:'',
-          country:'',
-          dist:'',
-          bith_area:'',
-          mari_code:'',
-          work_name:'',
-          occupation:'',
-          work_tel:'',
-          home:'',
-          home_tel:'',
-          linkman_name:'',
-          linkman_relation:'',
-          linkman_add:'',
-          linkman_tel:'',
-          pact_name:''
+      data() {
+        return {
+          form:'',
+          patient: {
+            cardNo: '',
+            patientName: '',
+            patientState: '',
+            sexCode: '',
+            idCard: '',
+            nation: '',
+            birthday: '',
+            age: '',
+            country: '',
+            dist: '',
+            birthArea: '',
+            mariCode: '',
+            workName: '',
+            occupation: '',
+            workTel: '',
+            home: '',
+            homeTel: '',
+            linkmanName: '',
+            linkmanRelation: '',
+            linkmanAdd: '',
+            linkmanTel: '',
+            pactName: '',
+            inSource: '',
+            inPath: '',
+            houseDocNo: '',
+            prepayCost: '',
+            prepayMethod: '',
+            diagnose: '',
+            bedNo: '',
+            deptNo: '',
+            inDate: '',
+          },
+          options1: [{
+            index: 1,
+            label: '未婚',
+          }, {
+            index: 2,
+            label: '已婚',
+          }, {
+            index: 3,
+            label: '丧偶',
+          }, {
+            index: 4,
+            label: '离婚',
+          }],
+
+          options2: [{
+            index: 11,
+            label: '国家公务人员',
+          }, {
+            index: 13,
+            label: '专业技术人员',
+          }, {
+            index: 17,
+            label: '职员',
+          }, {
+            index: 21,
+            label: '企业管理人员',
+          },
+            {
+              index: 24,
+              label: '工人',
+            }, {
+              index: 27,
+              label: '农民',
+            }, {
+              index: 31,
+              label: '学生',
+            }, {
+              index: 37,
+              label: '现役军人',
+            },
+            {
+              index: 11,
+              label: '国家公务人员',
+            }, {
+              index: 51,
+              label: '自由职业者',
+            }, {
+              index: 54,
+              label: '个人经营者',
+            }, {
+              index: 70,
+              label: '无业人员',
+            },
+            {
+              index: 80,
+              label: '退（离）休人员',
+            }, {
+              index: 90,
+              label: '其他',
+            }],
+          options3: [{
+            index: 1,
+            label: '配偶',
+          }, {
+            index: 2,
+            label: '子',
+          }, {
+            index: 3,
+            label: '女',
+          }, {
+            index: 4,
+            label: '孙子、孙女或外孙子、外孙女',
+          },
+            {
+              index: 5,
+              label: '父母',
+            }, {
+              index: 6,
+              label: '祖父母或外祖父母',
+            }, {
+              index: 7,
+              label: '兄弟姐妹',
+            }, {
+              index: 8,
+              label: '其他',
+            }],
+          options4: [{
+            index: 1,
+            label: '男',
+          }, {
+            index: 2,
+            label: '女',
+          }],
+          options5: [{
+            index: 0,
+            label: '出院',
+          }, {
+            index: 1,
+            label: '住院',
+          }]
         }
       }
-    }
+
   }
 </script>
 <style>
-  .post-article > .main > #editor {
-    width: 100%;
-    height: 450px;
-    text-align: left;
-  }
-
-  .post-article > .header {
-    background-color: #ececec;
-    margin-top: 10px;
-    padding-left: 5px;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .post-article > .main {
-    /*justify-content: flex-start;*/
+  .cate_mana_second{
     display: flex;
     flex-direction: column;
     padding-left: 5px;
     background-color: #ececec;
-    padding-top: 0px;
+    margin-top: 20px;
+    padding-top: 10px;
   }
 
-  .post-article > .header > .el-tag + .el-tag {
-    margin-left: 10px;
-  }
-
-  .post-article > .header > .button-new-tag {
-    margin-left: 10px;
-    height: 32px;
-    line-height: 30px;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .post-article > .header > .input-new-tag {
-    width: 90px;
-    margin-left: 10px;
-    vertical-align: bottom;
-  }
-
-  .post-article {
-  }
 </style>
