@@ -1,87 +1,203 @@
 <template>
-  <el-form :rules="rules" class="login-container" label-position="left"
-           label-width="0px" v-loading="loading">
-    <h3 class="login_title">系统登录</h3>
-    <el-form-item prop="account">
-      <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="账号"></el-input>
-    </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
-    </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>
-    <el-form-item style="width: 100%">
-      <el-button type="primary" @click.native.prevent="submitClick" style="width: 100%">登录</el-button>
-    </el-form-item>
-  </el-form>
+
+  <p class="login">
+
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+
+      <el-tab-pane label="登录" name="first">
+
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+          <el-form-item label="名称" prop="name">
+
+            <el-input v-model="ruleForm.name"></el-input>
+
+          </el-form-item>
+
+          <el-form-item label="密码" prop="pass">
+
+            <el-input type="password" v-model="ruleForm.pass" auto-complete="off"></el-input>
+
+          </el-form-item>
+
+          <el-form-item>
+
+            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+
+          </el-form-item>
+
+        </el-form>
+
+      </el-tab-pane>
+
+      <el-tab-pane label="注册" name="second">
+
+        <register></register>
+
+      </el-tab-pane>
+
+    </el-tabs>
+
+  </p>
+
 </template>
+
 <script>
-  import {postRequest} from '../utils/api'
-  import {putRequest} from '../utils/api'
-  export default{
-    data(){
-      return {
-        rules: {
-          account: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-          checkPass: [{required: true, message: '请输入密码', trigger: 'blur'}]
-        },
-        checked: true,
-        loginForm: {
-          username: 'sang',
-          password: '123'
-        },
-        loading: false
-      }
-    },
-    methods: {
-      submitClick: function () {
-        var _this = this;
-        this.loading = true;
-        postRequest('/login', {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-        }).then(resp=> {
-          _this.loading = false;
-          if (resp.status == 200) {
-            //成功
-            var json = resp.data;
-            console.log('json:'+JSON.stringify(json));
-            if (json.status == 'success') {
-              _this.$router.replace({path: '/home'});
-            } else {
-              _this.$alert('登录失败!', '失败!');
-            }
-          } else {
-            //失败
-            _this.$alert('登录失败!', '失败!');
+
+  import register from '@/components/register'
+
+  export default {
+
+    data() {
+
+      var validatePass = (rule, value, callback) => {
+
+        if (value === '') {
+
+          callback(new Error('请输入密码'));
+
+        } else {
+
+          if (this.ruleForm.checkPass !== '') {
+
+            this.$refs.ruleForm.validateField('checkPass');
+
           }
-        }, resp=> {
-          _this.loading = false;
-          _this.$alert('找不到服务器⊙﹏⊙∥!', '失败!');
+
+          callback();
+
+        }
+
+      };
+
+      return {
+
+        activeName: 'first',
+
+        ruleForm: {
+
+          name: '',
+
+          pass: '',
+
+          checkPass: '',
+
+        },
+
+        rules: {
+
+          name: [
+
+            { required: true, message: '请输入您的名称', trigger: 'blur' },
+
+            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+
+          ],
+
+          pass: [
+
+            { required: true, validator: validatePass, trigger: 'blur' }
+
+          ]
+
+        },
+
+      };
+
+    },
+
+    methods: {
+
+      //选项卡切换
+
+      handleClick(tab, event) {
+
+      },
+
+      //重置表单
+
+      resetForm(formName) {
+
+        this.$refs[formName].resetFields();
+
+      },
+
+      //提交表单
+
+      submitForm(formName) {
+
+        this.$refs[formName].validate((valid) => {
+
+          if (valid) {
+
+            this.$message({
+
+              type: 'success',
+
+              message: '登录成功'
+
+            });
+
+            this.$router.push('HelloWorld');
+
+          } else {
+
+            console.log('error submit!!');
+
+            return false;
+
+          }
+
         });
-      }
+
+      },
+
+    },
+
+    components: {
+
+      register
+
     }
+
   }
+
 </script>
-<style>
-  .login-container {
-    border-radius: 15px;
-    background-clip: padding-box;
-    margin: 180px auto;
-    width: 350px;
-    padding: 35px 35px 15px 35px;
-    background: #fff;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
+
+<style rel="stylesheet/scss" lang="scss">
+
+  .login {
+
+    width: 400px;
+
+    margin: 0 auto;
+
   }
 
-  .login_title {
-    margin: 0px auto 40px auto;
+  #app {
+
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+
     text-align: center;
-    color: #505458;
+
+    color: #2c3e50;
+
+    margin-top: 60px;
+
   }
 
-  .login_remember {
-    margin: 0px 0px 35px 0px;
-    text-align: left;
+  .el-tabsitem {
+
+    text-align: center;
+
+    width: 60px;
+
   }
+
 </style>

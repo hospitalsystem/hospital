@@ -207,16 +207,16 @@
   .el-form-item__label{
     width: 90px;
   }
-  .prepayAll{
-    float: left;
-    margin-left: 25px;
-  }
-  .remain{
-    float: left;
-    margin-left: 6px;
-  }
-  .button{
-    float: left;
-    width: 110px;
-  }
+  /*.prepayAll{*/
+  /*  float: left;*/
+  /*  margin-left: 25px;*/
+  /*}*/
+  /*.remain{*/
+  /*  float: left;*/
+  /*  margin-left: 6px;*/
+  /*}*/
+  /*.button{*/
+  /*  float: left;*/
+  /*  width: 110px;*/
+  /*}*/
 </style>

@@ -2,12 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
-import ArticleList from '@/components/ArticleList'
-import CateMana from '@/components/CateMana'
-import DataCharts from '@/components/DataCharts'
-import PostArticle from '@/components/PostArticle'
-import UserMana from '@/components/UserMana'
-import BlogDetail from '@/components/BlogDetail'
 import patientAdd from "../components/patientAdd";
 import prepaySearch from "../components/prepaySearch";
 import leavePatientRegister from "../components/leavePatientRegister.vue"
@@ -17,93 +11,27 @@ import patientShowAll from "../components/patientShowAll";
 import prepayCollect from "../components/prepayCollect"
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({
   routes: [
     {
       path: '/',
       name: '登录',
       hidden: true,
+      component: Home
+    },{
+      path: '/login',
+      name: '登录',
+      hidden: true,
       component: Login
-    }, {
+    }
+    , {
       path: '/home',
       name: '',
       component: Home,
+      meta: {
+        requiresAuth: true
+      },
       hidden: true
-    }, {
-      path: '/home',
-      component: Home,
-      name: '文章管理',
-      iconCls: 'fa fa-file-text-o',
-      children: [
-        {
-          path: '/articleList',
-          name: '文章列表',
-          component: ArticleList,
-          meta: {
-            keepAlive: true
-          }
-        }, {
-          path: '/postArticle',
-          name: '发表文章',
-          component: PostArticle,
-          meta: {
-            keepAlive: false
-          }
-        }, {
-          path: '/blogDetail',
-          name: '博客详情',
-          component: BlogDetail,
-          hidden: true,
-          meta: {
-            keepAlive: false
-          }
-        }, {
-          path: '/editBlog',
-          name: '编辑博客',
-          component: PostArticle,
-          hidden: true,
-          meta: {
-            keepAlive: false
-          }
-        }
-      ]
-    }, {
-      path: '/home',
-      component: Home,
-      name: '用户管理',
-      children: [
-        {
-          path: '/user',
-          iconCls: 'fa fa-user-o',
-          name: '用户管理',
-          component: UserMana
-        }
-      ]
-    }, {
-      path: '/home',
-      component: Home,
-      name: '栏目管理',
-      children: [
-        {
-          path: '/cateMana',
-          iconCls: 'fa fa-reorder',
-          name: '栏目管理',
-          component: CateMana
-        }
-      ]
-    }, {
-      path: '/home',
-      component: Home,
-      name: '数据统计',
-      iconCls: 'fa fa-bar-chart',
-      children: [
-        {
-          path: '/charts',
-          iconCls: 'fa fa-bar-chart',
-          name: '数据统计',
-          component: DataCharts
-        }
-      ]
     },
     {
       path: '/home',
@@ -156,6 +84,9 @@ export default new Router({
           path: '/leavePatientRegister',
           iconCls: 'fa fa-bar-chart',
           name: '出院登记',
+           meta: {
+             requiresAuth: true
+           },
           component: leavePatientRegister
         },
         {
@@ -165,6 +96,29 @@ export default new Router({
           component: leavePatientRecall
         }
       ]
-    },
+    }
   ]
-})
+});
+router.beforeEach((to, from, next) => {
+
+  //获取store里面的token
+
+//  let token = store.state.token;
+
+  //判断要去的路由有没有requiresAuth
+
+  if (to.meta.requiresAuth) {
+    if (false) {
+      next();
+    } else {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath } // 将刚刚要去的路由path作为参数，方便登录成功后直接跳转到该路由
+      });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;
