@@ -32,11 +32,11 @@
 
       </el-tab-pane>
 
-      <el-tab-pane label="注册" name="second">
+<!--      <el-tab-pane label="注册" name="second">-->
 
-        <register></register>
+<!--        <register></register>-->
 
-      </el-tab-pane>
+<!--      </el-tab-pane>-->
 
     </el-tabs>
 
@@ -45,9 +45,7 @@
 </template>
 
 <script>
-
-  import register from '@/components/register'
-
+  import axios from '../axios'
   export default {
 
     data() {
@@ -58,13 +56,13 @@
 
           callback(new Error('请输入密码'));
 
-        } else {
-
-          if (this.ruleForm.checkPass !== '') {
-
-            this.$refs.ruleForm.validateField('checkPass');
-
-          }
+         } else {
+        //
+        //   if (this.ruleForm.checkPass !== '') {
+        //
+        //     this.$refs.ruleForm.validateField('checkPass');
+        //
+        //   }
 
           callback();
 
@@ -82,8 +80,6 @@
 
           pass: '',
 
-          checkPass: '',
-
         },
 
         rules: {
@@ -92,7 +88,7 @@
 
             { required: true, message: '请输入您的名称', trigger: 'blur' },
 
-            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+            { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
 
           ],
 
@@ -129,20 +125,56 @@
       submitForm(formName) {
 
         this.$refs[formName].validate((valid) => {
-
           if (valid) {
 
-            this.$message({
+            console.log("this.ruleForm:"+JSON.stringify(this.ruleForm));
+            axios.userLogin(this.ruleForm).then(({ data }) => {
+              console.log("data:"+JSON.stringify(data));
+                //账号不存在
+                if (!data.status) {
 
-              type: 'success',
+                  this.$message({
 
-              message: '登录成功'
+                    type: 'info',
 
-            });
+                    message: data.message
 
-            this.$router.push('HelloWorld');
+                  });
 
-          } else {
+                  return;
+
+                }
+
+                //账号存在
+
+                if (data.status) {
+
+                  this.$message({
+
+                    type: 'success',
+
+                    message: '登录成功'
+
+                  });
+
+                  //拿到返回的token和username，并存到store
+                  var token = data.token;
+                  console.log("token:"+token);
+                  var username = data.name;
+
+                  this.$store.dispatch('UserLogin', token);
+
+                  this.$store.dispatch('UserName', username);
+
+                  //跳到目标页
+
+                  this.$router.push('Home');
+
+                }
+
+              });
+
+          }else {
 
             console.log('error submit!!');
 
@@ -153,12 +185,6 @@
         });
 
       },
-
-    },
-
-    components: {
-
-      register
 
     }
 

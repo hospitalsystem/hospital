@@ -37,7 +37,6 @@
 <script>
 
   export default {
-
     data() {
 
       var validatePass = (rule, value, callback) => {
@@ -98,7 +97,7 @@
 
             { required: true, message: '请输入您的名称', trigger: 'blur' },
 
-            { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+            { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
 
           ],
 
@@ -125,18 +124,35 @@
       submitForm(formName) {
 
         this.$refs[formName].validate((valid) => {
-
           if (valid) {
+            console.log("this.ruleForm:"+this.ruleForm);
+            axios.userRegister(this.ruleForm)
 
-            this.$message({
+              .then(({}) => {
 
-              type: 'success',
+                if (data.success) {
 
-              message: '注册成功'
+                  this.$message({
 
-            });
+                    type: 'success',
 
-            // this.activeName: 'first',
+                    message: '注册成功'
+
+                  });
+
+                } else {
+
+                  this.$message({
+
+                    type: 'info',
+
+                    message: '用户名已经存在'
+
+                  });
+
+                }
+
+              })
 
           } else {
 

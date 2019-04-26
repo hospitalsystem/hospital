@@ -8,9 +8,6 @@
     {{currentUserName}}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
   </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="sysMsg">系统消息</el-dropdown-item>
-            <el-dropdown-item command="MyArticle">我的文章</el-dropdown-item>
-            <el-dropdown-item command="MyHome">个人主页</el-dropdown-item>
             <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -57,22 +54,41 @@
 </template>
 <script>
   import {getRequest} from '../utils/api'
+  import store from "../store"
   export default{
+    created(){
+      console.log("username:"+store.state.username);
+      this.currentUserName=store.state.username;
+    },
     methods: {
       handleCommand(command){
-        var _this = this;
-        if (command == 'logout') {
-          this.$confirm('注销登录吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(function () {
-            getRequest("/logout")
-            _this.currentUserName = '游客';
-            _this.$router.replace({path: '/'});
-          }, function () {
-            //取消
+
+        //清除token
+
+        this.$store.dispatch('UserLogout');
+
+        if (!this.$store.state.token) {
+
+          this.$router.push('/login')
+
+          this.$message({
+
+            type: 'success',
+
+            message: '注销成功'
+
           })
+
+        } else {
+
+          this.$message({
+
+            type: 'info',
+
+            message: '注销失败'
+
+          })
+
         }
       }
     },
