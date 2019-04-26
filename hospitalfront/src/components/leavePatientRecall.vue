@@ -9,12 +9,12 @@
       <el-button type="primary" size="medium" style="margin-left: 10px" @click="this.recallInpatientInfoSearch" >查询</el-button>
     </el-header>
 
-    <el-main class="cate_mana_main" v-show="isShow">
-      <el-form :inline="true"  class="demo-form-inline">
+    <el-main class="cate_mana_main" v-show="isShow" >
+      <el-form :inline="true"  class="demo-form-inline" labelWidth="120px" align="left">
         <el-form-item label="患者姓名：">
           <el-input readonly="true" v-model="patient.patientName"></el-input>
         </el-form-item>
-        <el-form-item label="患者状态" >
+        <el-form-item label="患者状态：">
           <el-input readonly="true" v-model="patient.patientState"></el-input>
         </el-form-item>
         <el-form-item label="身份证号：">
@@ -78,9 +78,9 @@
     </el-main>
 
     <el-main class="cate_mana_main" v-show="isShowinput&&isShow">
-      <el-form :inline="true"  class="demo-form-inline">
+      <el-form :inline="true"  class="demo-form-inline" align="left" labelWidth="150px">
         <el-form-item label="入院来源：" class="inSource">
-          <el-select v-model="inpatient.inSource" placeholder="请选择">
+          <el-select v-model="inpatient.inSource" placeholder="请选择" style="width: 206.4px">
             <el-option
               v-for="item in inSourceOptions"
               :key="item.index"
@@ -90,7 +90,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="入院途径：" class="inPath">
-          <el-select v-model="inpatient.inPath" placeholder="请选择">
+          <el-select v-model="inpatient.inPath" placeholder="请选择" style="width: 206.4px">
             <el-option
               v-for="item in inPathOptions"
               :key="item.index"
@@ -120,14 +120,17 @@
         <el-form-item label="责任护士编号：">
           <el-input v-model="inpatient.dutyNurseNo" placeholder="责任护士编号" ></el-input>
         </el-form-item>
-        <el-button type="primary" size="medium" style="margin-left: 10px" @click="this.recallPatientRegister" >
-          出院召回
-        </el-button>
+        <el-row>
+          <el-button type="primary" size="medium" style="margin-left: 10px" @click="this.recallPatientRegister" >
+            出院召回
+          </el-button>
+        </el-row>
+
       </el-form>
     </el-main>
 
     <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="150px">
         <el-form-item label="住院编号:">
           <el-input readonly="true" v-model="inpatient.inpatientNo" ></el-input>
         </el-form-item>
@@ -171,7 +174,7 @@
     </el-main>
 
     <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="150px">
         <el-form-item label="病历编号：">
           <el-input readonly="true" v-model="patient.cardNo"></el-input>
         </el-form-item>
@@ -250,11 +253,14 @@
   import {deleteRequest} from '../utils/api';
   import {getRequest} from '../utils/api';
   import ElInput from "../../node_modules/element-ui/packages/input/src/input.vue";
+  import ElRow from "element-ui/packages/row/src/row";
   export default {
     /*
     往回发送的时候，我们传输的是patient的idcard
      */
-    components: {ElInput},
+    components: {
+      ElRow,
+      ElInput},
     data() {
       return {
         inpatient: {
@@ -550,9 +556,6 @@
   }
   .el-table th{
     text-align: center;
-  }
-  .el-form-item__label{
-    width: 90px;
   }
 
 </style>

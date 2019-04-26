@@ -1,5 +1,6 @@
 <template>
   <el-container>
+    <!--出院成功以后会隐藏以下界面-->
     <el-header class="cate_mana_header" v-show="isShow">
       <el-input
         placeholder="请输入住院号进行出院登记"
@@ -9,24 +10,24 @@
     </el-header>
 
     <el-main class="cate_mana_second" v-show="isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form"  class="demo-form-inline" align="left" labelWidth="90px">
         <el-form-item label="患者姓名:">
           <el-input readonly="true" v-model="inpatient.patientName" placeholder="患者姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="住院科室:">
-          <el-input readonly="true" v-model="inpatient.deptNo" placeholder="住院科室"></el-input>
         </el-form-item>
         <el-form-item label="病历号:">
           <el-input readonly="true" v-model="patient.cardNo" placeholder="病历号"></el-input>
         </el-form-item>
-        <el-form-item label="入院日期:">
-          <el-input readonly="true" v-model="inpatient.inDate" placeholder="入院日期"></el-input>
+        <el-form-item label="性别:">
+          <el-input readonly="true" v-model="patient.sexCode" placeholder="性别"></el-input>
+        </el-form-item>
+        <el-form-item label="住院科室:">
+          <el-input readonly="true" v-model="inpatient.deptNo" placeholder="住院科室"></el-input>
         </el-form-item>
         <el-form-item label="病床号:">
           <el-input readonly="true" v-model="inpatient.bedNo" placeholder="病床号"></el-input>
         </el-form-item>
-        <el-form-item label="性别:">
-          <el-input readonly="true" v-model="patient.sexCode" placeholder="性别"></el-input>
+        <el-form-item label="入院日期:">
+          <el-input readonly="true" v-model="inpatient.inDate" placeholder="入院日期"></el-input>
         </el-form-item>
         <el-form-item  label="预交金总额:" class="prepayAll">
           <el-input readonly="true" v-model="prepayAll" placeholder="预交金总额"></el-input>
@@ -40,14 +41,17 @@
         <el-form-item label="收取金额:" class="charge" v-show="remain < 0">
           <el-input v-model="charge" placeholder="收取金额" ></el-input>
         </el-form-item>
-        <el-form-item label="操作员:" class="staffNo" v-show="remain < 0">
-          <el-input v-model="forms.staffNo" placeholder="操作员"></el-input>
-        </el-form-item>
         <el-form-item label="收据号:" class="recipeNo" v-show="remain < 0">
           <el-input v-model="forms.recipeNo" placeholder="收据号"></el-input>
         </el-form-item>
+        <el-form-item label="找零:" class="change" v-show="change > 0">
+          <el-input readonly="true" v-model="change" placeholder="找零"></el-input>
+        </el-form-item>
+        <el-form-item label="操作员:" class="staffNo" v-show="remain < 0">
+          <el-input v-model="forms.staffNo" placeholder="操作员"></el-input>
+        </el-form-item>
         <el-form-item label="预交金支付方式:" class="prepayMethod" v-show="remain < 0">
-          <el-select v-model="forms.prepayMethod" placeholder="请选择">
+          <el-select v-model="forms.prepayMethod" placeholder="请选择" style="width:206.4px">
             <el-option
               v-for="item in prepayMethodOptions"
               :key="item.index"
@@ -56,14 +60,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="找零:" class="change" v-show="change > 0">
-          <el-input readonly="true" v-model="change" placeholder="找零"></el-input>
-        </el-form-item>
-        <el-form-item  label="出院日期:" class="outDate">
-          <el-input readonly="true" v-model="inpatient.outDate" placeholder="出院日期"></el-input>
-        </el-form-item>
         <el-form-item label="出院状态:" class="outState">
-          <el-select v-model="inpatient.outState" placeholder="请选择">
+          <el-select v-model="inpatient.outState" placeholder="请选择" style="width:206.4px">
             <el-option
               v-for="item in outStateOptions"
               :key="item.index"
@@ -71,6 +69,9 @@
               :value="item.index">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item  label="出院日期:" class="outDate">
+          <el-input readonly="true" v-model="inpatient.outDate" placeholder="出院日期"></el-input>
         </el-form-item>
         <el-form-item class="button" >
           <el-button type="primary" @click="leavePatientRegister" v-show="bed.bedState != ''">出院</el-button>
@@ -153,12 +154,13 @@
     </el-main>
 
 
+    <!--出院成功以后会展示以下界面-->
     <el-header class="cate_mana_header" v-show="!isShow">
       <p>住院详情如下</p>
     </el-header>
 
     <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
         <el-form-item label="住院编号:">
           <el-input readonly="true" v-model="inpatient.inpatientNo" ></el-input>
         </el-form-item>
@@ -208,7 +210,7 @@
     </el-main>
 
     <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
         <el-form-item label="病历编号：">
           <el-input readonly="true" v-model="patient.cardNo"></el-input>
         </el-form-item>
@@ -279,7 +281,7 @@
     </el-main>
 
     <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline"  align="left" labelWidth="110px">
         <el-form-item label="预交金总额:">
           <el-input readonly="true" v-model="prepayAll" ></el-input>
         </el-form-item>
@@ -360,7 +362,7 @@
           prop="costAmount"
           label="费用金额">
         </el-table-column>
-      </el-table>
+      </el-table>/
     </el-main>
   </el-container>
 
@@ -372,9 +374,11 @@
   import {putRequest} from '../utils/api'
   import {deleteRequest} from '../utils/api'
   import {getRequest} from '../utils/api'
+  import ElRow from "element-ui/packages/row/src/row";
 
   export default {
 
+    components: {ElRow},
     data(){
       return {
         inpatient: {
@@ -469,10 +473,21 @@
           prepayMethod:'',
         },
         isShow: true,
+        rules: {
+          inpatientNo: [
+            { required: true, message: '请输入住院号', trigger: 'blur' },
+            //{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+
+        }
       }
     },
     methods: {
       leaveInpatientInfoSearch() {
+        if(this.inpatient.inpatientNo == ''){
+          alert('住院号不能为空')
+          return
+        }
         var _this = this;
         postRequest('/leaveInpatientInfoSearch', {inPatientNo: this.inpatient.inpatientNo}).then(resp => {
           if (resp.status == 200) {
@@ -533,6 +548,8 @@
               }else if(inpatientJSON.outState == 7){
                 _this.inpatient.outState = '其他';
               }
+              console.log("inpatientJSON中的outState"+inpatientJSON.outState);
+              console.log("inpatient中的outState"+_this.inpatient.outState);
 
               _this.patient.cardNo = patientJSON.cardNo;
               _this.patient.patientName = patientJSON.patientName;
@@ -659,23 +676,42 @@
       },
 
       leavePatientRegister(){
+        var _this = this;
         if(this.change >= 0){
-          postRequest('/leaveInpatientInfoSearch', {inPatientNo: this.inpatient.inpatientNo}).then(resp => {
+          postRequest('/leaveInpatientInfoSearch', {inPatientNo: _this.inpatient.inpatientNo}).then(resp => {
             if (resp.status == 200) {
               //当初写的时候，上面的那个请求有意义吗？用来干嘛的....
-              var inpatientNoTemp = this.inpatient.inpatientNo;
-              var bedNoTemp = this.bed.bedNo;
+              var inpatientNoTemp = _this.inpatient.inpatientNo;
+              console.log("inpatient:::"+_this.inpatient.inpatientNo);
+              var bedNoTemp = _this.bed.bedNo;
               var bedStateTemp = 0;
-              var costAmountTemp = this.remain; //把余额作为开销，名称为返钱，打给用户，用来把全部预交金均消费掉
+              var costAmountTemp = _this.remain; //把余额作为开销，名称为返钱，打给用户，用来把全部预交金均消费掉
               var costNameTemp = '预交金返还';
               var patientStateTemp = '1';
-              var outStateTemp = this.inpatient.outState;
+              var outStateTemp = _this.inpatient.outState;
+              if(this.inpatient.outState == '治愈'){
+                outStateTemp = 1;
+              }else if(this.inpatient.outState == '好转'){
+                outStateTemp = 2;
+              }else if(this.inpatient.outState == '死亡'){
+                outStateTemp = 3;
+              }else if(this.inpatient.outState == '治残'){
+                outStateTemp = 4;
+              }else if(this.inpatient.outState == '未治愈'){
+                outStateTemp = 5;
+              }else if(this.inpatient.outState == '正常分娩'){
+                outStateTemp = 6;
+              }else if(this.inpatient.outState == '其他'){
+                outStateTemp = 7;
+              }
+              console.log("inpatient.outState::"+_this.inpatient.outState);
+              console.log("outStateTemp:"+outStateTemp);
 
-              var patientIdcardTemp = this.patient.idcard;
-              var remainTemp = this.remain;
-              var recipeNoTemp = this.forms.recipeNo;
-              var prepayMethodTemp = this.forms.prepayMethod;
-              var staffNoTemp = this.forms.staffNo;
+              var patientIdcardTemp = _this.patient.idcard;
+              var remainTemp = _this.remain;
+              var recipeNoTemp = _this.forms.recipeNo;
+              var prepayMethodTemp = _this.forms.prepayMethod;
+              var staffNoTemp = _this.forms.staffNo;
               var setOperDateTemp = moment().format("YYYY-MM-DD HH:mm:ss");
 
 
@@ -758,6 +794,7 @@
     padding-left: 5px;
     display: flex;
     justify-content: flex-start;
+
   }
 
   .cate_mana_main {
@@ -769,7 +806,13 @@
     margin-top: 20px;
     padding-top: 10px;
   }
+  .demo-form-inline{
+    /*display: flex;*/
+    /*justify-content: space-around;*/
+
+  }
   .cate_mana_second{
+
     display: flex;
     flex-direction: column;
     padding-left: 5px;
