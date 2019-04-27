@@ -78,8 +78,8 @@
     </el-main>
 
     <el-main class="cate_mana_main" v-show="isShowinput&&isShow">
-      <el-form :inline="true"  class="demo-form-inline" align="left" labelWidth="150px">
-        <el-form-item label="入院来源：" class="inSource">
+      <el-form :inline="true"  :model="inpatient" class="demo-form-inline" align="left" :rules="rules" ref="inpatient" labelWidth="150px">
+        <el-form-item label="入院来源：" class="inSource" prop="inSource">
           <el-select v-model="inpatient.inSource" placeholder="请选择" style="width: 206.4px">
             <el-option
               v-for="item in inSourceOptions"
@@ -89,7 +89,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="入院途径：" class="inPath">
+        <el-form-item label="入院途径：" class="inPath" prop="inPath">
           <el-select v-model="inpatient.inPath" placeholder="请选择" style="width: 206.4px">
             <el-option
               v-for="item in inPathOptions"
@@ -99,33 +99,32 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="入院情况：">
+        <el-form-item label="入院情况：" prop="status">
           <el-input v-model="inpatient.status" placeholder="入院情况" ></el-input>
         </el-form-item>
-        <el-form-item label="科室编号：">
+        <el-form-item label="科室编号：" prop="deptNo">
           <el-input v-model="inpatient.deptNo" placeholder="科室编号" ></el-input>
         </el-form-item>
-        <el-form-item label="病床编号：">
+        <el-form-item label="病床编号：" prop="bedNo">
           <el-input v-model="inpatient.bedNo" placeholder="病床编号" ></el-input>
         </el-form-item>
-        <el-form-item label="住院医师编号：">
+        <el-form-item label="住院医师编号：" prop="houseDocNo">
           <el-input v-model="inpatient.houseDocNo" placeholder="住院医师编号" ></el-input>
         </el-form-item>
-        <el-form-item label="主治医师编号：">
+        <el-form-item label="主治医师编号：" prop="chargeDocNo">
           <el-input v-model="inpatient.chargeDocNo" placeholder="主治医师编号" ></el-input>
         </el-form-item>
-        <el-form-item label="主任医师编号：">
+        <el-form-item label="主任医师编号：" prop="chiefDocNo">
           <el-input v-model="inpatient.chiefDocNo" placeholder="主任医师编号" ></el-input>
         </el-form-item>
-        <el-form-item label="责任护士编号：">
+        <el-form-item label="责任护士编号：" prop="dutyNurseNo">
           <el-input v-model="inpatient.dutyNurseNo" placeholder="责任护士编号" ></el-input>
         </el-form-item>
         <el-row>
-          <el-button type="primary" size="medium" style="margin-left: 10px" @click="this.recallPatientRegister" >
+          <el-button type="primary" size="medium" style="margin-left: 10px" @click="recallPatientRegister('inpatient')" >
             出院召回
           </el-button>
         </el-row>
-
       </el-form>
     </el-main>
 
@@ -334,7 +333,37 @@
             index: 2,
             label: '外市'
           },
-        ]
+        ],
+
+        rules:{
+          inSource: [
+            { required: true, message: '请选择入院来源', trigger: 'change' },
+            ],
+          inPath:[
+            { required: true, message: '请选择入院途径', trigger: 'change'},
+          ],
+          status:[
+            { required: true, message: '请输入入院情况', trigger: 'blur'},
+          ],
+          deptNo:[
+            { required: true, message: '请输入科室编号', trigger: 'blur'},
+          ],
+          bedNo:[
+            { required: true, message: '请输入病床号', trigger: 'blur'},
+          ],
+          houseDocNo:[
+            { required: true, message: '请输入住院医师编号', trigger: 'blur'},
+          ],
+          chargeDocNo:[
+            { required: true, message: '请输入主治医师编号', trigger: 'blur'},
+          ],
+          chiefDocNo:[
+            { required: true, message: '请输入主治医师', trigger: 'blur'},
+          ],
+          dutyNurseNo:[
+            { required: true, message: '请输入责任护士编号', trigger: 'blur'},
+          ]
+        }
       }
     },
     methods: {
@@ -451,9 +480,10 @@
         });
       },
 
-      recallPatientRegister(){
+      recallPatientRegister(formName){
         var _this = this;
 
+        console.log('formName:'+formName)
         var data = {
           patientName: _this.patient.patientName,
           idCard: _this.patient.idcard,
@@ -470,59 +500,66 @@
           //不需要outDate和outState
         }
 
-        postRequest("/recallPatientRegister", data).then(resp => {
-          if (resp.status == 200) {
-            alert('出院召回成功');
-            this.isShow = false;
-            //从后台发起请求，请求最新的inpatient数据
-            var Data = resp.data;
-            var inpatientJSON = Data.inpatientJSON;
-            _this.inpatient.patientName = inpatientJSON.patientName;
-            _this.inpatient.inpatientNo = inpatientJSON.inpatientNo;
-            _this.inpatient.patientName = inpatientJSON.patientName;
-            _this.inpatient.idCard = inpatientJSON.idCard;
-            _this.inpatient.inDate = inpatientJSON.inDate;
-            console.log("住院时间"+inpatientJSON.inDate);
-            if (inpatientJSON.inSource == 1) {
-              _this.inpatient.inSource = '门诊';
-            } else if (inpatientJSON.inSource == 2) {
-              _this.inpatient.inSource = '急诊';
-            } else if (inpatientJSON.inSource == 3) {
-              _this.inpatient.inSource = '转科';
-            } else if (inpatientJSON.inSource == 4) {
-              _this.inpatient.inSource = '转院';
-            }
-            if (inpatientJSON.inPath == 1) {
-              _this.inpatient.inPath = '本市';
-            } else if (inpatientJSON.inPath == 2) {
-              _this.inpatient.inPath = '外市';
-            }
-            _this.inpatient.status = inpatientJSON.status;
-            _this.inpatient.deptNo = inpatientJSON.deptNo;
-            _this.inpatient.bedNo = inpatientJSON.bedNo;
-            _this.inpatient.houseDocNo = inpatientJSON.houseDocNo;
-            _this.inpatient.chargeDocNo = inpatientJSON.chargeDocNo;
-            _this.inpatient.chiefDocNo = inpatientJSON.chiefDocNo;
-            _this.inpatient.dutyNurseNo = inpatientJSON.dutyNurseNo;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            postRequest("/recallPatientRegister", data).then(resp => {
+              if (resp.status == 200) {
+                alert('出院召回成功');
+                this.isShow = false;
+                //从后台发起请求，请求最新的inpatient数据
+                var Data = resp.data;
+                var inpatientJSON = Data.inpatientJSON;
+                _this.inpatient.patientName = inpatientJSON.patientName;
+                _this.inpatient.inpatientNo = inpatientJSON.inpatientNo;
+                _this.inpatient.patientName = inpatientJSON.patientName;
+                _this.inpatient.idCard = inpatientJSON.idCard;
+                _this.inpatient.inDate = inpatientJSON.inDate;
+                console.log("住院时间" + inpatientJSON.inDate);
+                if (inpatientJSON.inSource == 1) {
+                  _this.inpatient.inSource = '门诊';
+                } else if (inpatientJSON.inSource == 2) {
+                  _this.inpatient.inSource = '急诊';
+                } else if (inpatientJSON.inSource == 3) {
+                  _this.inpatient.inSource = '转科';
+                } else if (inpatientJSON.inSource == 4) {
+                  _this.inpatient.inSource = '转院';
+                }
+                if (inpatientJSON.inPath == 1) {
+                  _this.inpatient.inPath = '本市';
+                } else if (inpatientJSON.inPath == 2) {
+                  _this.inpatient.inPath = '外市';
+                }
+                _this.inpatient.status = inpatientJSON.status;
+                _this.inpatient.deptNo = inpatientJSON.deptNo;
+                _this.inpatient.bedNo = inpatientJSON.bedNo;
+                _this.inpatient.houseDocNo = inpatientJSON.houseDocNo;
+                _this.inpatient.chargeDocNo = inpatientJSON.chargeDocNo;
+                _this.inpatient.chiefDocNo = inpatientJSON.chiefDocNo;
+                _this.inpatient.dutyNurseNo = inpatientJSON.dutyNurseNo;
 
-            if(inpatientJSON.outState == 1){
-              _this.inpatient.outState = '治愈';
-            }else if(inpatientJSON.outState == 2){
-              _this.inpatient.outState = '好转';
-            }else if(inpatientJSON.outState == 3){
-              _this.inpatient.outState = '死亡';
-            }else if(inpatientJSON.outState == 4){
-              _this.inpatient.outState = '治残';
-            }else if(inpatientJSON.outState == 5){
-              _this.inpatient.outState = '未治愈';
-            }else if(inpatientJSON.outState == 6){
-              _this.inpatient.outState = '正常分娩';
-            }else if(inpatientJSON.outState == 7){
-              _this.inpatient.outState = '其他';
-            }
+                if (inpatientJSON.outState == 1) {
+                  _this.inpatient.outState = '治愈';
+                } else if (inpatientJSON.outState == 2) {
+                  _this.inpatient.outState = '好转';
+                } else if (inpatientJSON.outState == 3) {
+                  _this.inpatient.outState = '死亡';
+                } else if (inpatientJSON.outState == 4) {
+                  _this.inpatient.outState = '治残';
+                } else if (inpatientJSON.outState == 5) {
+                  _this.inpatient.outState = '未治愈';
+                } else if (inpatientJSON.outState == 6) {
+                  _this.inpatient.outState = '正常分娩';
+                } else if (inpatientJSON.outState == 7) {
+                  _this.inpatient.outState = '其他';
+                }
+              }
+            })
+
+          }else{
+            alert('必填内容不能为空');
+            return;
           }
-        })
-
+        });
       }
     }
   }
