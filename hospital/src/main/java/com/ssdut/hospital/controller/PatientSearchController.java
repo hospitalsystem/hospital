@@ -34,7 +34,11 @@ public class PatientSearchController {
         JSONObject json = new JSONObject();
         json.appendField("patientName", patient.getPatientName());
         json.appendField("idCard", patient.getIdCard());
-        json.appendField("sexCode", patient.getSexCode());
+        if(Integer.valueOf(patient.getSexCode())==1) {
+            json.appendField("sexCode",'男');
+        }else if(Integer.valueOf(patient.getSexCode())==2) {
+            json.appendField("sexCode",'女');
+        }
         //json.appendField("cardNo", patient.getCardNo());
         json.appendField("nation", patient.getNation());
         json.appendField("birthday", patient.getBirthday());
@@ -53,8 +57,11 @@ public class PatientSearchController {
         json.appendField("linkmanAdd", patient.getLinkmanAdd());
         json.appendField("linkmanTel", patient.getLinkmanTel());
         json.appendField("packName", patient.getPactName());
+
         json.appendField("inSource", inpatient.getInSource());
+
         json.appendField("inPath", inpatient.getInPath());
+
         json.appendField("houseDocNo", inpatient.getHouseDocNo());
         json.appendField("diagnose", outpatient.getDiagnose());
         Double prepayAll=0.0;
@@ -102,6 +109,19 @@ public class PatientSearchController {
              String dist = search.getAsString("searchCondition");
                 PatientList = patientDAO.findAllByDist(dist);
             }
+            for(Patient item : PatientList){
+//                Inpatient inpatientItem = inpatientDAO.findByIdCard(item.getIdCard());
+////               InpatientList.add(inpatientItem);
+                List<Inpatient> inpatients = inpatientDAO.findAllByIdCard(item.getIdCard());
+                for(Inpatient item1 : inpatients){
+                    InpatientList.add(item1);
+                }
+            }
+            for(Inpatient item : InpatientList){
+                Patient patientItem = patientDAO.findByIdCard(item.getIdCard());
+                PatientList.add(patientItem);
+            }
+
         }
         if(searchOption==6||searchOption==7||searchOption==8||searchOption==9){
             if(searchOption == 6){
@@ -119,10 +139,17 @@ public class PatientSearchController {
                 Integer houseDocNo=Integer.valueOf(search.getAsString("searchCondition"));
                 InpatientList = inpatientDAO.findAllByHouseDocNo(houseDocNo);
             }
-        for(Inpatient item : InpatientList){
-            Patient patientItem = patientDAO.findByIdCard(item.getIdCard());
+        for(Inpatient temp: InpatientList){
+            Patient patientItem = patientDAO.findByIdCard(temp.getIdCard());
             PatientList.add(patientItem);
         }
+        }
+        if(searchOption==10){
+            InpatientList = inpatientDAO.findAll();
+            for(Inpatient temp : InpatientList){
+                Patient patientItem = patientDAO.findByIdCard(temp.getIdCard());
+                PatientList.add(patientItem);
+            }
         }
 
 
@@ -144,7 +171,7 @@ public class PatientSearchController {
             patientJSONItem.appendField("patientName",patientItem.getPatientName());
             patientJSONItem.appendField("nation",patientItem.getNation());
             patientJSONItem.appendField("workName",patientItem.getWorkName());
-            patientJSONItem.appendField("birthArea",patientItem.getBirthArea());
+            patientJSONItem.appendField("dist",patientItem.getDist());
 
             patientJSON.add(patientJSONItem);
         }

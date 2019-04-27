@@ -59,7 +59,16 @@ const router= new Router({
             requiresAuth: true
           },
           component: patientShowAll,
-        }
+        },
+        {
+          path: '/patientSearch',
+          iconCls: 'fa fa-bar-chart',
+          name: '单个患者信息',
+          meta: {
+            requiresAuth: true
+          },
+          component: patientSearch
+        },
       ]
     },
     {

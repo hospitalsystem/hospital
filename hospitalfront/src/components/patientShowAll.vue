@@ -1,9 +1,11 @@
 <template>
 <el-container>
   <el-header   :inline="true"  :model="formInline"class="cate_mana_header1">
-    <el-form :inline="true" :model="formInline" class="cate_mana_header2">
+
+    <el-form :inline="true" :model="formInline" class="cate_mana_header2" style="height: 50px">
       <el-form-item label="查询条件">
-        <el-select v-model="formInline.searchOption" placeholder="请选择">
+        <el-select v-model="formInline.searchOption" style="width: 200px" placeholder="请选择">
+          <el-option label="全部" value="10"></el-option>
           <el-option label="病历号" value="1"></el-option>
           <el-option label="患者姓名" value="2"></el-option>
           <el-option label="住院号" value="6"></el-option>
@@ -20,10 +22,12 @@
       v-model="formInline.searchCondition" style="width: 200px;" class="elInput">
       </el-input>
       <el-form-item>
-        <el-button type="primary" @click="getPatientList">查询</el-button>
+        <el-button type="primary" size="medium" style="margin-left: 10px" @click="getPatientList">查询</el-button>
       </el-form-item>
     </el-form>
+
   </el-header>
+
    <br>
   <el-main class="cate_mana_main">
     <el-table
@@ -33,12 +37,12 @@
       <el-table-column
         prop="inpatientNo"
         label="住院号"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="cardNo"
         label="病历号"
-        width="180">
+        >
       </el-table-column>
       <el-table-column
         prop="patientName"
@@ -68,6 +72,14 @@
         prop="houseDocNo"
         label="收住医师">
       </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="100">
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row.cardNo)" type="text" size="small">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </el-main>
 </el-container>
@@ -78,6 +90,10 @@
 
     export default {
       methods:{
+        handleClick(row){
+          console.log(row);
+
+    },
           getPatientList(){
                var _this=this;
 
@@ -149,12 +165,14 @@
     padding-left: 5px;
     display: flex;
     justify-content: flex-start;
+    height: 80px;
   }
   .cate_mana_header2 {
     background-color: #ececec;
     padding-left: 5px;
     display: flex;
     justify-content: flex-start;
+    padding-top: 10px;
   }
 
   .cate_mana_main {
@@ -177,6 +195,7 @@
   .el-table th{
     text-align: center;
   }
+
   .el-form-item__label{
     width: 90px;
   }

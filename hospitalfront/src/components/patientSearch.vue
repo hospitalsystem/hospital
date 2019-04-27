@@ -9,85 +9,146 @@
       <el-button type="primary" size="medium" style="margin-left: 10px" @click="patientChange">修改</el-button>
     </el-header>
     <el-main class="cate_mana_second">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="患者姓名：">
-          <el-input v-model="patient.patientName" placeholder="patient_name" ></el-input>
-        </el-form-item>
-        <el-form-item label="身份证号：">
-          <el-input v-model="patient.idCard" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="性别：">
-          <el-input v-model="patient.sexCode" placeholder="sex_code" >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="民族：">
-          <el-input v-model="patient.nation" placeholder="请输入病人姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="出生年月：">
-          <el-input v-model="patient.birthday" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="年龄：">
-          <el-input v-model="patient.age" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="国籍：">
-          <el-input v-model="patient.country" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="籍贯：">
-          <el-input v-model="patient.dist" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="出生地：">
-          <el-input v-model="patient.birthArea" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="婚姻状况">
-          <el-input v-model="patient.mariCode" placeholder="请选择" >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="工作单位：">
-          <el-input v-model="patient.workName" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="职位：">
-          <el-input v-model="patient.occupation" placeholder="请选择" >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="单位电话：">
-          <el-input v-model="patient.workTel" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="家庭住址：">
-          <el-input v-model="patient.home" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="家庭电话：">
-          <el-input v-model="patient.homeTel" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="联系人姓名：">
-          <el-input v-model="patient.linkmanName" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="与患者关系：">
-          <el-input v-model="patient.linkmanRelation" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="联系人地址：">
-          <el-input v-model="patient.linkmanAdd" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="联系人电话：">
-          <el-input v-model="patient.linkmanTel" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="合同单位名称：">
-          <el-input v-model="patient.pactName" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="入院来源：">
-          <el-input v-model="inpatient.inSource" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="入院途径：">
-          <el-input v-model="inpatient.inPath" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="收住医师：">
-          <el-input v-model="inpatient.houseDocNo" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="门诊诊断：">
-          <el-input v-model="outpatient.diagnose" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
-        <el-form-item label="预收金额：">
-          <el-input v-model="prepay.prepayCost" placeholder="请输入病人姓名" ></el-input>
-        </el-form-item>
+      <el-form :inline="true" :model="patient" :rules="rules" ref="patient" class="demo-form-inline" label-width="120px">
+        <el-col span="8" label-position="left">
+          <el-form-item label="住院号：" prop="inpatientNo" >
+            <el-input v-model="patient.inpatientNo" :disabled="true" ></el-input>
+          </el-form-item>
+
+          <el-form-item label="患者姓名：" prop="patientName">
+            <el-input v-model="patient.patientName"  ></el-input>
+          </el-form-item>
+          <el-form-item label="性别：" prop="sexCode">
+            <el-select v-model="patient.sexCode"  style="width:202px">
+              <el-option
+                v-for="item in options4"
+                :key="item.index"
+                :label="item.label"
+                :value="item.index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="年龄：" prop="age">
+            <el-input v-model="patient.age"  ></el-input>
+          </el-form-item>
+          <el-form-item label="出生地：" prop="birthArea">
+            <el-input v-model="patient.birthArea"  ></el-input>
+          </el-form-item>
+          <el-form-item label="职业：" prop="occupation">
+            <el-select v-model="patient.occupation"style="width:202px">
+              <el-option
+                v-for="item in options2"
+                :key="item.index"
+                :label="item.label"
+                :value="item.index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="家庭电话：" prop="homeTel">
+            <el-input v-model="patient.homeTel" ></el-input>
+          </el-form-item>
+          <el-form-item label="联系人电话：" prop="linkmanTel">
+            <el-input v-model="patient.linkmanTel"  ></el-input>
+          </el-form-item>
+          <el-form-item label="科室编号："prop="deptNo">
+            <el-input v-model="patient.deptNo"></el-input>
+          </el-form-item>
+          <el-form-item label="入院来源：" prop="inSource">
+            <el-select v-model="patient.inSource" style="width:202px">
+              <el-option label="门诊" value="1"></el-option>
+              <el-option label="急诊" value="2"></el-option>
+              <el-option label="转科" value="3"></el-option>
+              <el-option label="转院" value="4"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="病历号：" prop="cardNo">
+            <el-input v-model="patient.cardNo" :disabled="true" ></el-input>
+          </el-form-item>
+          <el-form-item label="患者状态" prop="patientState">
+            <el-select v-model="patient.patientState"  style="width:202px">
+              <el-option
+                v-for="item in options5"
+                :key="item.index"
+                :label="item.label"
+                :value="item.index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="民族：" prop="nation">
+            <el-input v-model="patient.nation" ></el-input>
+          </el-form-item>
+          <el-form-item label="国籍：" prop="country">
+            <el-input v-model="patient.country"  ></el-input>
+          </el-form-item>
+          <el-form-item label="婚姻状况：" prop="mariCode">
+            <el-select v-model="patient.mariCode"  style="width:202px">
+              <el-option
+                v-for="item in options1"
+                :key="item.index"
+                :label="item.label"
+                :value="item.index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="单位电话：" prop="workTel">
+            <el-input v-model="patient.workTel"  ></el-input>
+          </el-form-item>
+          <el-form-item label="联系人姓名：" prop="linkmanName">
+            <el-input v-model="patient.linkmanName"  ></el-input>
+          </el-form-item>
+          <el-form-item label="与患者关系：" prop="linkmanRelation">
+            <el-select v-model="patient.linkmanRelation"  style="width:202px">
+              <el-option
+                v-for="item in options3"
+                :key="item.index"
+                :label="item.label"
+                :value="item.index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="病床编号：" prop="bedNo">
+            <el-input v-model="patient.bedNo" ></el-input>
+          </el-form-item>
+          <el-form-item label="收住医师：" prop="houseDocNo">
+            <el-input v-model="patient.houseDocNo" ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="身份证号：" prop="idCard">
+            <el-input v-model="patient.idCard" ></el-input>
+          </el-form-item>
+          <el-form-item label="出生年月：" required prop="birthday">
+            <el-form-item >
+              <el-date-picker  placeholder="选择日期" v-model="patient.birthday" style="width:202px"></el-date-picker>
+            </el-form-item>
+          </el-form-item>
+          <el-form-item label="籍贯：" prop="dist">
+            <el-input v-model="patient.dist" ></el-input>
+          </el-form-item>
+          <el-form-item label="工作单位：" prop="workName">
+            <el-input v-model="patient.workName" ></el-input>
+          </el-form-item>
+          <el-form-item label="家庭住址：" prop="home">
+            <el-input v-model="patient.home"  ></el-input>
+          </el-form-item>
+          <el-form-item label="联系人地址：" prop="linkmanAdd">
+            <el-input v-model="patient.linkmanAdd" ></el-input>
+          </el-form-item>
+          <el-form-item label="合同单位名称：" prop="pactName">
+            <el-input v-model="patient.pactName" ></el-input>
+          </el-form-item>
+          <el-form-item label="入院途径：" prop="inPath">
+            <el-select v-model="patient.inPath" style="width:202px">
+              <el-option label="本市" value="1"></el-option>
+              <el-option label="外市" value="2"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="门诊诊断：" prop="diagnose">
+            <el-input v-model="patient.diagnose"></el-input>
+          </el-form-item>
+        </el-col>
       </el-form>
     </el-main>
   </el-container>
@@ -128,11 +189,11 @@
         _this.patient.linkmanAdd=json.linkmanAdd;
         _this.patient.linkmanTel=json.linkmanTel;
         _this.patient.pactName=json.pactName;
-        _this.inpatient.inSource=json.inSource;
-            _this.inpatient.inPath=json.inPath;
-            _this.inpatient.houseDocNo=json.houseDocNo;
-            _this.prepay.prepayCost=json.prepayCost;
-            _this.outpatient.diagnose=json.diagnose;
+        _this.patient.inSource=json.inSource;
+            _this.patient.inPath=json.inPath;
+            _this.patient.houseDocNo=json.houseDocNo;
+            _this.patient.prepayCost=json.prepayCost;
+            _this.patient.diagnose=json.diagnose;
         //console.log("data:"+JSON.stringify(data));
         //data=JSON.parse(JSON.stringify(data));
       }
@@ -155,6 +216,7 @@
         form: '',
         patient:{
           cardNo:'',
+
           patientName:'',
           sexCode:'',
           idCard:'',
@@ -174,17 +236,17 @@
           linkmanRelation:'',
           linkmanAdd:'',
           linkmanTel:'',
-          pactName:''
-        },
-        inpatient:{
+          pactName:'',
+
+          inpatientNo:'',
           inSource:'',
           inPath:'',
           houseDocNo:'',
-        },
-        prepay:{
+
+
           prepayCost:'',
-        },
-        outpatient:{
+
+
           diagnose:''
         },
         options1:[{

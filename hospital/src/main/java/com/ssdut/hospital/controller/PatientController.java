@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class PatientController {
@@ -31,6 +32,7 @@ public class PatientController {
         Date birthday=sdf.parse(data.getAsString("birthday"));
         Integer age=Integer.valueOf(data.getAsString("age"));
         String country=data.getAsString("country");
+        String dist = data.getAsString("dist");
         String birthArea=data.getAsString("birthArea");
         String mariCode=data.getAsString("mariCode");
         String workName=data.getAsString("workName");
@@ -48,15 +50,15 @@ public class PatientController {
         String inPath=data.getAsString("inPath");
         Integer houseDocNo=Integer.valueOf(data.getAsString("houseDocNo"));
         String diagnose=data.getAsString("diagnose");
-        Double prepayCost=Double.valueOf(data.getAsString("prepayCost"));
-        String prepayMethod=data.getAsString("prepayMethod");
-        String inSoure=data.getAsString("inSource");
+      //  Double prepayCost=Double.valueOf(data.getAsString("prepayCost"));
+       // String prepayMethod=data.getAsString("prepayMethod");
+
         Date inDate=new Date();//获取当前时间
         System.out.println(inDate);
         Integer deptNo=Integer.valueOf(data.getAsString("deptNo"));
         Integer bedNo=Integer.valueOf(data.getAsString("bedNo"));
         Patient patient=new Patient();
-        Prepay prepay=new Prepay();
+       // Prepay prepay=new Prepay();
         Inpatient inpatient=new Inpatient();
         Outpatient outpatient=new Outpatient();
         patient.setPatientName(patientName);
@@ -79,6 +81,7 @@ public class PatientController {
         patient.setLinkmanTel(linkmanTel);
         patient.setPactName(pactName);
         patient.setPatientState(patientState);
+        patient.setDist(dist);
         inpatient.setPatientName(patientName);
         inpatient.setInSource(inSource);
         inpatient.setInPath(inPath);
@@ -91,13 +94,15 @@ public class PatientController {
         outpatient.setDiagnose(diagnose);
         outpatient.setIdCard(idCard);
         outpatient.setPatientName(patientName);
-        prepay.setPatientName(patientName);
-        prepay.setPrepayCost(prepayCost);
-        prepay.setPrepayMethod(prepayMethod);
-
+//        prepay.setPatientName(patientName);
+//        prepay.setPrepayCost(prepayCost);
+//        prepay.setPrepayMethod(prepayMethod);
+        //List<Inpatient> inpatient_list = inpatientDAO.findAllByIdCard(idCard);
+        //Integer inpatient_no = inpatient_list.get(inpatient_list.size()).getInpatientNo();
+       // prepay.setInpatientNo(inpatient_no);
          patientDAO.save(patient);
          inpatientDAO.save(inpatient);
-         prepayDAO.save(prepay);
+         //prepayDAO.save(prepay);
          outpatientDAO.save(outpatient);
         return new Info("success","1");
     }
