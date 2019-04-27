@@ -77,9 +77,9 @@ export default {
   //用户注册
 
   userRegister(data){
-
-    return instance.post('/register', data);
-
+    console.log("已执行到userRegister");
+    console.log("data:"+JSON.stringify(data));
+    return instance.post('/userRegister', data);
   },
 
   //用户登录

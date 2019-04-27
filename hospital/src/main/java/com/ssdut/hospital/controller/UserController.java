@@ -56,4 +56,29 @@ public class UserController {
         json.appendField("staffRole",staff.getStaffRole());
         return json;
     }
+    @RequestMapping(value = "/userRegister",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public JSONObject userRegister(@RequestBody JSONObject register)throws Exception{
+        System.out.println("register:"+register.toJSONString());
+        String staffName=register.getAsString("staffName");
+        String staffPassword=register.getAsString("staffPassword");
+        String staffSpell=register.getAsString("staffSpell");
+        Staff staff= staffDAO.findByStaffSpell(staffSpell);
+        if(staff==null){
+            String staffRole="2";
+            Staff staff1=new Staff();
+            staff1.setStaffName(staffName);
+            staff1.setStaffPassword(staffPassword);
+            staff1.setStaffSpell(staffSpell);
+            staff1.setStaffRole(staffRole);
+            staffDAO.save(staff1);
+            JSONObject json=new JSONObject();
+            json.appendField("success",true);
+            return json;
+        }
+        else{
+            JSONObject json=new JSONObject();
+            json.appendField("success",false);
+            return json;
+        }
+    }
 }
