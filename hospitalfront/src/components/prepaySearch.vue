@@ -8,7 +8,7 @@
       <el-button type="primary" size="medium" style="margin-left: 10px" @click="getPrepay">查询</el-button>
     </el-header>
     <el-main class="cate_mana_second">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
+      <el-form :inline="true" :model="form" class="demo-form-inline" align="left">
         <el-form-item label="患者姓名:">
           <el-input  v-model="form.patientName" placeholder="患者姓名"></el-input>
         </el-form-item>

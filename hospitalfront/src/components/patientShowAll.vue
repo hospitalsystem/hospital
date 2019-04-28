@@ -99,7 +99,6 @@
 
             postRequest('/getPatientList', {searchCondition: this.formInline.searchCondition, searchOption: this.formInline.searchOption}).then(resp => {
                 if (resp.status == 200) {
-                  alert('查询成功');
                   var Data = resp.data;
                   console.log("JSON"+JSON.stringify(Data));
                   _this.patientList = Data.patientJSON;
