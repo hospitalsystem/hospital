@@ -1,6 +1,6 @@
 <template>
   <el-container class="home_container">
-    <el-header>
+    <el-header style="height:29px">
       <div class="home_title">住院入出转</div>
       <div class="home_userinfoContainer">
         <el-dropdown @command="handleCommand">

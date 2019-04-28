@@ -443,6 +443,7 @@
             label: '支票支付'
           }
         ],
+        //outState的下拉选项
         outStateOptions:[
           {
           index: 1,
@@ -466,7 +467,7 @@
           index: 7,
           label: '其他'
         }
-        ], //outState的下拉选项
+        ],
         forms: {
           staffNo:'',
           recipeNo:'',
@@ -548,8 +549,6 @@
               }else if(inpatientJSON.outState == 7){
                 _this.inpatient.outState = '其他';
               }
-              console.log("inpatientJSON中的outState"+inpatientJSON.outState);
-              console.log("inpatient中的outState"+_this.inpatient.outState);
 
               _this.patient.cardNo = patientJSON.cardNo;
               _this.patient.patientName = patientJSON.patientName;
@@ -732,7 +731,8 @@
               }
 
               //需要对后台的数据进行更新，所以要发回去
-              postRequest("/leavePatientRegister", data).then(resp => {
+              postRequest("/leavePatientRegister", data).then(
+                resp => {
                 if (resp.status == 200) {
                   alert('出院登记成功');
                   this.isShow = false;
@@ -758,8 +758,8 @@
                 }
               })
             }
-
-          }, resp => {
+          },
+            resp => {
             if (resp.response.status == 403) {
               console.log("失败了 403")
               _this.$message({

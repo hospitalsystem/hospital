@@ -9,7 +9,10 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 @RestController
 public class PatientSearchController {
@@ -21,62 +24,70 @@ public class PatientSearchController {
     PatientDAO patientDAO;
     @Autowired
     PrepayDAO prepayDAO;
+
     @RequestMapping(value = "/getPatient", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JSONObject getPatient(@RequestBody JSONObject cardNo) throws Exception {
-        Integer Card_no = Integer.valueOf(cardNo.getAsString("cardNo"));
-        Patient patient = patientDAO.findByCardNo(Card_no);
-        String id_card = patient.getIdCard();
-        Inpatient inpatient = inpatientDAO.findByIdCard(id_card);
-        Outpatient outpatient = outpatientDAO.findByIdCard(id_card);
-        Integer inpatient_no =  inpatient.getInpatientNo();
-        List<Prepay> prepay = prepayDAO.findByInpatientNo(inpatient_no);
-        System.out.println(prepay);
-        JSONObject json = new JSONObject();
-        json.appendField("patientName", patient.getPatientName());
-        json.appendField("idCard", patient.getIdCard());
-        if(Integer.valueOf(patient.getSexCode())==1) {
-            json.appendField("sexCode",'男');
-        }else if(Integer.valueOf(patient.getSexCode())==2) {
-            json.appendField("sexCode",'女');
-        }
-        //json.appendField("cardNo", patient.getCardNo());
-        json.appendField("nation", patient.getNation());
-        json.appendField("birthday", patient.getBirthday());
-        json.appendField("age", patient.getAge());
-        json.appendField("country", patient.getCountry());
-        json.appendField("dist", patient.getDist());
-        json.appendField("birthArea", patient.getBirthArea());
-        json.appendField("mariCode", patient.getMariCode());
-        json.appendField("workName", patient.getWorkName());
-        json.appendField("occupation", patient.getOccupation());
-        json.appendField("workTel", patient.getWorkTel());
-        json.appendField("home", patient.getHome());
-        json.appendField("homeTel", patient.getHomeTel());
-        json.appendField("linkmanName", patient.getLinkmanName());
-        json.appendField("linkmanRelation", patient.getLinkmanRelation());
-        json.appendField("linkmanAdd", patient.getLinkmanAdd());
-        json.appendField("linkmanTel", patient.getLinkmanTel());
-        json.appendField("packName", patient.getPactName());
+    public JSONObject getPatient(@RequestBody JSONObject inPatientNo) throws Exception {
 
-        json.appendField("inSource", inpatient.getInSource());
-
-        json.appendField("inPath", inpatient.getInPath());
-
-        json.appendField("houseDocNo", inpatient.getHouseDocNo());
-        json.appendField("diagnose", outpatient.getDiagnose());
-        Double prepayAll=0.0;
-        for(int i =0;i<prepay.size();i++){
-            Prepay prepay1=prepay.get(i);
-            prepayAll+=prepay1.getPrepayCost();
-        }
-        json.appendField("prepayCost", prepayAll);
-       // json.appendField("prepayMethod", prepay.getPrepayMethod());
         JSONObject Data=new JSONObject();
-        Data.appendField("json",json);
-       // Data.appendField("data",data);
-        System.out.println("Data:"+Data.toJSONString());
-        System.out.println("11111");
+        JSONObject inpatientJSON = new JSONObject();
+        JSONObject patientJSON = new JSONObject();
+
+        Integer inPatientNo1 = Integer.valueOf(inPatientNo.getAsString("inPatientNo"));
+
+        Inpatient inpatient = inpatientDAO.findOne(inPatientNo1);
+        Patient patient = patientDAO.findByIdCard(inpatient.getIdCard());
+
+        //将inpatient的值加入到JSON中
+        inpatientJSON.appendField("inpatientNo",inpatient.getInpatientNo());
+        inpatientJSON.appendField("patientName",inpatient.getPatientName());
+        inpatientJSON.appendField("idCard",inpatient.getIdCard());
+        inpatientJSON.appendField("inDate",inpatient.getInDate());
+        inpatientJSON.appendField("inSource",inpatient.getInSource());
+        inpatientJSON.appendField("inPath",inpatient.getInPath());
+        inpatientJSON.appendField("status",inpatient.getStatus());
+        inpatientJSON.appendField("deptNo",inpatient.getDeptNo());
+        inpatientJSON.appendField("bedNo",inpatient.getBedNo());
+        inpatientJSON.appendField("houseDocNo",inpatient.getHouseDocNo());
+        inpatientJSON.appendField("chargeDocNo",inpatient.getChargeDocNo());
+        inpatientJSON.appendField("chiefDocNo",inpatient.getChiefDocNo());
+        inpatientJSON.appendField("dutyNurseNo",inpatient.getDutyNurseNo());
+        inpatientJSON.appendField("outDate",inpatient.getOutDate());
+        inpatientJSON.appendField("outState",inpatient.getOutState());
+
+        //将patient的值加入到JSON中
+        patientJSON.appendField("cardNo",patient.getCardNo());
+        patientJSON.appendField("patientName",patient.getPatientName());
+        patientJSON.appendField("sexCode",patient.getSexCode());
+        patientJSON.appendField("idCard",patient.getIdCard());
+        patientJSON.appendField("patientState",patient.getPatientState());
+        patientJSON.appendField("nation",patient.getNation());
+        patientJSON.appendField("birthday",patient.getBirthday());
+        patientJSON.appendField("age",patient.getAge());
+        patientJSON.appendField("country",patient.getCountry());
+        patientJSON.appendField("dist",patient.getDist());
+        patientJSON.appendField("birthArea",patient.getBirthArea());
+        patientJSON.appendField("mariCode",patient.getMariCode());
+        patientJSON.appendField("workName",patient.getWorkName());
+        patientJSON.appendField("occupation",patient.getOccupation());
+        patientJSON.appendField("workTel",patient.getWorkTel());
+        patientJSON.appendField("home",patient.getHome());
+        patientJSON.appendField("homeTel",patient.getHomeTel());
+        patientJSON.appendField("linkmanName",patient.getLinkmanName());
+        patientJSON.appendField("linkmanRelation",patient.getLinkmanRelation());
+        patientJSON.appendField("linkmanAdd",patient.getLinkmanAdd());
+        patientJSON.appendField("linkmanTel",patient.getLinkmanTel());
+        patientJSON.appendField("pactName",patient.getPactName());
+
+        //将inpatientJSON，patientJSON，bedJSON，prepayJSON，costJSON,prepayAll,costAll添加到Date中
+        Data.appendField("inpatientJSON",inpatientJSON);
+        Data.appendField("patientJSON",patientJSON);
+
+        System.out.println("inpatientJSON:"+Data.getAsString("inpatientJSON"));
+        System.out.println("patientJSON:"+Data.getAsString("patientJSON"));
+
+        //给前端返回Data
         return Data;
+
     }
 
     @RequestMapping(value = "/getPatientList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -186,4 +197,158 @@ public class PatientSearchController {
         return Data;
     }
 
+    @PostMapping("/editPatientInfo")
+    public void editPatientInfo(@RequestBody JSONObject data){
+        System.out.println("接受的数据为:"+data.toJSONString());
+        //根据接收的inpatientNo来查找inpatient进行更新，根据接收的cardNo来查找patient进行更新
+        Inpatient inpatient = inpatientDAO.findOne(Integer.valueOf(data.getAsString("inpatientNo")));
+        Patient patient = patientDAO.findOne(Integer.valueOf(data.getAsString("cardNo")));
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos = new ParsePosition(0);
+
+        /*
+        接下来的工作：
+        1. 将前端发回的部分数据转换成数字
+        2. 将String转化为Date
+         */
+        inpatient.setPatientName(data.getAsString("patientName"));
+        inpatient.setIdCard(data.getAsString("idCard"));
+
+        inpatient.setInSource(data.getAsString("inSource"));
+//        if(data.getAsString("inSource") == "门诊"){
+//            inpatient.setInSource("1");
+//        }else if(data.getAsString("inSource") == "急诊"){
+//            inpatient.setInSource("2");
+//        }else if(data.getAsString("inSource") == "转科"){
+//            inpatient.setInSource("3");
+//        }else if(data.getAsString("inSource") == "转院"){
+//            inpatient.setInSource("4");
+//        }
+        inpatient.setInPath(data.getAsString("inPath"));
+//        if(data.getAsString("inPath") == "本市"){
+//            inpatient.setInPath("1");
+//        }else if(data.getAsString("inPath") == "外市"){
+//            inpatient.setInPath("2");
+//        }
+        inpatient.setStatus(data.getAsString("status"));
+        inpatient.setDeptNo(Integer.valueOf(data.getAsString("deptNo")));
+        inpatient.setBedNo(Integer.valueOf(data.getAsString("bedNo")));
+        inpatient.setHouseDocNo(Integer.valueOf(data.getAsString("houseDocNo")));
+        inpatient.setChargeDocNo(Integer.valueOf(data.getAsString("chargeDocNo")));
+        inpatient.setChiefDocNo(Integer.valueOf(data.getAsString("chiefDocNo")));
+        inpatient.setDutyNurseNo(Integer.valueOf(data.getAsString("dutyNurseNo")));
+
+        inpatient.setOutState(data.getAsString("outState"));
+//        if(data.getAsString("outState") == "治愈"){
+//            inpatient.setOutState("1");
+//        }else if(data.getAsString("outState") == "好转"){
+//            inpatient.setOutState("2");
+//        }else if(data.getAsString("outState") == "死亡"){
+//            inpatient.setOutState("3");
+//        }else if(data.getAsString("outState") == "治残"){
+//            inpatient.setOutState("4");
+//        }else if(data.getAsString("outState") == "未治愈"){
+//            inpatient.setOutState("5");
+//        }else if(data.getAsString("outState") == "正常分娩"){
+//            inpatient.setOutState("6");
+//        }else if(data.getAsString("outState") == "其他"){
+//            inpatient.setOutState("7");
+//        }
+
+        patient.setPatientName(data.getAsString("patientName"));
+        patient.setSexCode(data.getAsString("sexCode"));
+//        if(data.getAsString("sexCode") == "男"){
+//            patient.setSexCode("1");
+//        }else if(data.getAsString("sexCode") == "女"){
+//            patient.setSexCode("2");
+//        }
+        patient.setIdCard(data.getAsString("idCard"));
+        patient.setNation(data.getAsString("nation"));
+
+
+        //用日期选择器返回的时间格式例子如下：2019-04-10T16:00:00.000Z，所以要替换掉多余的内容，改成2019-04-10 16:00:00
+        Date birthdayTemp = formatter.parse(data.getAsString("birthday").replace(".000Z", "").replace("T", " "), pos);
+        System.out.println("出生日期为"+birthdayTemp.toString());
+        patient.setBirthday(birthdayTemp);
+
+        patient.setAge(Integer.valueOf(data.getAsString("age")));
+        patient.setCountry(data.getAsString("country"));
+        patient.setDist(data.getAsString("dist"));
+        patient.setBirthArea(data.getAsString("birthArea"));
+        patient.setMariCode(data.getAsString("mariCode"));
+//        if(data.getAsString("mariCode") == "未婚"){
+//            patient.setMariCode("1");
+//        }else if(data.getAsString("mariCode") == "已婚"){
+//            patient.setMariCode("2");
+//        }else if(data.getAsString("mariCode") == "丧偶"){
+//            patient.setMariCode("3");
+//        }else if(data.getAsString("mariCode") == "离婚"){
+//            patient.setMariCode("4");
+//        }
+        patient.setWorkName(data.getAsString("workName"));
+
+        patient.setOccupation(data.getAsString("occupation"));
+//        if(data.getAsString("occupation") == "国家公务人员"){
+//            patient.setOccupation("11");
+//        }else if(data.getAsString("occupation") == "专业技术人员"){
+//            patient.setOccupation("13");
+//        }else if(data.getAsString("occupation") == "职员"){
+//            patient.setOccupation("17");
+//        }else if(data.getAsString("occupation") == "企业管理人员"){
+//            patient.setOccupation("21");
+//        }else if(data.getAsString("occupation") == "工人"){
+//            patient.setOccupation("24");
+//        }else if(data.getAsString("occupation") == "农民"){
+//            patient.setOccupation("27");
+//        }else if(data.getAsString("occupation") == "学生"){
+//            patient.setOccupation("31");
+//        }else if(data.getAsString("occupation") == "现役军人"){
+//            patient.setOccupation("37");
+//        }else if(data.getAsString("occupation") == "自由职业者"){
+//            patient.setOccupation("51");
+//        }else if(data.getAsString("occupation") == "个人经营者"){
+//            patient.setOccupation("54");
+//        }else if(data.getAsString("occupation") == "无业人员"){
+//            patient.setOccupation("70");
+//        }else if(data.getAsString("occupation") == "退（离）休人员"){
+//            patient.setOccupation("80");
+//        }else if(data.getAsString("occupation") == "其他"){
+//            patient.setOccupation("90");
+//        }
+        patient.setWorkTel(data.getAsString("workTel"));
+        patient.setHome(data.getAsString("home"));
+        patient.setHomeTel(data.getAsString("homeTel"));
+        patient.setLinkmanName(data.getAsString("linkmanName"));
+        patient.setLinkmanRelation(data.getAsString("linkmanRelation"));
+//        if(data.getAsString("linkmanRelation") == "配偶"){
+//            patient.setLinkmanRelation("1");
+//        }else if(data.getAsString("linkmanRelation") == "子"){
+//            patient.setLinkmanRelation("2");
+//        }else if(data.getAsString("linkmanRelation") == "女"){
+//            patient.setLinkmanRelation("3");
+//        }else if(data.getAsString("linkmanRelation") == "孙子、孙女或外孙子、外孙女"){
+//            patient.setLinkmanRelation("4");
+//        }else if(data.getAsString("linkmanRelation") == "父母"){
+//            patient.setLinkmanRelation("5");
+//        }else if(data.getAsString("linkmanRelation") == "祖父母或外祖父母"){
+//            patient.setLinkmanRelation("6");
+//        }else if(data.getAsString("linkmanRelation") == "兄弟姐妹"){
+//            patient.setLinkmanRelation("7");
+//        }else if(data.getAsString("linkmanRelation") == "其他"){
+//            patient.setLinkmanRelation("8");
+//        }
+        patient.setLinkmanAdd(data.getAsString("linkmanAdd"));
+        patient.setLinkmanTel(data.getAsString("linkmanTel"));
+        patient.setPactName(data.getAsString("pactName"));
+
+
+        //将修改后的inpatient和patient重新保存
+        inpatientDAO.save(inpatient);
+        patientDAO.save(patient);
+
+
+
+
+    }
 }
