@@ -133,6 +133,14 @@
             <el-option label="转院" value="4"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="主治医师" prop="chargeDocNo">
+          <el-input v-model="patient.chargeDocNo"></el-input>
+        </el-form-item>
+        <el-form-item label="住院日期：" required prop="inDate">
+          <el-form-item >
+            <el-date-picker  :disabled="true" v-model="patient.inDate" style="width:202px"></el-date-picker>
+          </el-form-item>
+        </el-form-item>
       </el-col>
       <el-col span="8">
         <el-form-item label="病历号：" prop="cardNo">
@@ -186,6 +194,14 @@
         <el-form-item label="收住医师：" prop="houseDocNo">
           <el-input v-model="patient.houseDocNo" ></el-input>
         </el-form-item>
+        <el-form-item label="责任护士" prop="dutyNurseNo">
+          <el-input v-model="patient.dutyNurseNo"></el-input>
+        </el-form-item>
+        <el-form-item  label="出院日期：" required prop="outDate">
+          <el-form-item >
+            <el-date-picker  :disabled="true" v-model="patient.outDate" style="width:202px"></el-date-picker>
+          </el-form-item>
+        </el-form-item>
       </el-col>
       <el-col span="8">
         <el-form-item label="身份证号：" prop="idCard">
@@ -223,12 +239,8 @@
         <el-form-item label="主任医师" prop="chiefDocNo">
           <el-input v-model="patient.chiefDocNo"></el-input>
         </el-form-item>
-        <el-form-item label="主治医师" prop="chargeDocNo">
-          <el-input v-model="patient.chargeDocNo"></el-input>
-        </el-form-item>
-        <el-form-item label="责任护士" prop="dutyNurseNo">
-          <el-input v-model="patient.dutyNurseNo"></el-input>
-        </el-form-item>
+
+
         <el-form-item label="出院状态:" class="outState">
           <el-select v-model="patient.outState" placeholder="请选择" style="width:206.4px">
             <el-option
@@ -239,16 +251,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="住院日期：" required prop="inDate">
-          <el-form-item >
-            <el-date-picker  :disabled="true" v-model="patient.inDate" style="width:202px"></el-date-picker>
-          </el-form-item>
-        </el-form-item>
-        <el-form-item  label="出院日期：" required prop="outDate">
-          <el-form-item >
-            <el-date-picker  :disabled="true" v-model="patient.outDate" style="width:202px"></el-date-picker>
-          </el-form-item>
-        </el-form-item>
+
+
         <el-form-item>
           <el-button type="primary" size="medium" style="margin-left: 10px" @click="patientChange">修改并保存</el-button>
         </el-form-item>
