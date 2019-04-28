@@ -216,7 +216,6 @@
         form: '',
         patient:{
           cardNo:'',
-
           patientName:'',
           sexCode:'',
           idCard:'',
@@ -243,13 +242,11 @@
           inPath:'',
           houseDocNo:'',
 
-
-          prepayCost:'',
-
-
           diagnose:''
         },
-        options1:[{
+
+        options1:[
+          {
           index:1,
           label:'未婚',
         }, {
@@ -262,8 +259,8 @@
           index: 4,
           label: '离婚',
         }],
-
-        options2:[{
+        options2:[
+          {
           index:11,
           label:'国家公务人员',
         }, {
@@ -309,7 +306,8 @@
             index: 90,
             label: '其他',
           }],
-        options3:[{
+        options3:[
+          {
           index: 1,
           label:'配偶',
         }, {
@@ -335,7 +333,8 @@
             index: 8,
             label: '其他',
           }],
-        options4:[{
+        options4:[
+          {
           index: 1,
           label:'男',
         }, {

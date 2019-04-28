@@ -169,7 +169,7 @@ public class LeavePatientController {
     @PostMapping("/leavePatientRegister")
     public void leavePatientRegister(@RequestBody JSONObject data){
         System.out.println("接受的数据为:"+data.toJSONString());
-        Inpatient inpatient= inpatientDAO.findOne(Integer.valueOf(data.getAsString("inpatientNoTemp")));
+        Inpatient inpatient = inpatientDAO.findOne(Integer.valueOf(data.getAsString("inpatientNoTemp")));
         Bed bed = new Bed();
         Cost cost = new Cost();
         Patient patient = patientDAO.findByIdCard(data.getAsString("patientIdcardTemp"));
