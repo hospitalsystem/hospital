@@ -8,10 +8,10 @@
         <version>1.5.10.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.atguigu</groupId>
-    <artifactId>spring-boot-06-data-jpa</artifactId>
+    <groupId>com.ssdut</groupId>
+    <artifactId>hospital</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-06-data-jpa</name>
+    <name>hospital</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
