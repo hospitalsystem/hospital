@@ -145,9 +145,7 @@
   import {postRequest} from '../utils/api'
   import {getRequest} from '../utils/api'
   import moment from 'moment'
-  import {mavonEditor} from 'mavon-editor'
-  // 可以通过 mavonEditor.markdownIt 获取解析器markdown-it对象
-  import 'mavon-editor/dist/css/index.css'
+
   export default {
     methods: {
       savePatient(formName) {
@@ -201,13 +199,9 @@
         });
       },
       resetForm(formName) {
-        console.log("11111")
         if (this.$refs[formName] !== undefined) {
-          console.log("11111")
           this.$refs[formName].resetFields();
-          console.log("2222")
         }
-        console.log("2222")
       },
     },
       data() {

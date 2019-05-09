@@ -1,9 +1,6 @@
 package com.ssdut.hospital.controller;
 import com.ssdut.hospital.dao.*;
 import com.ssdut.hospital.entity.*;
-//import com.ssdut.hospital.entity.Prepay;
-//import com.ssdut.hospital.entity.Staff;
-//import net.minidev.json.JSONArray;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,8 +118,6 @@ public class PatientSearchController {
                 PatientList = patientDAO.findAllByDist(dist);
             }
             for(Patient item : PatientList){
-//                Inpatient inpatientItem = inpatientDAO.findByIdCard(item.getIdCard());
-////               InpatientList.add(inpatientItem);
                 List<Inpatient> inpatients = inpatientDAO.findAllByIdCard(item.getIdCard());
                 for(Inpatient item1 : inpatients){
                     InpatientList.add(item1);
@@ -207,30 +202,11 @@ public class PatientSearchController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ParsePosition pos = new ParsePosition(0);
 
-        /*
-        接下来的工作：
-        1. 将前端发回的部分数据转换成数字
-        2. 将String转化为Date
-         */
+
         inpatient.setPatientName(data.getAsString("patientName"));
         inpatient.setIdCard(data.getAsString("idCard"));
-
         inpatient.setInSource(data.getAsString("inSource"));
-//        if(data.getAsString("inSource") == "门诊"){
-//            inpatient.setInSource("1");
-//        }else if(data.getAsString("inSource") == "急诊"){
-//            inpatient.setInSource("2");
-//        }else if(data.getAsString("inSource") == "转科"){
-//            inpatient.setInSource("3");
-//        }else if(data.getAsString("inSource") == "转院"){
-//            inpatient.setInSource("4");
-//        }
         inpatient.setInPath(data.getAsString("inPath"));
-//        if(data.getAsString("inPath") == "本市"){
-//            inpatient.setInPath("1");
-//        }else if(data.getAsString("inPath") == "外市"){
-//            inpatient.setInPath("2");
-//        }
         inpatient.setStatus(data.getAsString("status"));
         inpatient.setDeptNo(Integer.valueOf(data.getAsString("deptNo")));
         inpatient.setBedNo(Integer.valueOf(data.getAsString("bedNo")));
@@ -238,31 +214,10 @@ public class PatientSearchController {
         inpatient.setChargeDocNo(Integer.valueOf(data.getAsString("chargeDocNo")));
         inpatient.setChiefDocNo(Integer.valueOf(data.getAsString("chiefDocNo")));
         inpatient.setDutyNurseNo(Integer.valueOf(data.getAsString("dutyNurseNo")));
-
         inpatient.setOutState(data.getAsString("outState"));
-//        if(data.getAsString("outState") == "治愈"){
-//            inpatient.setOutState("1");
-//        }else if(data.getAsString("outState") == "好转"){
-//            inpatient.setOutState("2");
-//        }else if(data.getAsString("outState") == "死亡"){
-//            inpatient.setOutState("3");
-//        }else if(data.getAsString("outState") == "治残"){
-//            inpatient.setOutState("4");
-//        }else if(data.getAsString("outState") == "未治愈"){
-//            inpatient.setOutState("5");
-//        }else if(data.getAsString("outState") == "正常分娩"){
-//            inpatient.setOutState("6");
-//        }else if(data.getAsString("outState") == "其他"){
-//            inpatient.setOutState("7");
-//        }
 
         patient.setPatientName(data.getAsString("patientName"));
         patient.setSexCode(data.getAsString("sexCode"));
-//        if(data.getAsString("sexCode") == "男"){
-//            patient.setSexCode("1");
-//        }else if(data.getAsString("sexCode") == "女"){
-//            patient.setSexCode("2");
-//        }
         patient.setIdCard(data.getAsString("idCard"));
         patient.setNation(data.getAsString("nation"));
 
@@ -277,78 +232,21 @@ public class PatientSearchController {
         patient.setDist(data.getAsString("dist"));
         patient.setBirthArea(data.getAsString("birthArea"));
         patient.setMariCode(data.getAsString("mariCode"));
-//        if(data.getAsString("mariCode") == "未婚"){
-//            patient.setMariCode("1");
-//        }else if(data.getAsString("mariCode") == "已婚"){
-//            patient.setMariCode("2");
-//        }else if(data.getAsString("mariCode") == "丧偶"){
-//            patient.setMariCode("3");
-//        }else if(data.getAsString("mariCode") == "离婚"){
-//            patient.setMariCode("4");
-//        }
         patient.setWorkName(data.getAsString("workName"));
 
         patient.setOccupation(data.getAsString("occupation"));
-//        if(data.getAsString("occupation") == "国家公务人员"){
-//            patient.setOccupation("11");
-//        }else if(data.getAsString("occupation") == "专业技术人员"){
-//            patient.setOccupation("13");
-//        }else if(data.getAsString("occupation") == "职员"){
-//            patient.setOccupation("17");
-//        }else if(data.getAsString("occupation") == "企业管理人员"){
-//            patient.setOccupation("21");
-//        }else if(data.getAsString("occupation") == "工人"){
-//            patient.setOccupation("24");
-//        }else if(data.getAsString("occupation") == "农民"){
-//            patient.setOccupation("27");
-//        }else if(data.getAsString("occupation") == "学生"){
-//            patient.setOccupation("31");
-//        }else if(data.getAsString("occupation") == "现役军人"){
-//            patient.setOccupation("37");
-//        }else if(data.getAsString("occupation") == "自由职业者"){
-//            patient.setOccupation("51");
-//        }else if(data.getAsString("occupation") == "个人经营者"){
-//            patient.setOccupation("54");
-//        }else if(data.getAsString("occupation") == "无业人员"){
-//            patient.setOccupation("70");
-//        }else if(data.getAsString("occupation") == "退（离）休人员"){
-//            patient.setOccupation("80");
-//        }else if(data.getAsString("occupation") == "其他"){
-//            patient.setOccupation("90");
-//        }
         patient.setWorkTel(data.getAsString("workTel"));
         patient.setHome(data.getAsString("home"));
         patient.setHomeTel(data.getAsString("homeTel"));
         patient.setLinkmanName(data.getAsString("linkmanName"));
         patient.setLinkmanRelation(data.getAsString("linkmanRelation"));
-//        if(data.getAsString("linkmanRelation") == "配偶"){
-//            patient.setLinkmanRelation("1");
-//        }else if(data.getAsString("linkmanRelation") == "子"){
-//            patient.setLinkmanRelation("2");
-//        }else if(data.getAsString("linkmanRelation") == "女"){
-//            patient.setLinkmanRelation("3");
-//        }else if(data.getAsString("linkmanRelation") == "孙子、孙女或外孙子、外孙女"){
-//            patient.setLinkmanRelation("4");
-//        }else if(data.getAsString("linkmanRelation") == "父母"){
-//            patient.setLinkmanRelation("5");
-//        }else if(data.getAsString("linkmanRelation") == "祖父母或外祖父母"){
-//            patient.setLinkmanRelation("6");
-//        }else if(data.getAsString("linkmanRelation") == "兄弟姐妹"){
-//            patient.setLinkmanRelation("7");
-//        }else if(data.getAsString("linkmanRelation") == "其他"){
-//            patient.setLinkmanRelation("8");
-//        }
         patient.setLinkmanAdd(data.getAsString("linkmanAdd"));
         patient.setLinkmanTel(data.getAsString("linkmanTel"));
         patient.setPactName(data.getAsString("pactName"));
 
-
         //将修改后的inpatient和patient重新保存
         inpatientDAO.save(inpatient);
         patientDAO.save(patient);
-
-
-
 
     }
 }

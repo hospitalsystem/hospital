@@ -38,7 +38,7 @@ const router = new Router({
             path: '/home',
             component: Home,
             name: '住院登记管理',
-            iconCls: 'fa fa-bar-chart',
+            iconCls: 'fa fa-hospital-o',
             children: [
                 {
                     path: '/patientAdd',
@@ -50,7 +50,6 @@ const router = new Router({
                     component: patientAdd
                 },
                 {
-                    //path: '/patientSearch',
                     path: '/patientShowAll',
                     iconCls: 'fa fa-bar-chart',
                     name: '患者信息查询',
@@ -65,8 +64,17 @@ const router = new Router({
             path: '/home',
             component: Home,
             name: '预交金管理',
-            iconCls: 'fa fa-bar-chart',
+            iconCls: 'fa fa-credit-card-alt',
             children: [
+               {
+                  path: '/prepayCollect',
+                  iconCls: 'fa fa-bar-chart',
+                  name: '预交金收取',
+                  meta: {
+                    requiresAuth: true
+                  },
+                  component: prepayCollect
+                },
                 {
                     path: '/prepaySearch',
                     iconCls: 'fa fa-reorder',
@@ -76,22 +84,14 @@ const router = new Router({
                     },
                     component: prepaySearch
                 },
-                {
-                    path: '/prepayCollect',
-                    iconCls: 'fa fa-bar-chart',
-                    name: '预交金收取',
-                    meta: {
-                        requiresAuth: true
-                    },
-                    component: prepayCollect
-                }
+
             ]
         },
         {
             path: '/home',
             component: Home,
             name: '出院管理',
-            iconCls: 'fa fa-bar-chart',
+            iconCls: 'fa fa-home',
             children: [
                 {
                     path: '/leavePatientRegister',
@@ -117,11 +117,12 @@ const router = new Router({
             path: '/home',
             component: Home,
             name: '个人主页',
-            iconCls: 'fa fa-bar-chart',
+            iconCls: 'fa fa-users',
             children: [
                 {
                     path: '/user',
                     component: user,
+                    iconCls: 'fa fa-users',
                     meta: {
                         requiresAuth: true
                     },

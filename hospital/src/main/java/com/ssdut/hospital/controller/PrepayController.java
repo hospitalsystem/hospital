@@ -7,11 +7,8 @@ import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -63,16 +60,7 @@ public class PrepayController {
         for(int i=0;i<prepay.size();i++){
             Prepay prepay1=prepay.get(i);
             JSONObject json1=new JSONObject();
-            //System.out.println("InpatientNo:" + prepay1.getInpatientNo());
-            //Integer Inpatient_no1 = new Integer(prepay1.getInpatientNo());
-            //System.out.println("Inpatient_no1:" + Inpatient_no);
-            ///Inpatient inpatient1 = inpatientDAO.findOne(Inpatient_no);
-            //System.out.println("inpatientIdCard1:" + inpatient.getIdCard());
-            //String idCard1 = inpatient.getIdCard();
-            //System.out.println("idCard1:" + idCard1);
-            //Integer IdCard=Integer.valueOf(idCard);
-            //Patient patient1 = patientDAO.findByIdCard(idCard1);
-            //System.out.println(patient1.getLinkmanTel());
+
             prepayAll+=prepay1.getPrepayCost();
             System.out.println("prepay1.getPrepayState():"+prepay1.getPrepayState());
             if(Integer.valueOf(prepay1.getPrepayState())==1){
@@ -105,14 +93,14 @@ public class PrepayController {
         }
         Double costAll=costDAO.getCostAll(Inpatient_no);
         Double remain=prepayAll-costAll;
-       json.appendField("prepayAll",prepayAll);
-       json.appendField("remain",remain);
-       JSONObject Data=new JSONObject();
-       Data.appendField("json",json);
-       Data.appendField("data",data);
-       System.out.println("Data:"+Data.toJSONString());
-      System.out.println("11111");
-       return Data;
+        json.appendField("prepayAll",prepayAll);
+        json.appendField("remain",remain);
+        JSONObject Data=new JSONObject();
+        Data.appendField("json",json);
+        Data.appendField("data",data);
+        System.out.println("Data:"+Data.toJSONString());
+        System.out.println("11111");
+        return Data;
     }
     @RequestMapping(value = "/prepayCollect", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public Info prepayCollect(@RequestBody JSONObject data) throws Exception {

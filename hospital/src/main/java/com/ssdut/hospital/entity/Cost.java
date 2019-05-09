@@ -1,9 +1,6 @@
 package com.ssdut.hospital.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-
-
 
 @Entity
 @Table(name = "cost")

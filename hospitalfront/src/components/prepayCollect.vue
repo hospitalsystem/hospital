@@ -63,9 +63,7 @@
   import {uploadFileRequest} from '../utils/api'
   // Local Registration
   import moment from 'moment'
-  import {mavonEditor} from 'mavon-editor'
-  // 可以通过 mavonEditor.markdownIt 获取解析器markdown-it对象
-  import 'mavon-editor/dist/css/index.css'
+
   import {isNotNullORBlank} from '../utils/utils'
 
   export default {

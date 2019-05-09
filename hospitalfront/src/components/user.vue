@@ -33,9 +33,7 @@
     methods:{
     },
     components: {
-
       register
-
     }
   }
 
