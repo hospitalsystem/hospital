@@ -8,12 +8,8 @@
       </el-form-item>
       <el-form-item label="性别：" prop="sexCode">
         <el-select v-model="patient.sexCode"  style="width:202px">
-          <el-option
-            v-for="item in options4"
-            :key="item.index"
-            :label="item.label"
-            :value="item.index">
-          </el-option>
+          <el-option label="男" value="1"></el-option>
+          <el-option label="女" value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="年龄：" prop="age">
@@ -101,13 +97,16 @@
   </el-form-item>
 </el-col>
 <el-col span="8">
+  <!--<el-form :model="baseInfo" ref="baseForm" :rules="baseFormRules">-->
+  <!--<el-form-item label="身份证号：" prop="idCard">-->
+  <!--<el-input v-model="baseInfo.idCard" ></el-input>-->
+  <!--</el-form-item>-->
+  <!--</el-form>-->
   <el-form-item label="身份证号：" prop="idCard">
-  <el-input v-model="patient.idCard" ></el-input>
-</el-form-item>
+    <el-input v-model="patient.idCard" ></el-input>
+  </el-form-item>
   <el-form-item label="出生年月：" required prop="birthday">
-    <el-form-item >
       <el-date-picker  placeholder="选择日期" v-model="patient.birthday" style="width:202px"></el-date-picker>
-    </el-form-item>
   </el-form-item>
   <el-form-item label="籍贯：" prop="dist">
     <el-input v-model="patient.dist" ></el-input>
@@ -147,14 +146,254 @@
   import moment from 'moment'
 
   export default {
+    data() {
+      return {
+        form:'',
+        patient: {
+          cardNo: '',
+          patientName: '',
+          patientState: '',
+          sexCode: '',
+          idCard: '',
+          nation: '汉族',
+          birthday: '',
+          age: '',
+          country: '中国',
+          dist: '',
+          birthArea: '',
+          mariCode: '',
+          workName: '',
+          occupation: '',
+          workTel: '',
+          home: '',
+          homeTel: '',
+          linkmanName: '',
+          linkmanRelation: '',
+          linkmanAdd: '',
+          linkmanTel: '',
+          pactName: '',
+          inSource: '',
+          inPath: '',
+          houseDocNo: '',
+          // prepayCost: '',
+          // prepayMethod: '',
+          diagnose: '',
+          bedNo: '',
+          deptNo: '',
+          inDate: '',
+        },
+
+        baseFormRules : {
+          idCard:[
+            {required: true, message:'身份证号不能为空',trigger:'blur'},
+            {validator:this.validID,trigger:"blur"}
+          ]
+        },
+        baseInfo:{},
+
+        area: {11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江",
+          31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北",
+          43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏",
+          61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"
+        },
+        rules: {
+          idCard:[
+            {required: true, message:'身份证号不能为空',trigger:'blur',},
+            {validator:this.validID, trigger:'blur'}
+          ],
+          patientName: [
+            { required: true, message: '请输入患者姓名', trigger: 'blur' },
+            //{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          sexCode: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+          ],
+          birthArea: [
+            { required: true, message: '请输入出生地', trigger: 'blur' }
+          ],
+          age: [
+            { required: true, message: '请选择年龄', trigger: 'blur' }
+          ],
+          occupation: [
+            { required: true, message: '请输入职业', trigger: 'blur' }
+          ],
+          // homeTel: [
+          //   { required: true, message: '请输入家庭电话', trigger: 'blur' }
+          // ],
+          linkmanTel: [
+            { required: true, message: '请输入联系人电话', trigger: 'blur' }
+          ],
+          deptNo: [
+            { required: true, message: '请输入科室编号', trigger: 'blur' }
+          ],
+          inSource: [
+            { required: true, message: '请选择入院来源', trigger: 'change' }
+          ],
+          patientState: [
+            { required: true, message: '请输入病人状态', trigger: 'change' }
+          ],
+          nation: [
+            { required: true, message: '请输入民族', trigger: 'blur' }
+          ],
+          country: [
+            { required: true, message: '请输入国籍', trigger: 'blur' }
+          ],
+          mariCode: [
+            { required: true, message: '请选择婚姻状态', trigger: 'change' }
+          ],
+          workTel: [
+            { required: true, message: '请输入单位电话', trigger: 'blur' }
+          ],
+          linkmanName: [
+            { required: true, message: '请输入联系人姓名', trigger: 'blur' }
+          ],
+          linkmanRelation: [
+            { required: true, message: '请选择与患者关系', trigger: 'change' }
+          ],
+          bedNo: [
+            { required: true, message: '请输入病床号', trigger: 'blur' }
+          ],
+          houseDocNo: [
+            { required: true, message: '请输入收住医师号', trigger: 'blur' }
+          ],
+          birthday: [
+            {  required: true, message: '请选择日期', trigger: 'change' }
+          ],
+          dist: [
+            { required: true, message: '请输入籍贯', trigger: 'blur' }
+          ],
+          workName: [
+            { required: true, message: '请输入单位名称', trigger: 'blur' }
+          ],
+          home: [
+            { required: true, message: '请输入家庭住址', trigger: 'blur' }
+          ],
+          linkmanAdd: [
+            { required: true, message: '请输入联系人住址', trigger: 'blur' }
+          ],
+          pactName: [
+            { required: true, message: '请输入合同单位名称', trigger: 'blur' }
+          ],
+          inPath: [
+            { required: true, message: '请选择入院途径', trigger: 'change' }
+          ],
+          diagnose: [
+            { required: true, message: '请输入门诊诊断', trigger: 'blur' }
+          ]
+        },
+        options1: [
+          {
+          index: 1,
+          label: '未婚',
+        }, {
+          index: 2,
+          label: '已婚',
+        }, {
+          index: 3,
+          label: '丧偶',
+        }, {
+          index: 4,
+          label: '离婚',
+        }],
+
+        options2: [
+          {
+          index: 11,
+          label: '国家公务人员',
+        }, {
+          index: 13,
+          label: '专业技术人员',
+        }, {
+          index: 17,
+          label: '职员',
+        }, {
+          index: 21,
+          label: '企业管理人员',
+        },
+          {
+            index: 24,
+            label: '工人',
+          }, {
+            index: 27,
+            label: '农民',
+          }, {
+            index: 31,
+            label: '学生',
+          }, {
+            index: 37,
+            label: '现役军人',
+          },
+          {
+            index: 11,
+            label: '国家公务人员',
+          }, {
+            index: 51,
+            label: '自由职业者',
+          }, {
+            index: 54,
+            label: '个人经营者',
+          }, {
+            index: 70,
+            label: '无业人员',
+          },
+          {
+            index: 80,
+            label: '退（离）休人员',
+          }, {
+            index: 90,
+            label: '其他',
+          }],
+        options3: [
+          {
+          index: 1,
+          label: '配偶',
+        }, {
+          index: 2,
+          label: '子',
+        }, {
+          index: 3,
+          label: '女',
+        }, {
+          index: 4,
+          label: '孙子、孙女或外孙子、外孙女',
+        },
+          {
+            index: 5,
+            label: '父母',
+          }, {
+            index: 6,
+            label: '祖父母或外祖父母',
+          }, {
+            index: 7,
+            label: '兄弟姐妹',
+          }, {
+            index: 8,
+            label: '其他',
+          }],
+        options5: [
+          {
+          index: 0,
+          label: '出院',
+        }, {
+          index: 1,
+          label: '住院',
+        }]
+      }
+    },
     methods: {
       savePatient(formName) {
         this.$refs[formName].validate((valid) => {
             if (valid) {
               var _this = this;
+              var sexCodeTemp = '';
+              if(_this.patient.sexCode == '男'){
+                sexCodeTemp= '1';
+              }else if(_this.patient.sexCode == '女'){
+                sexCodeTemp= '2'
+              }
               var data = {
                 patientName: _this.patient.patientName,
-                sexCode: _this.patient.sexCode,
+                sexCode: sexCodeTemp,
                 idCard: _this.patient.idCard,
                 nation: _this.patient.nation,
                 birthday: _this.patient.birthday,
@@ -190,10 +429,12 @@
                 if (resp.status == 200 && resp.data.status == 'success') {
                   console.log("resp:" + JSON.stringify(resp));
                   alert("添加成功");
+                  console.log("data:"+data.sex);
                 }
               })
             }else {
               console.log('error submit!!');
+
               return false;
             }
         });
@@ -203,229 +444,58 @@
           this.$refs[formName].resetFields();
         }
       },
-    },
-      data() {
-        return {
-          form:'',
-          patient: {
-            cardNo: '',
-            patientName: '',
-            patientState: '',
-            sexCode: '',
-            idCard: '',
-            nation: '',
-            birthday: '',
-            age: '',
-            country: '',
-            dist: '',
-            birthArea: '',
-            mariCode: '',
-            workName: '',
-            occupation: '',
-            workTel: '',
-            home: '',
-            homeTel: '',
-            linkmanName: '',
-            linkmanRelation: '',
-            linkmanAdd: '',
-            linkmanTel: '',
-            pactName: '',
-            inSource: '',
-            inPath: '',
-            houseDocNo: '',
-            // prepayCost: '',
-            // prepayMethod: '',
-            diagnose: '',
-            bedNo: '',
-            deptNo: '',
-            inDate: '',
-          },
-          rules: {
-            patientName: [
-              { required: true, message: '请输入患者姓名', trigger: 'blur' },
-              //{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-            ],
-            sexCode: [
-              { required: true, message: '请选择性别', trigger: 'change' }
-            ],
-            birthArea: [
-              { required: true, message: '请输入出生地', trigger: 'blur' }
-            ],
-            age: [
-              { required: true, message: '请选择年龄', trigger: 'blur' }
-            ],
-            occupation: [
-              { required: true, message: '请输入职业', trigger: 'blur' }
-            ],
-            homeTel: [
-              { required: true, message: '请输入家庭电话', trigger: 'blur' }
-            ],
-            linkmanTel: [
-              { required: true, message: '请输入联系人电话', trigger: 'blur' }
-            ],
-            deptNo: [
-              { required: true, message: '请输入科室编号', trigger: 'blur' }
-            ],
-            inSource: [
-              { required: true, message: '请选择入院来源', trigger: 'change' }
-            ],
-            patientState: [
-              { required: true, message: '请输入病人状态', trigger: 'change' }
-            ],
-            nation: [
-              { required: true, message: '请输入民族', trigger: 'blur' }
-            ],
-            country: [
-              { required: true, message: '请输入国籍', trigger: 'blur' }
-            ],
-            mariCode: [
-              { required: true, message: '请选择婚姻状态', trigger: 'change' }
-            ],
-            workTel: [
-              { required: true, message: '请输入单位电话', trigger: 'blur' }
-            ],
-           linkmanName: [
-              { required: true, message: '请输入联系人姓名', trigger: 'blur' }
-            ],
-            linkmanRelation: [
-              { required: true, message: '请选择与患者关系', trigger: 'change' }
-            ],
-            bedNo: [
-              { required: true, message: '请输入病床号', trigger: 'blur' }
-            ],
-            houseDocNo: [
-              { required: true, message: '请输入收住医师号', trigger: 'blur' }
-            ],
-            idCard: [
-              { required: true, message: '请输入身份证号', trigger: 'blur' }
-            ],
-            birthday: [
-              { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-            ],
-           dist: [
-              { required: true, message: '请输入籍贯', trigger: 'blur' }
-            ],
-            workName: [
-              { required: true, message: '请输入单位名称', trigger: 'blur' }
-            ],
-            home: [
-              { required: true, message: '请输入家庭住址', trigger: 'blur' }
-            ],
-            linkmanAdd: [
-              { required: true, message: '请输入联系人住址', trigger: 'blur' }
-            ],
-            pactName: [
-              { required: true, message: '请输入合同单位名称', trigger: 'blur' }
-            ],
-            inPath: [
-              { required: true, message: '请选择入院途径', trigger: 'change' }
-            ],
-            diagnose: [
-              { required: true, message: '请输入门诊诊断', trigger: 'blur' }
-            ]
-          },
-          options1: [{
-            index: 1,
-            label: '未婚',
-          }, {
-            index: 2,
-            label: '已婚',
-          }, {
-            index: 3,
-            label: '丧偶',
-          }, {
-            index: 4,
-            label: '离婚',
-          }],
-
-          options2: [{
-            index: 11,
-            label: '国家公务人员',
-          }, {
-            index: 13,
-            label: '专业技术人员',
-          }, {
-            index: 17,
-            label: '职员',
-          }, {
-            index: 21,
-            label: '企业管理人员',
-          },
-            {
-              index: 24,
-              label: '工人',
-            }, {
-              index: 27,
-              label: '农民',
-            }, {
-              index: 31,
-              label: '学生',
-            }, {
-              index: 37,
-              label: '现役军人',
-            },
-            {
-              index: 11,
-              label: '国家公务人员',
-            }, {
-              index: 51,
-              label: '自由职业者',
-            }, {
-              index: 54,
-              label: '个人经营者',
-            }, {
-              index: 70,
-              label: '无业人员',
-            },
-            {
-              index: 80,
-              label: '退（离）休人员',
-            }, {
-              index: 90,
-              label: '其他',
-            }],
-          options3: [{
-            index: 1,
-            label: '配偶',
-          }, {
-            index: 2,
-            label: '子',
-          }, {
-            index: 3,
-            label: '女',
-          }, {
-            index: 4,
-            label: '孙子、孙女或外孙子、外孙女',
-          },
-            {
-              index: 5,
-              label: '父母',
-            }, {
-              index: 6,
-              label: '祖父母或外祖父母',
-            }, {
-              index: 7,
-              label: '兄弟姐妹',
-            }, {
-              index: 8,
-              label: '其他',
-            }],
-          options4: [{
-            index: 1,
-            label: '男',
-          }, {
-            index: 2,
-            label: '女',
-          }],
-          options5: [{
-            index: 0,
-            label: '出院',
-          }, {
-            index: 1,
-            label: '住院',
-          }]
+      async validID(rule,value,callback) {
+        let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if (reg.test(value)) {
+          await this.go(value.length);
+          callback()
+        } else {
+          callback(new Error('身份证号码不正确'))
         }
-      }
+      },
+        go(val) {
+          let iden = this.patient.idCard;
+          let sex = null;
+          let birth = null;
+          let myDate = new Date();
+          let month = myDate.getMonth() + 1;
+          let day = myDate.getDate();
+          let age = 0;
+
+          if(val===18){
+            age = myDate.getFullYear() - iden.substring(6, 10) - 1;
+            sex = iden.substring(16,17);
+            birth = iden.substring(6,10)+"-"+iden.substring(10,12)+"-"+iden.substring(12,14)+" 00:00:00";
+            if (iden.substring(10, 12) < month || iden.substring(10, 12) == month && iden.substring(12, 14) <= day) age++;
+
+          }
+          if(val===15){
+            age = myDate.getFullYear() - iden.substring(6, 8) - 1901;
+            sex = iden.substring(13,14);
+            birth = "19"+iden.substring(6,8)+"-"+iden.substring(8,10)+"-"+iden.substring(10,12);
+            if (iden.substring(8, 10) < month || iden.substring(8, 10) == month && iden.substring(10, 12) <= day) age++;
+          }
+
+          if(sex%2 === 0)
+            sex = '0';//女
+          else
+            sex = '1';//男
+
+          if(sex == '0')
+            this.patient.sexCode  = '女';
+          if(sex == '1')
+            this.patient.sexCode  = '男';
+
+
+          this.patient.age = age;
+          this.patient.birthday = birth;
+          this.patient.birthArea = this.area[iden.substring(0,2)];
+          this.patient.dist = this.area[iden.substring(0,2)];
+        }
+
+
+    }
+
 
   }
 </script>

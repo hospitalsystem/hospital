@@ -1,5 +1,7 @@
 <template>
+
 <el-container>
+
   <!--当点击“查看并修改”按钮后，隐藏以下内容-->
   <el-header :inline="true"  :model="formInline"class="cate_mana_header1" v-show="isShow">
     <el-form :inline="true" :model="formInline" class="cate_mana_header2" style="height: 50px">
@@ -74,6 +76,8 @@
         </template>
       </el-table-column>
     </el-table>
+
+
   </el-main>
 
   <!--当点击“查看并修改”按钮后，显示以下内容-->
@@ -260,6 +264,7 @@
     </el-form>
   </el-main>
 </el-container>
+
 </template>
 
 <script>
@@ -616,7 +621,10 @@
         //用于从“查看”界面，返回“查询”界面
         back(){
           this.isShow = !this.isShow;
-        }
+        },
+        current_change:function(currentPage){
+          this.currentPage = currentPage;
+        },
         },
       data(){
         return {
@@ -628,7 +636,9 @@
             searchCondition:''
           },
           tableData:[],
-
+          total: 0,
+          pagesize:10,
+          currentPage:1,
           //以下内容用于查看并修改具体的信息
           form: '',
           patient:{
