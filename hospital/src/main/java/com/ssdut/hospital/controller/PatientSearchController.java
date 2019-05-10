@@ -42,12 +42,12 @@ public class PatientSearchController {
         inpatientJSON.appendField("inSource",inpatient.getInSource());
         inpatientJSON.appendField("inPath",inpatient.getInPath());
         inpatientJSON.appendField("status",inpatient.getStatus());
-        inpatientJSON.appendField("deptNo",inpatient.getDeptNo());
+        inpatientJSON.appendField("deptName",inpatient.getDeptName());
         inpatientJSON.appendField("bedNo",inpatient.getBedNo());
-        inpatientJSON.appendField("houseDocNo",inpatient.getHouseDocNo());
-        inpatientJSON.appendField("chargeDocNo",inpatient.getChargeDocNo());
-        inpatientJSON.appendField("chiefDocNo",inpatient.getChiefDocNo());
-        inpatientJSON.appendField("dutyNurseNo",inpatient.getDutyNurseNo());
+        inpatientJSON.appendField("houseDocName",inpatient.getHouseDocName());
+        inpatientJSON.appendField("chargeDocName",inpatient.getChargeDocName());
+        inpatientJSON.appendField("chiefDocName",inpatient.getChiefDocName());
+        inpatientJSON.appendField("dutyNurseName",inpatient.getDutyNurseName());
         inpatientJSON.appendField("outDate",inpatient.getOutDate());
         inpatientJSON.appendField("outState",inpatient.getOutState());
 
@@ -89,10 +89,8 @@ public class PatientSearchController {
 
     @RequestMapping(value = "/getPatientList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JSONObject getPatientList(@RequestBody JSONObject search) throws Exception{
-        //System.out.println(search.getAsString("data"));
         System.out.println("searchOption"+search.getAsString("searchOption"));
         Integer searchOption = Integer.valueOf(search.getAsString("searchOption"));
-        //System.out.println(searchOption);
         List<Inpatient> InpatientList = new ArrayList();
         List<Patient> PatientList = new ArrayList();
         JSONObject Data = new JSONObject();
@@ -135,15 +133,17 @@ public class PatientSearchController {
                 Integer inpatientNo = Integer.valueOf(search.getAsString("searchCondition"));
                 InpatientList = inpatientDAO.findAllByInpatientNo(inpatientNo);
             }else if(searchOption == 7){
-                //科室号 床位号 收住医师
-                Integer deptNo = Integer.valueOf(search.getAsString("searchCondition"));
-                InpatientList = inpatientDAO.findAllByDeptNo(deptNo);
+                //科室名称
+                String deptName = search.getAsString("searchCondition");
+                InpatientList = inpatientDAO.findAllByDeptName(deptName);
             }else if(searchOption == 8){
+                //床位号
                 Integer bedNo=Integer.valueOf(search.getAsString("searchCondition"));
                 InpatientList = inpatientDAO.findAllByBedNo(bedNo);
             }else if(searchOption == 9){
-                Integer houseDocNo=Integer.valueOf(search.getAsString("searchCondition"));
-                InpatientList = inpatientDAO.findAllByHouseDocNo(houseDocNo);
+                //收住医师
+                String houseDocName=search.getAsString("searchCondition");
+                InpatientList = inpatientDAO.findAllByHouseDocName(houseDocName);
             }
         for(Inpatient temp: InpatientList){
             Patient patientItem = patientDAO.findByIdCard(temp.getIdCard());
@@ -164,9 +164,9 @@ public class PatientSearchController {
             JSONObject inpatientJSONItem=new JSONObject(); //用来将每一条数据存放到inpatientJSON中
 
             inpatientJSONItem.appendField("inpatientNo",inpatientItem.getInpatientNo());
-            inpatientJSONItem.appendField("deptNo",inpatientItem.getDeptNo());
+            inpatientJSONItem.appendField("deptName",inpatientItem.getDeptName());
             inpatientJSONItem.appendField("bedNo",inpatientItem.getBedNo());
-            inpatientJSONItem.appendField("houseDocNo",inpatientItem.getHouseDocNo());
+            inpatientJSONItem.appendField("houseDocName",inpatientItem.getHouseDocName());
             inpatientJSON.add(inpatientJSONItem);
         }
 
@@ -178,6 +178,14 @@ public class PatientSearchController {
             patientJSONItem.appendField("nation",patientItem.getNation());
             patientJSONItem.appendField("workName",patientItem.getWorkName());
             patientJSONItem.appendField("dist",patientItem.getDist());
+            if(patientItem.getPatientState().equals("0")){
+                patientJSONItem.appendField("patientState","住院");
+            }else if(patientItem.getPatientState().equals("1")){
+                patientJSONItem.appendField("patientState","出院");
+            }else if(patientItem.getPatientState().equals("2")){
+                patientJSONItem.appendField("patientState","转院");
+            }
+
 
             patientJSON.add(patientJSONItem);
         }
@@ -208,12 +216,12 @@ public class PatientSearchController {
         inpatient.setInSource(data.getAsString("inSource"));
         inpatient.setInPath(data.getAsString("inPath"));
         inpatient.setStatus(data.getAsString("status"));
-        inpatient.setDeptNo(Integer.valueOf(data.getAsString("deptNo")));
+        inpatient.setDeptName(data.getAsString("deptName"));
         inpatient.setBedNo(Integer.valueOf(data.getAsString("bedNo")));
-        inpatient.setHouseDocNo(Integer.valueOf(data.getAsString("houseDocNo")));
-        inpatient.setChargeDocNo(Integer.valueOf(data.getAsString("chargeDocNo")));
-        inpatient.setChiefDocNo(Integer.valueOf(data.getAsString("chiefDocNo")));
-        inpatient.setDutyNurseNo(Integer.valueOf(data.getAsString("dutyNurseNo")));
+        inpatient.setHouseDocName(data.getAsString("houseDocName"));
+        inpatient.setChargeDocName(data.getAsString("chargeDocName"));
+        inpatient.setChiefDocName(data.getAsString("chiefDocName"));
+        inpatient.setDutyNurseName(data.getAsString("dutyNurseName"));
         inpatient.setOutState(data.getAsString("outState"));
 
         patient.setPatientName(data.getAsString("patientName"));

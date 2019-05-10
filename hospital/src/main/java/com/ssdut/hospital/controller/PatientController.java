@@ -21,9 +21,7 @@ public class PatientController {
     public Info addPatient(@RequestBody JSONObject data) throws Exception {
         System.out.println("1111");
         System.out.println("data:"+data.toJSONString());
-       // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-       // SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String patientName=data.getAsString("patientName");
         String idCard=data.getAsString("idCard");
         String sexCode=data.getAsString("sexCode");
@@ -47,14 +45,14 @@ public class PatientController {
         String patientState=data.getAsString("patientState");
         String inSource=data.getAsString("inSource");
         String inPath=data.getAsString("inPath");
-        Integer houseDocNo=Integer.valueOf(data.getAsString("houseDocNo"));
+        String houseDocName=data.getAsString("houseDocName");
         String diagnose=data.getAsString("diagnose");
       //  Double prepayCost=Double.valueOf(data.getAsString("prepayCost"));
        // String prepayMethod=data.getAsString("prepayMethod");
 
         Date inDate=new Date();//获取当前时间
         System.out.println(inDate);
-        Integer deptNo=Integer.valueOf(data.getAsString("deptNo"));
+        String deptName=data.getAsString("deptName");
         Integer bedNo=Integer.valueOf(data.getAsString("bedNo"));
         Patient patient=new Patient();
        // Prepay prepay=new Prepay();
@@ -84,9 +82,9 @@ public class PatientController {
         inpatient.setPatientName(patientName);
         inpatient.setInSource(inSource);
         inpatient.setInPath(inPath);
-        inpatient.setHouseDocNo(houseDocNo);
+        inpatient.setHouseDocName(houseDocName);
         inpatient.setBedNo(bedNo);
-        inpatient.setDeptNo(deptNo);
+        inpatient.setDeptName(deptName);
         inpatient.setInDate(inDate);
         inpatient.setIdCard(idCard);
         inpatient.setInSource(inSource);
@@ -111,7 +109,6 @@ public class PatientController {
     }
     @GetMapping("/getBed/{number}")
     public Bed getBed(@PathVariable("number")Integer num){
-        System.out.println("111111");
         System.out.println("num:"+num);
         Bed bed= bedDAO.findOne(num);
         return  bed;

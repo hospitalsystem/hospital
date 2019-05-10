@@ -28,14 +28,14 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="家庭电话：" prop="homeTel">
+      <el-form-item label="家庭电话：">
         <el-input v-model="patient.homeTel" ></el-input>
       </el-form-item>
       <el-form-item label="联系人电话：" prop="linkmanTel">
         <el-input v-model="patient.linkmanTel"  ></el-input>
       </el-form-item>
-      <el-form-item label="科室编号："prop="deptNo">
-        <el-input v-model="patient.deptNo"></el-input>
+      <el-form-item label="科室名称："prop="deptName">
+        <el-input v-model="patient.deptName"></el-input>
       </el-form-item>
       <el-form-item label="入院来源：" prop="inSource">
         <el-select v-model="patient.inSource" style="width:202px">
@@ -73,7 +73,7 @@
     </el-option>
   </el-select>
 </el-form-item>
-  <el-form-item label="单位电话：" prop="workTel">
+  <el-form-item label="单位电话：">
   <el-input v-model="patient.workTel"  ></el-input>
 </el-form-item>
   <el-form-item label="联系人姓名：" prop="linkmanName">
@@ -92,16 +92,11 @@
   <el-form-item label="病床编号：" prop="bedNo">
     <el-input v-model="patient.bedNo" ></el-input>
   </el-form-item>
-  <el-form-item label="收住医师：" prop="houseDocNo">
-    <el-input v-model="patient.houseDocNo" ></el-input>
+  <el-form-item label="收住医师：" prop="houseDocName">
+    <el-input v-model="patient.houseDocName" ></el-input>
   </el-form-item>
 </el-col>
 <el-col span="8">
-  <!--<el-form :model="baseInfo" ref="baseForm" :rules="baseFormRules">-->
-  <!--<el-form-item label="身份证号：" prop="idCard">-->
-  <!--<el-input v-model="baseInfo.idCard" ></el-input>-->
-  <!--</el-form-item>-->
-  <!--</el-form>-->
   <el-form-item label="身份证号：" prop="idCard">
     <el-input v-model="patient.idCard" ></el-input>
   </el-form-item>
@@ -114,10 +109,10 @@
   <el-form-item label="工作单位：" prop="workName">
     <el-input v-model="patient.workName" ></el-input>
   </el-form-item>
-  <el-form-item label="家庭住址：" prop="home">
+  <el-form-item label="家庭住址：">
     <el-input v-model="patient.home"  ></el-input>
   </el-form-item>
-  <el-form-item label="联系人地址：" prop="linkmanAdd">
+  <el-form-item label="联系人地址：">
     <el-input v-model="patient.linkmanAdd" ></el-input>
   </el-form-item>
   <el-form-item label="合同单位名称：" prop="pactName">
@@ -174,21 +169,15 @@
           pactName: '',
           inSource: '',
           inPath: '',
-          houseDocNo: '',
+          houseDocName: '',
           // prepayCost: '',
           // prepayMethod: '',
           diagnose: '',
           bedNo: '',
-          deptNo: '',
+          deptName: '',
           inDate: '',
         },
 
-        baseFormRules : {
-          idCard:[
-            {required: true, message:'身份证号不能为空',trigger:'blur'},
-            {validator:this.validID,trigger:"blur"}
-          ]
-        },
         baseInfo:{},
 
         area: {11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江",
@@ -203,7 +192,6 @@
           ],
           patientName: [
             { required: true, message: '请输入患者姓名', trigger: 'blur' },
-            //{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
           sexCode: [
             { required: true, message: '请选择性别', trigger: 'change' }
@@ -217,14 +205,11 @@
           occupation: [
             { required: true, message: '请输入职业', trigger: 'blur' }
           ],
-          // homeTel: [
-          //   { required: true, message: '请输入家庭电话', trigger: 'blur' }
-          // ],
           linkmanTel: [
             { required: true, message: '请输入联系人电话', trigger: 'blur' }
           ],
-          deptNo: [
-            { required: true, message: '请输入科室编号', trigger: 'blur' }
+          deptName: [
+            { required: true, message: '请输入科室名称', trigger: 'blur' }
           ],
           inSource: [
             { required: true, message: '请选择入院来源', trigger: 'change' }
@@ -241,9 +226,6 @@
           mariCode: [
             { required: true, message: '请选择婚姻状态', trigger: 'change' }
           ],
-          workTel: [
-            { required: true, message: '请输入单位电话', trigger: 'blur' }
-          ],
           linkmanName: [
             { required: true, message: '请输入联系人姓名', trigger: 'blur' }
           ],
@@ -253,8 +235,8 @@
           bedNo: [
             { required: true, message: '请输入病床号', trigger: 'blur' }
           ],
-          houseDocNo: [
-            { required: true, message: '请输入收住医师号', trigger: 'blur' }
+          houseDocName: [
+            { required: true, message: '请输入收住医师', trigger: 'blur' }
           ],
           birthday: [
             {  required: true, message: '请选择日期', trigger: 'change' }
@@ -264,12 +246,6 @@
           ],
           workName: [
             { required: true, message: '请输入单位名称', trigger: 'blur' }
-          ],
-          home: [
-            { required: true, message: '请输入家庭住址', trigger: 'blur' }
-          ],
-          linkmanAdd: [
-            { required: true, message: '请输入联系人住址', trigger: 'blur' }
           ],
           pactName: [
             { required: true, message: '请输入合同单位名称', trigger: 'blur' }
@@ -295,7 +271,6 @@
           index: 4,
           label: '离婚',
         }],
-
         options2: [
           {
           index: 11,
@@ -372,10 +347,10 @@
           }],
         options5: [
           {
-          index: 0,
+          index: 1,
           label: '出院',
         }, {
-          index: 1,
+          index: 0,
           label: '住院',
         }]
       }
@@ -414,10 +389,10 @@
                 pactName: _this.patient.pactName,
                 inSource: _this.patient.inSource,
                 inPath: _this.patient.inPath,
-                houseDocNo: _this.patient.houseDocNo,
+                houseDocName: _this.patient.houseDocName,
                 diagnose: _this.patient.diagnose,
                 patientState: _this.patient.patientState,
-                deptNo: _this.patient.deptNo,
+                deptName: _this.patient.deptName,
                 bedNo: _this.patient.bedNo,
                 inDate: _this.patient.inDate,
               };

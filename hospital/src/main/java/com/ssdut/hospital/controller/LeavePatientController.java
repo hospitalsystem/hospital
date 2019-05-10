@@ -6,11 +6,7 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import java.util.List;
 
 @RestController
@@ -47,8 +43,6 @@ public class LeavePatientController {
         List<Prepay> prepay = prepayDAO.findByInpatientNo(inPatientNo1);
         List<Cost> cost = costDAO.findByInpatientNo(inPatientNo1);
 
-
-
         //将inpatient的值加入到JSON中
         inpatientJSON.appendField("inpatientNo",inpatient.getInpatientNo());
         inpatientJSON.appendField("patientName",inpatient.getPatientName());
@@ -57,12 +51,12 @@ public class LeavePatientController {
         inpatientJSON.appendField("inSource",inpatient.getInSource());
         inpatientJSON.appendField("inPath",inpatient.getInPath());
         inpatientJSON.appendField("status",inpatient.getStatus());
-        inpatientJSON.appendField("deptNo",inpatient.getDeptNo());
+        inpatientJSON.appendField("deptName",inpatient.getDeptName());
         inpatientJSON.appendField("bedNo",inpatient.getBedNo());
-        inpatientJSON.appendField("houseDocNo",inpatient.getHouseDocNo());
-        inpatientJSON.appendField("chargeDocNo",inpatient.getChargeDocNo());
-        inpatientJSON.appendField("chiefDocNo",inpatient.getChiefDocNo());
-        inpatientJSON.appendField("dutyNurseNo",inpatient.getDutyNurseNo());
+        inpatientJSON.appendField("houseDocName",inpatient.getHouseDocName());
+        inpatientJSON.appendField("chargeDocName",inpatient.getChargeDocName());
+        inpatientJSON.appendField("chiefDocName",inpatient.getChiefDocName());
+        inpatientJSON.appendField("dutyNurseName",inpatient.getDutyNurseName());
         inpatientJSON.appendField("outDate",inpatient.getOutDate());
         inpatientJSON.appendField("outState",inpatient.getOutState());
 
@@ -353,12 +347,12 @@ public class LeavePatientController {
         inpatient.setInSource(data.getAsString("inSource"));
         inpatient.setInPath(data.getAsString("inPath"));
         inpatient.setStatus(data.getAsString("status"));
-        inpatient.setDeptNo(Integer.valueOf(data.getAsString("deptNo")));
+        inpatient.setDeptName(data.getAsString("deptName"));
         inpatient.setBedNo(Integer.valueOf(data.getAsString("bedNo")));
-        inpatient.setHouseDocNo(Integer.valueOf(data.getAsString("houseDocNo")));
-        inpatient.setChargeDocNo(Integer.valueOf(data.getAsString("chargeDocNo")));
-        inpatient.setChiefDocNo(Integer.valueOf(data.getAsString("chiefDocNo")));
-        inpatient.setDutyNurseNo(Integer.valueOf(data.getAsString("dutyNurseNo")));
+        inpatient.setHouseDocName(data.getAsString("houseDocName"));
+        inpatient.setChargeDocName(data.getAsString("chargeDocName"));
+        inpatient.setChiefDocName(data.getAsString("chiefDocName"));
+        inpatient.setDutyNurseName(data.getAsString("dutyNurseName"));
 
         inpatientDAO.save(inpatient);
         patientDAO.save(patient);
@@ -379,12 +373,12 @@ public class LeavePatientController {
         inpatientJSON.appendField("inSource",inpatientTemp.getInSource());
         inpatientJSON.appendField("inPath",inpatientTemp.getInPath());
         inpatientJSON.appendField("status",inpatientTemp.getStatus());
-        inpatientJSON.appendField("deptNo",inpatientTemp.getDeptNo());
+        inpatientJSON.appendField("deptName",inpatientTemp.getDeptName());
         inpatientJSON.appendField("bedNo",inpatientTemp.getBedNo());
-        inpatientJSON.appendField("houseDocNo",inpatientTemp.getHouseDocNo());
-        inpatientJSON.appendField("chargeDocNo",inpatientTemp.getChargeDocNo());
-        inpatientJSON.appendField("chiefDocNo",inpatientTemp.getChiefDocNo());
-        inpatientJSON.appendField("dutyNurseNo",inpatientTemp.getDutyNurseNo());
+        inpatientJSON.appendField("houseDocName",inpatientTemp.getHouseDocName());
+        inpatientJSON.appendField("chargeDocName",inpatientTemp.getChargeDocName());
+        inpatientJSON.appendField("chiefDocName",inpatientTemp.getChiefDocName());
+        inpatientJSON.appendField("dutyNurseName",inpatientTemp.getDutyNurseName());
 
 
         System.out.println("住院时间是："+inpatientJSON.getAsString("inDate"));

@@ -1,7 +1,5 @@
 <template>
-
 <el-container>
-
   <!--当点击“查看并修改”按钮后，隐藏以下内容-->
   <el-header :inline="true"  :model="formInline"class="cate_mana_header1" v-show="isShow">
     <el-form :inline="true" :model="formInline" class="cate_mana_header2" style="height: 50px">
@@ -11,7 +9,7 @@
           <el-option label="病历号" value="1"></el-option>
           <el-option label="患者姓名" value="2"></el-option>
           <el-option label="住院号" value="6"></el-option>
-          <el-option label="科室号" value="7"></el-option>
+          <el-option label="科室名称" value="7"></el-option>
           <el-option label="床位号" value="8"></el-option>
           <el-option label="民族" value="3"></el-option>
           <el-option label="工作单位" value="4"></el-option>
@@ -28,7 +26,7 @@
   <br>
   <el-main class="cate_mana_main"  v-show="isShow">
     <el-table
-      :data="tableData"
+      :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
       stripe
       style="width: 100%">
       <el-table-column
@@ -56,16 +54,20 @@
         label="籍贯">
       </el-table-column>
       <el-table-column
-        prop="deptNo"
-        label="科室">
+        prop="deptName"
+        label="科室名称">
       </el-table-column>
       <el-table-column
         prop="bedNo"
         label="病床号">
       </el-table-column>
       <el-table-column
-        prop="houseDocNo"
+        prop="houseDocName"
         label="收住医师">
+      </el-table-column>
+      <el-table-column
+        prop="patientState"
+        label="病人状态">
       </el-table-column>
       <el-table-column
         fixed="right"
@@ -75,9 +77,17 @@
           <el-button @click="ShowAndEditPatientInfo(scope.row.inpatientNo)" type="text" size="small">查看</el-button>
         </template>
       </el-table-column>
+
     </el-table>
-
-
+    <div class="block">
+      <el-pagination
+        layout="prev, pager, next"
+        :pageSize="pageSize"
+        background
+        @current-change="CurrentChange"
+        :total="tableData.length">
+      </el-pagination>
+    </div>
   </el-main>
 
   <!--当点击“查看并修改”按钮后，显示以下内容-->
@@ -126,8 +136,8 @@
         <el-form-item label="联系人电话：" prop="linkmanTel">
           <el-input v-model="patient.linkmanTel"  ></el-input>
         </el-form-item>
-        <el-form-item label="科室编号："prop="deptNo">
-          <el-input v-model="patient.deptNo"></el-input>
+        <el-form-item label="科室名称："prop="deptName">
+          <el-input v-model="patient.deptName"></el-input>
         </el-form-item>
         <el-form-item label="入院来源：" prop="inSource">
           <el-select v-model="patient.inSource" style="width:202px">
@@ -137,8 +147,8 @@
             <el-option label="转院" value="4"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="主治医师" prop="chargeDocNo">
-          <el-input v-model="patient.chargeDocNo"></el-input>
+        <el-form-item label="主治医师" prop="chargeDocName">
+          <el-input v-model="patient.chargeDocName"></el-input>
         </el-form-item>
         <el-form-item label="住院日期：" required prop="inDate">
           <el-form-item >
@@ -195,11 +205,11 @@
         <el-form-item label="病床编号：" prop="bedNo">
           <el-input v-model="patient.bedNo" ></el-input>
         </el-form-item>
-        <el-form-item label="收住医师：" prop="houseDocNo">
-          <el-input v-model="patient.houseDocNo" ></el-input>
+        <el-form-item label="收住医师：" prop="houseDocName">
+          <el-input v-model="patient.houseDocName" ></el-input>
         </el-form-item>
-        <el-form-item label="责任护士" prop="dutyNurseNo">
-          <el-input v-model="patient.dutyNurseNo"></el-input>
+        <el-form-item label="责任护士" prop="dutyNurseName">
+          <el-input v-model="patient.dutyNurseName"></el-input>
         </el-form-item>
         <el-form-item  label="出院日期：" required prop="outDate">
           <el-form-item >
@@ -241,7 +251,7 @@
           <el-input v-model="patient.status"></el-input>
         </el-form-item>
         <el-form-item label="主任医师" prop="chiefDocNo">
-          <el-input v-model="patient.chiefDocNo"></el-input>
+          <el-input v-model="patient.chiefDocName"></el-input>
         </el-form-item>
 
 
@@ -294,11 +304,12 @@
                   cardNo:'',
                   patientName: '',
                   workName: '',
-                  deptNo: '',
+                  deptName: '',
                   houseDocNo: '',
                   bedNo: '',
                   dist: '',
-                  nation:''
+                  nation:'',
+                  patientState:''
                 }
                 form.patientName = _this.patientList[i].patientName;
                 form.cardNo = _this.patientList[i].cardNo;
@@ -306,9 +317,10 @@
                 form.nation = _this.patientList[i].nation;
                 form.workName = _this.patientList[i].workName;
                 form.dist = _this.patientList[i].dist;
-                form.deptNo = _this.inpatientList[i].deptNo;
+                form.deptName = _this.inpatientList[i].deptName;
                 form.bedNo = _this.inpatientList[i].bedNo;
-                form.houseDocNo = _this.inpatientList[i].houseDocNo;
+                form.houseDocName = _this.inpatientList[i].houseDocName;
+                form.patientState = _this.patientList[i].patientState;
 
                 _this.tableData.push(form);
               }
@@ -326,11 +338,8 @@
 
         //点击某一住院信息后，查看或修改某个用户的信息
         ShowAndEditPatientInfo(row){
-          console.log('当前信息的住院号是'+row);
           this.isShow = !this.isShow; //隐藏查询列表界面，展示特定住院记录
-
           var _this = this;
-
           postRequest("/getPatient",{inPatientNo : row}).then(
             resp=> {
               if (resp.status == 200) {
@@ -443,12 +452,12 @@
                 _this.patient.inPath = '外市';
               }
               _this.patient.status = inpatientJSON.status;
-              _this.patient.deptNo = inpatientJSON.deptNo;
+              _this.patient.deptName = inpatientJSON.deptName;
               _this.patient.bedNo = inpatientJSON.bedNo;
-              _this.patient.houseDocNo = inpatientJSON.houseDocNo;
-              _this.patient.chargeDocNo = inpatientJSON.chargeDocNo;
-              _this.patient.chiefDocNo = inpatientJSON.chiefDocNo;
-              _this.patient.dutyNurseNo = inpatientJSON.dutyNurseNo;
+              _this.patient.houseDocName = inpatientJSON.houseDocName;
+              _this.patient.chargeDocName = inpatientJSON.chargeDocName;
+              _this.patient.chiefDocName = inpatientJSON.chiefDocName;
+              _this.patient.dutyNurseName = inpatientJSON.dutyNurseName;
               _this.patient.outDate = inpatientJSON.outDate;
               if(inpatientJSON.outState == 1){
                 _this.patient.outState = '治愈';
@@ -595,12 +604,12 @@
             inSource:_this.patient.inSource,
             inPath:_this.patient.inPath,
             status:_this.patient.status,
-            deptNo:_this.patient.deptNo,
+            deptName:_this.patient.deptName,
             bedNo:_this.patient.bedNo,
-            houseDocNo:_this.patient.houseDocNo,
-            chargeDocNo:_this.patient.chargeDocNo,
-            chiefDocNo:_this.patient.chiefDocNo,
-            dutyNurseNo:_this.patient.dutyNurseNo,
+            houseDocName:_this.patient.houseDocName,
+            chargeDocName:_this.patient.chargeDocName,
+            chiefDocName:_this.patient.chiefDocName,
+            dutyNurseName:_this.patient.dutyNurseName,
             outState:_this.patient.outState,
           }
 
@@ -622,12 +631,15 @@
         back(){
           this.isShow = !this.isShow;
         },
-        current_change:function(currentPage){
+        CurrentChange:function(currentPage){
           this.currentPage = currentPage;
+          console.log(this.currentPage)
         },
         },
       data(){
         return {
+          currentPage:1, //分页的默认开始页数
+          pageSize: 3, //每页显示的数据个数
           isShow: true, //用于控制界面的显示
           patientList:[],//接收返回的满足查询条件的所有病人信息
           inpatientList:[],//接收返回的满足查询条件的所有住院信息
@@ -671,12 +683,12 @@
             inSource:'',
             inPath:'',
             status:'',
-            deptNo:'',
+            deptName:'',
             bedNo:'',
-            houseDocNo:'',
-            chargeDocNo:'',
-            chiefDocNo:'',
-            dutyNurseNo:'',
+            houseDocName:'',
+            chargeDocName:'',
+            chiefDocName:'',
+            dutyNurseName:'',
             outDate:'',
             outState:'',
 

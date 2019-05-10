@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './utils/filter_utils.js'
 import Vuex from 'vuex'
+import htmlToPdf from './utils/htmlToPdf'
+Vue.use(htmlToPdf)
 Vue.use(Vuex);
 
 Vue.use(ElementUI)

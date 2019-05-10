@@ -102,23 +102,23 @@
         <el-form-item label="入院情况：" prop="status">
           <el-input v-model="inpatient.status" placeholder="入院情况" ></el-input>
         </el-form-item>
-        <el-form-item label="科室编号：" prop="deptNo">
-          <el-input v-model="inpatient.deptNo" placeholder="科室编号" ></el-input>
+        <el-form-item label="科室名称：" prop="deptName">
+          <el-input v-model="inpatient.deptName" placeholder="科室名称" ></el-input>
         </el-form-item>
         <el-form-item label="病床编号：" prop="bedNo">
           <el-input v-model="inpatient.bedNo" placeholder="病床编号" ></el-input>
         </el-form-item>
-        <el-form-item label="住院医师编号：" prop="houseDocNo">
-          <el-input v-model="inpatient.houseDocNo" placeholder="住院医师编号" ></el-input>
+        <el-form-item label="住院医师：" prop="houseDocName">
+          <el-input v-model="inpatient.houseDocName" placeholder="住院医师" ></el-input>
         </el-form-item>
-        <el-form-item label="主治医师编号：" prop="chargeDocNo">
-          <el-input v-model="inpatient.chargeDocNo" placeholder="主治医师编号" ></el-input>
+        <el-form-item label="主治医师：" prop="chargeDocName">
+          <el-input v-model="inpatient.chargeDocName" placeholder="主治医师" ></el-input>
         </el-form-item>
-        <el-form-item label="主任医师编号：" prop="chiefDocNo">
-          <el-input v-model="inpatient.chiefDocNo" placeholder="主任医师编号" ></el-input>
+        <el-form-item label="主任医师：" prop="chiefDocName">
+          <el-input v-model="inpatient.chiefDocName" placeholder="主任医师" ></el-input>
         </el-form-item>
-        <el-form-item label="责任护士编号：" prop="dutyNurseNo">
-          <el-input v-model="inpatient.dutyNurseNo" placeholder="责任护士编号" ></el-input>
+        <el-form-item label="责任护士：" prop="dutyNurseName">
+          <el-input v-model="inpatient.dutyNurseName" placeholder="责任护士" ></el-input>
         </el-form-item>
         <el-row>
           <el-button type="primary" size="medium" style="margin-left: 10px" @click="recallPatientRegister('inpatient')" >
@@ -151,23 +151,23 @@
         <el-form-item label="入院情况：">
           <el-input readonly="true" v-model="inpatient.status"></el-input>
         </el-form-item>
-        <el-form-item label="科室编号：">
-          <el-input readonly="true" v-model="inpatient.deptNo"></el-input>
+        <el-form-item label="科室名称：">
+          <el-input readonly="true" v-model="inpatient.deptName"></el-input>
         </el-form-item>
         <el-form-item label="病床编号：">
           <el-input readonly="true" v-model="inpatient.bedNo"></el-input>
         </el-form-item>
-        <el-form-item label="住院医师编号：">
-          <el-input readonly="true" v-model="inpatient.houseDocNo"></el-input>
+        <el-form-item label="住院医师：">
+          <el-input readonly="true" v-model="inpatient.houseDocName"></el-input>
         </el-form-item>
-        <el-form-item label="主治医师编号：">
-          <el-input readonly="true" v-model="inpatient.chargeDocNo"></el-input>
+        <el-form-item label="主治医师：">
+          <el-input readonly="true" v-model="inpatient.chargeDocName"></el-input>
         </el-form-item>
-        <el-form-item label="主任医师编号：">
-          <el-input readonly="true" v-model="inpatient.chiefDocNo"></el-input>
+        <el-form-item label="主任医师：">
+          <el-input readonly="true" v-model="inpatient.chiefDocName"></el-input>
         </el-form-item>
-        <el-form-item label="责任护士编号：">
-          <el-input readonly="true" v-model="inpatient.dutyNurseNo"></el-input>
+        <el-form-item label="责任护士：">
+          <el-input readonly="true" v-model="inpatient.dutyNurseName"></el-input>
         </el-form-item>
       </el-form>
     </el-main>
@@ -270,12 +270,12 @@
           inSource: '',
           inPath: '',
           status: '',
-          deptNo: '',
+          deptName: '',
           bedNo: '',
-          houseDocNo: '',
-          chargeDocNo: '',
-          chiefDocNo: '',
-          dutyNurseNo: '',
+          houseDocName: '',
+          chargeDocName: '',
+          chiefDocName: '',
+          dutyNurseName: '',
           outDate: '',
           outState: ''
         },
@@ -345,23 +345,23 @@
           status:[
             { required: true, message: '请输入入院情况', trigger: 'blur'},
           ],
-          deptNo:[
-            { required: true, message: '请输入科室编号', trigger: 'blur'},
+          deptName:[
+            { required: true, message: '请输入科室名称', trigger: 'blur'},
           ],
           bedNo:[
             { required: true, message: '请输入病床号', trigger: 'blur'},
           ],
-          houseDocNo:[
-            { required: true, message: '请输入住院医师编号', trigger: 'blur'},
+          houseDocName:[
+            { required: true, message: '请输入住院医师', trigger: 'blur'},
           ],
-          chargeDocNo:[
-            { required: true, message: '请输入主治医师编号', trigger: 'blur'},
-          ],
-          chiefDocNo:[
+          chargeDocName:[
             { required: true, message: '请输入主治医师', trigger: 'blur'},
           ],
-          dutyNurseNo:[
-            { required: true, message: '请输入责任护士编号', trigger: 'blur'},
+          chiefDocName:[
+            { required: true, message: '请输入主任医师', trigger: 'blur'},
+          ],
+          dutyNurseName:[
+            { required: true, message: '请输入责任护士', trigger: 'blur'},
           ]
         }
       }
@@ -491,12 +491,12 @@
           inSource: _this.inpatient.inSource,
           inPath : _this.inpatient.inPath,
           status: _this.inpatient.status,
-          deptNo: _this.inpatient.deptNo,
+          deptName: _this.inpatient.deptName,
           bedNo: _this.inpatient.bedNo,
-          houseDocNo: _this.inpatient.houseDocNo,
-          chargeDocNo: _this.inpatient.chargeDocNo,
-          chiefDocNo: _this.inpatient.chiefDocNo,
-          dutyNurseNo: _this.inpatient.dutyNurseNo,
+          houseDocName: _this.inpatient.houseDocName,
+          chargeDocName: _this.inpatient.chargeDocName,
+          chiefDocName: _this.inpatient.chiefDocName,
+          dutyNurseName: _this.inpatient.dutyNurseName,
           //不需要outDate和outState
         }
 
@@ -530,12 +530,12 @@
                   _this.inpatient.inPath = '外市';
                 }
                 _this.inpatient.status = inpatientJSON.status;
-                _this.inpatient.deptNo = inpatientJSON.deptNo;
+                _this.inpatient.deptName = inpatientJSON.deptName;
                 _this.inpatient.bedNo = inpatientJSON.bedNo;
-                _this.inpatient.houseDocNo = inpatientJSON.houseDocNo;
-                _this.inpatient.chargeDocNo = inpatientJSON.chargeDocNo;
-                _this.inpatient.chiefDocNo = inpatientJSON.chiefDocNo;
-                _this.inpatient.dutyNurseNo = inpatientJSON.dutyNurseNo;
+                _this.inpatient.houseDocName = inpatientJSON.houseDocName;
+                _this.inpatient.chargeDocName = inpatientJSON.chargeDocName;
+                _this.inpatient.chiefDocName = inpatientJSON.chiefDocName;
+                _this.inpatient.dutyNurseName = inpatientJSON.dutyNurseName;
 
                 if (inpatientJSON.outState == 1) {
                   _this.inpatient.outState = '治愈';
@@ -554,7 +554,6 @@
                 }
               }
             })
-
           }else{
             alert('必填内容不能为空');
             return;

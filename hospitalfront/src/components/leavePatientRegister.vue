@@ -21,7 +21,7 @@
           <el-input readonly="true" v-model="patient.sexCode" placeholder="性别"></el-input>
         </el-form-item>
         <el-form-item label="住院科室:">
-          <el-input readonly="true" v-model="inpatient.deptNo" placeholder="住院科室"></el-input>
+          <el-input readonly="true" v-model="inpatient.deptName" placeholder="住院科室"></el-input>
         </el-form-item>
         <el-form-item label="病床号:">
           <el-input readonly="true" v-model="inpatient.bedNo" placeholder="病床号"></el-input>
@@ -154,216 +154,220 @@
     </el-main>
 
 
-    <!--出院成功以后会展示以下界面-->
-    <el-header class="cate_mana_header" v-show="!isShow">
-      <p>住院详情如下</p>
-    </el-header>
+    <div class="row" id="pdfDom" style="padding-top: 55px;background-color:#fff;">
+      <!--出院成功以后会展示以下界面-->
+      <el-header class="cate_mana_header" v-show="!isShow">
+        <p>住院详情如下</p>
+      </el-header>
 
-    <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
-        <el-form-item label="住院编号:">
-          <el-input readonly="true" v-model="inpatient.inpatientNo" ></el-input>
-        </el-form-item>
-        <el-form-item label="病人姓名:">
-          <el-input readonly="true" v-model="inpatient.patientName" ></el-input>
-        </el-form-item>
-        <el-form-item label="身份证号：">
-          <el-input readonly="true" v-model="inpatient.idCard"></el-input>
-        </el-form-item>
-        <el-form-item label="入院时间：">
-          <el-input readonly="true" v-model="inpatient.inDate"></el-input>
-        </el-form-item>
-        <el-form-item label="入院来源：">
-          <el-input readonly="true" v-model="inpatient.inSource"></el-input>
-        </el-form-item>
-        <el-form-item label="入院途径：">
-          <el-input readonly="true" v-model="inpatient.inPath"></el-input>
-        </el-form-item>
-        <el-form-item label="入院情况：">
-          <el-input readonly="true" v-model="inpatient.status"></el-input>
-        </el-form-item>
-        <el-form-item label="科室编号：">
-          <el-input readonly="true" v-model="inpatient.deptNo"></el-input>
-        </el-form-item>
-        <el-form-item label="病床编号：">
-          <el-input readonly="true" v-model="inpatient.bedNo"></el-input>
-        </el-form-item>
-        <el-form-item label="住院医师编号：">
-          <el-input readonly="true" v-model="inpatient.houseDocNo"></el-input>
-        </el-form-item>
-        <el-form-item label="主治医师编号：">
-          <el-input readonly="true" v-model="inpatient.chargeDocNo"></el-input>
-        </el-form-item>
-        <el-form-item label="主任医师编号：">
-          <el-input readonly="true" v-model="inpatient.chiefDocNo"></el-input>
-        </el-form-item>
-        <el-form-item label="责任护士编号：">
-          <el-input readonly="true" v-model="inpatient.dutyNurseNo"></el-input>
-        </el-form-item>
-        <el-form-item label="出院日期：">
-          <el-input readonly="true" v-model="inpatient.outDate"></el-input>
-        </el-form-item>
-        <el-form-item label="出院情况：">
-          <el-input readonly="true" v-model="inpatient.outState"></el-input>
-        </el-form-item>
-      </el-form>
-    </el-main>
+      <el-main class="cate_mana_second" v-show="!isShow">
+        <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
+          <el-form-item label="住院编号:">
+            <el-input readonly="true" v-model="inpatient.inpatientNo" ></el-input>
+          </el-form-item>
+          <el-form-item label="病人姓名:">
+            <el-input readonly="true" v-model="inpatient.patientName" ></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号：">
+            <el-input readonly="true" v-model="inpatient.idCard"></el-input>
+          </el-form-item>
+          <el-form-item label="入院时间：">
+            <el-input readonly="true" v-model="inpatient.inDate"></el-input>
+          </el-form-item>
+          <el-form-item label="入院来源：">
+            <el-input readonly="true" v-model="inpatient.inSource"></el-input>
+          </el-form-item>
+          <el-form-item label="入院途径：">
+            <el-input readonly="true" v-model="inpatient.inPath"></el-input>
+          </el-form-item>
+          <el-form-item label="入院情况：">
+            <el-input readonly="true" v-model="inpatient.status"></el-input>
+          </el-form-item>
+          <el-form-item label="科室名称：">
+            <el-input readonly="true" v-model="inpatient.deptName"></el-input>
+          </el-form-item>
+          <el-form-item label="病床编号：">
+            <el-input readonly="true" v-model="inpatient.bedNo"></el-input>
+          </el-form-item>
+          <el-form-item label="住院医师：">
+            <el-input readonly="true" v-model="inpatient.houseDocName"></el-input>
+          </el-form-item>
+          <el-form-item label="主治医师：">
+            <el-input readonly="true" v-model="inpatient.chargeDocName"></el-input>
+          </el-form-item>
+          <el-form-item label="主任医师：">
+            <el-input readonly="true" v-model="inpatient.chiefDocName"></el-input>
+          </el-form-item>
+          <el-form-item label="责任护士：">
+            <el-input readonly="true" v-model="inpatient.dutyNurseName"></el-input>
+          </el-form-item>
+          <el-form-item label="出院日期：">
+            <el-input readonly="true" v-model="inpatient.outDate"></el-input>
+          </el-form-item>
+          <el-form-item label="出院情况：">
+            <el-input readonly="true" v-model="inpatient.outState"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-main>
 
-    <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
-        <el-form-item label="病历编号：">
-          <el-input readonly="true" v-model="patient.cardNo"></el-input>
-        </el-form-item>
-        <el-form-item label="病人姓名：">
-          <el-input readonly="true" v-model="patient.patientName"></el-input>
-        </el-form-item>
-        <el-form-item label="性别：">
-          <el-input readonly="true" v-model="patient.sexCode"></el-input>
-        </el-form-item>
-        <el-form-item label="身份证号：">
-          <el-input readonly="true" v-model="patient.idcard"></el-input>
-        </el-form-item>
-        <el-form-item label="民族：">
-          <el-input readonly="true" v-model="patient.nation"></el-input>
-        </el-form-item>
-        <el-form-item label="出生年月：">
-          <el-input readonly="true" v-model="patient.birthday"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄：">
-          <el-input readonly="true" v-model="patient.age"></el-input>
-        </el-form-item>
-        <el-form-item label="国籍：">
-          <el-input readonly="true" v-model="patient.country"></el-input>
-        </el-form-item>
-        <el-form-item label="籍贯：">
-          <el-input readonly="true" v-model="patient.dist"></el-input>
-        </el-form-item>
-        <el-form-item label="出生地：">
-          <el-input readonly="true" v-model="patient.birthArea"></el-input>
-        </el-form-item>
-        <el-form-item label="婚姻状况：">
-          <el-input readonly="true" v-model="patient.mariCode"></el-input>
-        </el-form-item>
-        <el-form-item label="工作单位：">
-          <el-input readonly="true" v-model="patient.workName"></el-input>
-        </el-form-item>
-        <el-form-item label="职业：">
-          <el-input readonly="true" v-model="patient.occupation"></el-input>
-        </el-form-item>
-        <el-form-item label="单位电话：">
-          <el-input readonly="true" v-model="patient.workTel"></el-input>
-        </el-form-item>
-        <el-form-item label="家庭住址：">
-          <el-input readonly="true" v-model="patient.home"></el-input>
-        </el-form-item>
-        <el-form-item label="家庭电话：">
-          <el-input readonly="true" v-model="patient.homeTel"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人姓名：">
-          <el-input readonly="true" v-model="patient.linkmanName"></el-input>
-        </el-form-item>
-        <el-form-item label="与患者关系：">
-          <el-input readonly="true" v-model="patient.linkmanRelation"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人地址：">
-          <el-input readonly="true" v-model="patient.linkmanAdd"></el-input>
-        </el-form-item>
-        <el-form-item label="联系人电话：">
-          <el-input readonly="true" v-model="patient.linkmanTel"></el-input>
-        </el-form-item>
-        <el-form-item label="合同单位名称：">
-          <el-input readonly="true" v-model="patient.pactName"></el-input>
-        </el-form-item>
-        <el-form-item label="病人状态：">
-          <el-input readonly="true" v-model="this.patient.patientState"></el-input>
-        </el-form-item>
-      </el-form>
-    </el-main>
+      <el-main class="cate_mana_second" v-show="!isShow">
+        <el-form :inline="true" :model="form" class="demo-form-inline" align="left" labelWidth="110px">
+          <el-form-item label="病历编号：">
+            <el-input readonly="true" v-model="patient.cardNo"></el-input>
+          </el-form-item>
+          <el-form-item label="病人姓名：">
+            <el-input readonly="true" v-model="patient.patientName"></el-input>
+          </el-form-item>
+          <el-form-item label="性别：">
+            <el-input readonly="true" v-model="patient.sexCode"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号：">
+            <el-input readonly="true" v-model="patient.idcard"></el-input>
+          </el-form-item>
+          <el-form-item label="民族：">
+            <el-input readonly="true" v-model="patient.nation"></el-input>
+          </el-form-item>
+          <el-form-item label="出生年月：">
+            <el-input readonly="true" v-model="patient.birthday"></el-input>
+          </el-form-item>
+          <el-form-item label="年龄：">
+            <el-input readonly="true" v-model="patient.age"></el-input>
+          </el-form-item>
+          <el-form-item label="国籍：">
+            <el-input readonly="true" v-model="patient.country"></el-input>
+          </el-form-item>
+          <el-form-item label="籍贯：">
+            <el-input readonly="true" v-model="patient.dist"></el-input>
+          </el-form-item>
+          <el-form-item label="出生地：">
+            <el-input readonly="true" v-model="patient.birthArea"></el-input>
+          </el-form-item>
+          <el-form-item label="婚姻状况：">
+            <el-input readonly="true" v-model="patient.mariCode"></el-input>
+          </el-form-item>
+          <el-form-item label="工作单位：">
+            <el-input readonly="true" v-model="patient.workName"></el-input>
+          </el-form-item>
+          <el-form-item label="职业：">
+            <el-input readonly="true" v-model="patient.occupation"></el-input>
+          </el-form-item>
+          <el-form-item label="单位电话：">
+            <el-input readonly="true" v-model="patient.workTel"></el-input>
+          </el-form-item>
+          <el-form-item label="家庭住址：">
+            <el-input readonly="true" v-model="patient.home"></el-input>
+          </el-form-item>
+          <el-form-item label="家庭电话：">
+            <el-input readonly="true" v-model="patient.homeTel"></el-input>
+          </el-form-item>
+          <el-form-item label="联系人姓名：">
+            <el-input readonly="true" v-model="patient.linkmanName"></el-input>
+          </el-form-item>
+          <el-form-item label="与患者关系：">
+            <el-input readonly="true" v-model="patient.linkmanRelation"></el-input>
+          </el-form-item>
+          <el-form-item label="联系人地址：">
+            <el-input readonly="true" v-model="patient.linkmanAdd"></el-input>
+          </el-form-item>
+          <el-form-item label="联系人电话：">
+            <el-input readonly="true" v-model="patient.linkmanTel"></el-input>
+          </el-form-item>
+          <el-form-item label="合同单位名称：">
+            <el-input readonly="true" v-model="patient.pactName"></el-input>
+          </el-form-item>
+          <el-form-item label="病人状态：">
+            <el-input readonly="true" v-model="this.patient.patientState"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-main>
 
-    <el-main class="cate_mana_second" v-show="!isShow">
-      <el-form :inline="true" :model="form" class="demo-form-inline"  align="left" labelWidth="110px">
-        <el-form-item label="预交金总额:">
-          <el-input readonly="true" v-model="prepayAll" ></el-input>
-        </el-form-item>
-        <el-form-item label="消费总额:">
-          <el-input readonly="true" v-model="costAll"></el-input>
-        </el-form-item>
-      </el-form>
-    </el-main>
+      <el-main class="cate_mana_second" v-show="!isShow">
+        <el-form :inline="true" :model="form" class="demo-form-inline"  align="left" labelWidth="110px">
+          <el-form-item label="预交金总额:">
+            <el-input readonly="true" v-model="prepayAll" ></el-input>
+          </el-form-item>
+          <el-form-item label="消费总额:">
+            <el-input readonly="true" v-model="costAll"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-main>
 
-    <el-main class="cate_mana_main" v-show="!isShow">
-      <p>预交金详情</p>
-      <el-table
-        :data="this.prepay"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="inpatientNo"
-          label="住院编号">
-        </el-table-column>
-        <el-table-column
-          prop="happenNo"
-          label="发生编号">
-        </el-table-column>
-        <el-table-column
-          prop="patientName"
-          label="姓名">
-        </el-table-column>
-        <el-table-column
-          prop="prepayCost"
-          label="预交金额">
-        </el-table-column>
-        <el-table-column
-          prop="recipeNo"
-          label="收据号">
-        </el-table-column>
-        <el-table-column
-          prop="prepayState"
-          label="预交金状态">
-        </el-table-column>
-        <el-table-column
-          prop="issettlement"
-          label="是否结算">
-        </el-table-column>
-        <el-table-column
-          prop="staffNo"
-          label="操作员编号">
-        </el-table-column>
-        <el-table-column
-          prop="operDate"
-          label="操作日期">
-        </el-table-column>
-        <el-table-column
-          prop="prepayMethod"
-          label="预交金支付方式">
-        </el-table-column>
-      </el-table>
-    </el-main>
+      <el-main class="cate_mana_main" v-show="!isShow">
+        <p>预交金详情</p>
+        <el-table
+          :data="this.prepay"
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="inpatientNo"
+            label="住院编号">
+          </el-table-column>
+          <el-table-column
+            prop="happenNo"
+            label="发生编号">
+          </el-table-column>
+          <el-table-column
+            prop="patientName"
+            label="姓名">
+          </el-table-column>
+          <el-table-column
+            prop="prepayCost"
+            label="预交金额">
+          </el-table-column>
+          <el-table-column
+            prop="recipeNo"
+            label="收据号">
+          </el-table-column>
+          <el-table-column
+            prop="prepayState"
+            label="预交金状态">
+          </el-table-column>
+          <el-table-column
+            prop="issettlement"
+            label="是否结算">
+          </el-table-column>
+          <el-table-column
+            prop="staffNo"
+            label="操作员编号">
+          </el-table-column>
+          <el-table-column
+            prop="operDate"
+            label="操作日期">
+          </el-table-column>
+          <el-table-column
+            prop="prepayMethod"
+            label="预交金支付方式">
+          </el-table-column>
+        </el-table>
+      </el-main>
 
-    <el-main class="cate_mana_main" v-show="!isShow">
-      <p>消费详情</p>
-      <el-table
-        :data="this.cost"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="inpatientNo"
-          label="住院编号">
-        </el-table-column>
-        <el-table-column
-          prop="happenNo"
-          label="发生序号">
-        </el-table-column>
-        <el-table-column
-          prop="costName"
-          label="开销名称">
-        </el-table-column>
-        <el-table-column
-          prop="costAmount"
-          label="费用金额">
-        </el-table-column>
-      </el-table>/
-    </el-main>
+      <el-main class="cate_mana_main" v-show="!isShow">
+        <p>消费详情</p>
+        <el-table
+          :data="this.cost"
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="inpatientNo"
+            label="住院编号">
+          </el-table-column>
+          <el-table-column
+            prop="happenNo"
+            label="发生序号">
+          </el-table-column>
+          <el-table-column
+            prop="costName"
+            label="开销名称">
+          </el-table-column>
+          <el-table-column
+            prop="costAmount"
+            label="费用金额">
+          </el-table-column>
+        </el-table>
+      </el-main>
+    </div>
+    <el-button type="button" class="btn btn-primary"v-on:click="getPdf()" v-show="!isShow">导出PDF</el-button>
+
   </el-container>
 
 </template>
@@ -389,12 +393,12 @@
           inSource:'',
           inPath:'',
           status:'',
-          deptNo:'',
+          deptName:'',
           bedNo:'',
-          houseDocNo:'',
-          chargeDocNo:'',
-          chiefDocNo:'',
-          dutyNurseNo:'',
+          houseDocName:'',
+          chargeDocName:'',
+          chiefDocName:'',
+          dutyNurseName:'',
           outDate:'',
           outState:''
         },
@@ -525,12 +529,12 @@
                 _this.inpatient.inPath = '外市';
               }
               _this.inpatient.status = inpatientJSON.status;
-              _this.inpatient.deptNo = inpatientJSON.deptNo;
+              _this.inpatient.deptName = inpatientJSON.deptName;
               _this.inpatient.bedNo = inpatientJSON.bedNo;
-              _this.inpatient.houseDocNo = inpatientJSON.houseDocNo;
-              _this.inpatient.chargeDocNo = inpatientJSON.chargeDocNo;
-              _this.inpatient.chiefDocNo = inpatientJSON.chiefDocNo;
-              _this.inpatient.dutyNurseNo = inpatientJSON.dutyNurseNo;
+              _this.inpatient.houseDocName = inpatientJSON.houseDocName;
+              _this.inpatient.chargeDocName = inpatientJSON.chargeDocName;
+              _this.inpatient.chiefDocName = inpatientJSON.chiefDocName;
+              _this.inpatient.dutyNurseName = inpatientJSON.dutyNurseName;
 
               //出院时间是前端直接获取的当前时间并进行显示，最后可以修改为点击“出院“按钮后再获取时间
               _this.inpatient.outDate = moment().format("YYYY-MM-DD HH:mm:ss").toString()
@@ -640,6 +644,8 @@
 
             } else if (patientJSON.patientState == 1) {
               alert('该病人已经出院，无法进行出院操作');
+            }else if(patientJSON.patientState == 2){
+              alert('该病人已经转院，无法进行出院操作');
             }
 
           }
@@ -782,6 +788,9 @@
       //change 找零
       change:function () {
         return Number(this.remain) + Number(this.charge);
+      },
+      htmlTitle:function () {
+        return this.inpatient.inpatientNo + '号病人出院信息详情'
       }
     }
   }

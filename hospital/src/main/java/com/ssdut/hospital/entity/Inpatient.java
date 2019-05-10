@@ -27,18 +27,18 @@ public class Inpatient {
     private String inPath;
     @Column(name="status",length = 50)
     private String status;
-    @Column(name="deptNo",nullable = false)
-    private Integer deptNo;
+    @Column(name="deptName",nullable = false)
+    private String deptName;
     @Column(name="bedNo",nullable = false)
     private Integer bedNo;
-    @Column(name="houseDocNo",nullable = false)
-    private Integer houseDocNo;
-    @Column(name="chargeDocNo")
-    private Integer chargeDocNo;
-    @Column(name="chiefDocNo")
-    private Integer chiefDocNo;
-    @Column(name="dutyNurseNo")
-    private Integer dutyNurseNo;
+    @Column(name="houseDocName",nullable = false)
+    private String houseDocName;
+    @Column(name="chargeDocName")
+    private String chargeDocName;
+    @Column(name="chiefDocName")
+    private String chiefDocName;
+    @Column(name="dutyNurseName")
+    private String dutyNurseName;
     @Column(name="outDate")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date outDate;
@@ -101,12 +101,12 @@ public class Inpatient {
         this.status = status;
     }
 
-    public Integer getDeptNo() {
-        return deptNo;
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setDeptNo(Integer deptNo) {
-        this.deptNo = deptNo;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     public Integer getBedNo() {
@@ -117,36 +117,36 @@ public class Inpatient {
         this.bedNo = bedNo;
     }
 
-    public Integer getHouseDocNo() {
-        return houseDocNo;
+    public String getHouseDocName() {
+        return houseDocName;
     }
 
-    public void setHouseDocNo(Integer houseDocNo) {
-        this.houseDocNo = houseDocNo;
+    public void setHouseDocName(String houseDocName) {
+        this.houseDocName = houseDocName;
     }
 
-    public Integer getChargeDocNo() {
-        return chargeDocNo;
+    public String getChargeDocName() {
+        return chargeDocName;
     }
 
-    public void setChargeDocNo(Integer chargeDocNo) {
-        this.chargeDocNo = chargeDocNo;
+    public void setChargeDocName(String chargeDocName) {
+        this.chargeDocName = chargeDocName;
     }
 
-    public Integer getChiefDocNo() {
-        return chiefDocNo;
+    public String getChiefDocName() {
+        return chiefDocName;
     }
 
-    public void setChiefDocNo(Integer chiefDocNo) {
-        this.chiefDocNo = chiefDocNo;
+    public void setChiefDocName(String chiefDocName) {
+        this.chiefDocName = chiefDocName;
     }
 
-    public Integer getDutyNurseNo() {
-        return dutyNurseNo;
+    public String getDutyNurseName() {
+        return dutyNurseName;
     }
 
-    public void setDutyNurseNo(Integer dutyNurseNo) {
-        this.dutyNurseNo = dutyNurseNo;
+    public void setDutyNurseName(String dutyNurseName) {
+        this.dutyNurseName = dutyNurseName;
     }
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")

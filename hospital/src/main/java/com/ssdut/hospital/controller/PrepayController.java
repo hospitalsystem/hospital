@@ -38,18 +38,17 @@ public class PrepayController {
         //System.out.println("inpatientIdCard:" + inpatient.getIdCard());
         String idCard = inpatient.getIdCard();
         //System.out.println("idCard:" + idCard);
-        Integer staffNo=inpatient.getHouseDocNo();
-        Staff staff=staffDAO.findOne(staffNo);
+        //Staff staff=staffDAO.findOne(staffNo);
         //Integer IdCard=Integer.valueOf(idCard);
         Patient patient = patientDAO.findByIdCard(idCard);
         //System.out.println(patient.getLinkmanTel());
         JSONObject json = new JSONObject();
         json.appendField("patientName", patient.getPatientName());
         json.appendField("workName", patient.getWorkName());
-        json.appendField("deptNo", inpatient.getDeptNo());
+        json.appendField("deptName", inpatient.getDeptName());
         json.appendField("inPath", inpatient.getInPath());
         json.appendField("inDate", inpatient.getInDate());
-        json.appendField("houseDocNo", staff.getStaffName());
+        json.appendField("houseDocName", inpatient.getHouseDocName());
         json.appendField("bedNo", inpatient.getBedNo());
         json.appendField("birthday", patient.getBirthday());
         json.appendField("prepayMethod", prepay.get(0).getPrepayMethod());
@@ -64,24 +63,18 @@ public class PrepayController {
             prepayAll+=prepay1.getPrepayCost();
             System.out.println("prepay1.getPrepayState():"+prepay1.getPrepayState());
             if(Integer.valueOf(prepay1.getPrepayState())==1){
-                System.out.println("2222");
                 json1.appendField("prepayState","收取");
             }
             else if(Integer.valueOf(prepay1.getPrepayState())==2){
-                System.out.println("3333");
                 json1.appendField("prepayState","返还");
             }
             else if(Integer.valueOf(prepay1.getPrepayState())==3){
-                System.out.println("4444");
                 json1.appendField("prepayState","补打");
             }
-            System.out.println("7777");
             if(Integer.valueOf(prepay1.getPrepayState())==0){
-                System.out.println("5555");
                 json1.appendField("issettlement","未结算");
             }
             else if(Integer.valueOf(prepay1.getPrepayState())==1){
-                System.out.println("6666");
                 json1.appendField("issettlement","已结算");
             }
             json1.appendField("recipeNo",prepay1.getRecipeNo());
@@ -99,7 +92,6 @@ public class PrepayController {
         Data.appendField("json",json);
         Data.appendField("data",data);
         System.out.println("Data:"+Data.toJSONString());
-        System.out.println("11111");
         return Data;
     }
     @RequestMapping(value = "/prepayCollect", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

@@ -2,7 +2,6 @@ package com.ssdut.hospital.controller;
 
 
 import com.ssdut.hospital.dao.StaffDAO;
-import com.ssdut.hospital.entity.Info;
 import com.ssdut.hospital.entity.Staff;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

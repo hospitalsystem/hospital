@@ -13,7 +13,7 @@
           <el-input  v-model="form.patientName" placeholder="患者姓名"></el-input>
         </el-form-item>
         <el-form-item label="住院科室:">
-          <el-input v-model="form.deptNo" placeholder="住院科室"></el-input>
+          <el-input v-model="form.deptName" placeholder="住院科室"></el-input>
         </el-form-item>
         <el-form-item label="工作单位:">
           <el-input v-model="form.workName" placeholder="工作单位"></el-input>
@@ -22,7 +22,7 @@
           <el-input v-model="form.inDate" placeholder="入院日期"></el-input>
         </el-form-item>
         <el-form-item label="住院医师:">
-          <el-input v-model="form.houseDocNo" placeholder="住院医师"></el-input>
+          <el-input v-model="form.houseDocName" placeholder="住院医师"></el-input>
         </el-form-item>
         <el-form-item label="病床号:">
           <el-input v-model="form.bedNo" placeholder="病床号"></el-input>
@@ -116,8 +116,8 @@
             _this.form.inPath = json.inPath;
             _this.form.inDate = json.inDate;
             _this.form.workName = json.workName;
-            _this.form.deptNo = json.deptNo;
-            _this.form.houseDocNo = json.houseDocNo;
+            _this.form.deptName = json.deptName;
+            _this.form.houseDocName = json.houseDocName;
             _this.form.bedNo = json.bedNo;
             _this.form.birthday = json.birthday;
             _this.form.prepayAll = json.prepayAll;
@@ -161,10 +161,10 @@
         form: {
           patientName: '',
           workName: '',
-          deptNo: '',
+          deptName: '',
           inPath: '',
           inDate: '',
-          houseDocNo: '',
+          houseDocName: '',
           bedNo: '',
           birthday: '',
           prepayMethod: '',

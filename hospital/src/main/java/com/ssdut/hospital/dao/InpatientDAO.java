@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface InpatientDAO extends JpaRepository<Inpatient, Integer> {
     List<Inpatient> findAllByIdCard(String idCard);
-    List<Inpatient> findAllByHouseDocNo(Integer houseDocNo);
+    List<Inpatient> findAllByHouseDocName(String houseDocName);
     List<Inpatient> findAllByInpatientNo(Integer inpatientNo);
-    List<Inpatient> findAllByDeptNo(Integer deptNo);
+    List<Inpatient> findAllByDeptName(String deptName);
     List<Inpatient> findAllByBedNo(Integer bedNo);
     Inpatient findByIdCard(String idCard);
 
