@@ -49,10 +49,10 @@ public class PatientController {
         String diagnose=data.getAsString("diagnose");
       //  Double prepayCost=Double.valueOf(data.getAsString("prepayCost"));
        // String prepayMethod=data.getAsString("prepayMethod");
-
         Date inDate=new Date();//获取当前时间
         System.out.println(inDate);
         String deptName=data.getAsString("deptName");
+        System.out.println("deptName:"+deptName);
         Integer bedNo=Integer.valueOf(data.getAsString("bedNo"));
         Patient patient=new Patient();
        // Prepay prepay=new Prepay();

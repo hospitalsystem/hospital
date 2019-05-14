@@ -97,6 +97,10 @@
               if (resp.status == 200 && resp.data.status == 'success') {
                 console.log("resp:"+JSON.stringify(resp));
                 alert("提交成功");
+
+                let NewPage = '_empty' + '?time=' + new Date().getTime()/500;
+                this.$router.push(NewPage);
+                this.$router.go(-1)
               }
             })
           } else {

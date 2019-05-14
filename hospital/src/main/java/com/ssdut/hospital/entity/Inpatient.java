@@ -27,7 +27,7 @@ public class Inpatient {
     private String inPath;
     @Column(name="status",length = 50)
     private String status;
-    @Column(name="deptName",nullable = false)
+    @Column(name="deptName",length = 11,nullable = false)
     private String deptName;
     @Column(name="bedNo",nullable = false)
     private Integer bedNo;

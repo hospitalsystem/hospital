@@ -78,7 +78,7 @@ const router = new Router({
                 {
                     path: '/prepaySearch',
                     iconCls: 'fa fa-reorder',
-                    name: '预交查询',
+                    name: '预交金信息查询',
                     meta: {
                         requiresAuth: true
                     },

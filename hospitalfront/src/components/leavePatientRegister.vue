@@ -47,8 +47,8 @@
         <el-form-item label="找零:" class="change" v-show="change > 0">
           <el-input readonly="true" v-model="change" placeholder="找零"></el-input>
         </el-form-item>
-        <el-form-item label="操作员:" class="staffNo" v-show="remain < 0">
-          <el-input v-model="forms.staffNo" placeholder="操作员"></el-input>
+        <el-form-item label="操作员编号:" class="staffNo" v-show="remain < 0">
+          <el-input v-model="forms.staffNo" placeholder="操作员编号"></el-input>
         </el-form-item>
         <el-form-item label="预交金支付方式:" class="prepayMethod" v-show="remain < 0">
           <el-select v-model="forms.prepayMethod" placeholder="请选择" style="width:206.4px">
@@ -381,7 +381,6 @@
   import ElRow from "element-ui/packages/row/src/row";
 
   export default {
-
     components: {ElRow},
     data(){
       return {

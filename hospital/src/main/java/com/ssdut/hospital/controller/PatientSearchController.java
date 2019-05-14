@@ -121,8 +121,10 @@ public class PatientSearchController {
                     InpatientList.add(item1);
                 }
             }
+            PatientList.clear();
             for(Inpatient item : InpatientList){
                 Patient patientItem = patientDAO.findByIdCard(item.getIdCard());
+
                 PatientList.add(patientItem);
             }
 
@@ -150,6 +152,8 @@ public class PatientSearchController {
             PatientList.add(patientItem);
         }
         }
+
+        //返回全部
         if(searchOption==10){
             InpatientList = inpatientDAO.findAll();
             for(Inpatient temp : InpatientList){

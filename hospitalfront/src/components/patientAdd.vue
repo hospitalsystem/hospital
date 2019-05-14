@@ -47,7 +47,7 @@
       </el-form-item>
     </el-col>
 <el-col span="8">
-  <el-form-item label="患者状态" prop="patientState">
+  <el-form-item label="患者状态：" prop="patientState">
     <el-select v-model="patient.patientState"  style="width:202px">
       <el-option
         v-for="item in options5"
@@ -349,10 +349,16 @@
           {
           index: 1,
           label: '出院',
-        }, {
+          },
+          {
           index: 0,
           label: '住院',
-        }]
+          },
+          {
+          index: 2,
+            label:'转院'
+          }]
+
       }
     },
     methods: {
@@ -405,11 +411,14 @@
                   console.log("resp:" + JSON.stringify(resp));
                   alert("添加成功");
                   console.log("data:"+data.sex);
+
+                  let NewPage = '_empty' + '?time=' + new Date().getTime()/500;
+                  this.$router.push(NewPage);
+                  this.$router.go(-1)
                 }
               })
             }else {
               console.log('error submit!!');
-
               return false;
             }
         });

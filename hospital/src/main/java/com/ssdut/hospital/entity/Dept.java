@@ -10,7 +10,7 @@ public class Dept {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="deptNo")
     private Integer deptNo;
-    @Column(name="deptName",length = 20)
+    @Column(name="deptName",length = 20, nullable = false)
     private String deptName;
 
     public Integer getDeptNo() {

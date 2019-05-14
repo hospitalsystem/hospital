@@ -147,7 +147,7 @@
             <el-option label="转院" value="4"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="主治医师" prop="chargeDocName">
+        <el-form-item label="主治医师：" prop="chargeDocName">
           <el-input v-model="patient.chargeDocName"></el-input>
         </el-form-item>
         <el-form-item label="住院日期：" required prop="inDate">
@@ -160,7 +160,7 @@
         <el-form-item label="病历号：" prop="cardNo">
           <el-input v-model="patient.cardNo" :disabled="true" ></el-input>
         </el-form-item>
-        <el-form-item label="患者状态" prop="patientState" >
+        <el-form-item label="患者状态：" prop="patientState" >
           <el-select v-model="patient.patientState"  :disabled="true" style="width:202px">
             <el-option
               v-for="item in options5"
@@ -208,7 +208,7 @@
         <el-form-item label="收住医师：" prop="houseDocName">
           <el-input v-model="patient.houseDocName" ></el-input>
         </el-form-item>
-        <el-form-item label="责任护士" prop="dutyNurseName">
+        <el-form-item label="责任护士：" prop="dutyNurseName">
           <el-input v-model="patient.dutyNurseName"></el-input>
         </el-form-item>
         <el-form-item  label="出院日期：" required prop="outDate">
@@ -250,7 +250,7 @@
         <el-form-item label="入院情况："  prop="status">
           <el-input v-model="patient.status"></el-input>
         </el-form-item>
-        <el-form-item label="主任医师" prop="chiefDocNo">
+        <el-form-item label="主任医师：" prop="chiefDocNo">
           <el-input v-model="patient.chiefDocName"></el-input>
         </el-form-item>
 
